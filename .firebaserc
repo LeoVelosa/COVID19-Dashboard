@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "covid-dashboard-10efe": {
+      "hosting": {
+        "COVID-Dashboard": [
+          "covid-dashboard-10efe"
+        ]
+      }
+    }
+  }
+}
