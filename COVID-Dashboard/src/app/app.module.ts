@@ -8,10 +8,24 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { NavComponent } from './nav/nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { PublicationsComponent } from './publications/publications.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavComponent,
+    VaccinePageComponent,
+    PublicationsComponent
   ],
   imports: [
     BrowserModule,
@@ -20,6 +34,14 @@ import { environment } from 'src/environments/environment';
     MatToolbarModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    LayoutModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
 
   ],
   providers: [],
