@@ -19,13 +19,16 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { PublicationsComponent } from './publications/publications.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     VaccinePageComponent,
-    PublicationsComponent
+    PublicationsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { PublicationsComponent } from './publications/publications.component';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    NgbModule,
 
   ],
   providers: [],

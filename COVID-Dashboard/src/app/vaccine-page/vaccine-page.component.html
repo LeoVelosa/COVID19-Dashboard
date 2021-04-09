@@ -1,14 +1,17 @@
 <div class="grid-container">
   <h1 class="mat-h1">COVID19 Informational Hub</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-          </mat-card-title>
-        </mat-card-header>
-      </mat-card>
+  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
+    <mat-grid-tile [colspan]="( cardLayout | async )?.news.cols" [rowspan]="( cardLayout | async )?.news.rows">
+      <app-card title="News Stories"><div>News content here</div></app-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="( cardLayout | async )?.tabCard.cols" [rowspan]="( cardLayout | async )?.tabCard.rows">
+      <app-card title="Vaccine Comparison"><div>Vaccine content here</div></app-card>
+    </mat-grid-tile>
+    <mat-grid-tile *ngFor="let i of [1,2]" [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
+      <app-card title="{{i}}"></app-card>
+    </mat-grid-tile>
+    <mat-grid-tile *ngFor="let i of [1,2,3]" [colspan]="( cardLayout | async )?.longCards.cols" [rowspan]="( cardLayout | async )?.longCards.rows">
+      <app-card title="{{i}}"><div>Twitter info here</div></app-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
