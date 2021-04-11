@@ -5,9 +5,11 @@
     "outDir": "../out-tsc/e2e",
     "module": "commonjs",
     "target": "es2018",
+    "allowJs": true,
     "types": [
       "jasmine",
       "node"
-    ]
-  }
+    ],
+    "experimentalDecorators": true,
+  },
 }

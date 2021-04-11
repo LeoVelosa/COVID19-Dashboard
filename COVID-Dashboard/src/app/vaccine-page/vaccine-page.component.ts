@@ -18,15 +18,15 @@ export class VaccinePageComponent {
           tabCard: {cols: 1, rows: 2},
           regCards: {cols: 1, rows: 1},
           longCards: {cols: 1, rows: 2},
-        }
+        };
       }
       return {
         columns: 3,
-          news: {cols: 2, rows: 1},
-          tabCard: {cols: 1, rows: 2},
-          regCards: {cols: 1, rows: 1},
-          longCards: {cols: 1, rows: 2},
-      }
+        news: {cols: 2, rows: 1},
+        tabCard: {cols: 1, rows: 2},
+        regCards: {cols: 1, rows: 1},
+        longCards: {cols: 1, rows: 2},
+      };
     })
   );
 
