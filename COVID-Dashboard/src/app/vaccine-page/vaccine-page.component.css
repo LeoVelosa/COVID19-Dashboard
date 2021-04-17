@@ -10,6 +10,17 @@
   bottom: 15px;
 }
 
+.tab-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  height: 600px;
+  width: 95%;
+}
+
 .more-button {
   position: absolute;
   top: 5px;

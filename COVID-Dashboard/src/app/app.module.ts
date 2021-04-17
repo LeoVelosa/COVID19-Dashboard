@@ -21,6 +21,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { PublicationsComponent } from './publications/publications.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from './card/card.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { CardComponent } from './card/card.component';
     MatCardModule,
     MatMenuModule,
     NgbModule,
-
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

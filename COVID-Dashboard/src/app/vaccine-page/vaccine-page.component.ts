@@ -13,16 +13,16 @@ export class VaccinePageComponent {
     map(({ matches }) => {
       if (matches) {
         return {
-          columns: 3,
-          news: {cols: 2, rows: 1},
+          columns: 2,
+          sidewayCards: {cols: 1, rows: 1},
           tabCard: {cols: 1, rows: 2},
           regCards: {cols: 1, rows: 1},
-          longCards: {cols: 1, rows: 2},
+          longCards: {cols: 1, rows: 1},
         };
       }
       return {
         columns: 3,
-        news: {cols: 2, rows: 1},
+        sidewayCards: {cols: 2, rows: 1},
         tabCard: {cols: 1, rows: 2},
         regCards: {cols: 1, rows: 1},
         longCards: {cols: 1, rows: 2},
