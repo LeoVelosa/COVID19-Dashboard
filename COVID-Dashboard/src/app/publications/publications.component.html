@@ -1,14 +1,11 @@
 <div class="grid-container">
   <h1 class="mat-h1">Scientific Publications</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{card.title}}
-          </mat-card-title>
-        </mat-card-header>
-      </mat-card>
+  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
+    <mat-grid-tile [colspan]="( cardLayout | async )?.Abstracts.cols" [rowspan]="( cardLayout | async )?.Abstracts.rows">
+      <app-card title="Abstracts"><div>Publications here</div></app-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="( cardLayout | async )?.Visualization.cols" [rowspan]="( cardLayout | async )?.Visualization.rows">
+      <app-card title="Visualization"><div>Visualization here</div></app-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
