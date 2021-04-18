@@ -2,7 +2,7 @@
   <h1 class="mat-h1">COVID19 Informational Hub</h1>
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
-      <app-card title="Vaccine Availability"><div>Availability content here</div></app-card>
+      <app-card title="Vaccine Availability"><div id="test">Availability content here</div></app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.tabCard.cols" [rowspan]="( cardLayout | async )?.tabCard.rows">
       <mat-tab-group mat-stretch-tabs>
