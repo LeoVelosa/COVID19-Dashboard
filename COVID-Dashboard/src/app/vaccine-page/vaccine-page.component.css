@@ -1,3 +1,21 @@
+.test {
+  background-color: lightgrey;
+  width: 300px;
+  border: 15px solid green;
+  padding: 50px;
+  margin: 20px;
+}
+
+.twitter{
+  display: grid;
+  grid-template-columns: repeat(auto-fill);
+  height:100%;
+  padding: 1%;
+  overflow:scroll;
+  grid-auto-flow: column;
+  grid-gap: 3%;
+  overflow-y: hidden;}
+
 .grid-container {
   margin: 20px;
 }

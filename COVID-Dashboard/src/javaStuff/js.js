@@ -14,8 +14,16 @@ async function getTweets(firebase) {
 
   const tweets=document.getElementById("test")
   var stuff = await db.collection('Twitter_Data').get().then((twitterData) => {
+    tweets.innerHTML += '<style> ' +
+      'div.tweet{ width: 300px; border: 3px solid grey; text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 5px; height: 100%;}' +
+      'img.profile {border: 1px solid black; border-radius: 50%;}' +
+      'p.text, div.text {color:black;}' +
+      '</style>'
     twitterData.docs.forEach(doc => {
-      tweets.innerHTML += '<div id="test">'+doc.data().AlachuaCounty.text +'</div>';
+      tweets.innerHTML += '<a href="https://www.w3schools.com/html/html_css.asp"><div class="tweet">' +
+        '<p class="text">' + '<img src='+doc.data().AlachuaCounty.user.profile_image_url_https+' class="profile">  ' +doc.data().AlachuaCounty.user.name+'  @'+doc.data().AlachuaCounty.user.screen_name+' </p>' +
+        '<div class="text">'+doc.data().AlachuaCounty.text +'</div>' +
+        '</div></a>';
     })}) ;
   /*
   const tweets=document.getElementById("twitter")
