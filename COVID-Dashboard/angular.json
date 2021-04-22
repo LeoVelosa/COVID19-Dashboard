@@ -37,7 +37,9 @@
               "src/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/utils/webscrapePuller.js"
+            ]
           },
           "configurations": {
             "production": {
