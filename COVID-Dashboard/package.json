@@ -26,7 +26,11 @@
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "@types/jquery": "^3.5.5",
     "bootstrap": "^4.5.0",
+    "cheerio": "^1.0.0-rc.6",
     "firebase": "^7.0 || ^8.0",
+    "puppeteer": "^8.0.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

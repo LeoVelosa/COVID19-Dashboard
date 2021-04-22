@@ -8,5 +8,5 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class AppComponent {
   title = 'COVID-Dashboard';
-  constructor(private store: AngularFirestore) {console.log("hi");}
+  constructor() {}
 }

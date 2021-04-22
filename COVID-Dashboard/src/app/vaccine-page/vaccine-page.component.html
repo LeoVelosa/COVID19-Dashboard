@@ -4,6 +4,7 @@
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
       <app-card title="Vaccine Availability"><div>Availability content here</div></app-card>
     </mat-grid-tile>
+    <!--Tab Card-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.tabCard.cols" [rowspan]="( cardLayout | async )?.tabCard.rows">
       <mat-tab-group mat-stretch-tabs>
         <mat-tab label="Pfizer">
@@ -23,15 +24,19 @@
         </mat-tab>
       </mat-tab-group>
     </mat-grid-tile>
+    <!--List of Comorbidities & CDC Eligibility Guidelines-->
     <mat-grid-tile *ngFor="let i of ['List of Comorbidities', 'CDC Eligibility Guidelines']" [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
       <app-card title="{{i}}"><div>Info</div></app-card>
     </mat-grid-tile>
+    <!--Eligibility Comparison-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.longCards.cols" [rowspan]="( cardLayout | async )?.longCards.rows">
       <app-card title="Eligibility Comparison"><div>Eligibility Comparison info here</div></app-card>
     </mat-grid-tile>
+    <!--Florida County Eligibility-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
       <app-card title="Florida county Eligibility"><div>Eligibility info here</div></app-card>
     </mat-grid-tile>
+    <!--News Stories-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
       <app-card title="News stories"><div>News info here</div></app-card>
     </mat-grid-tile>
