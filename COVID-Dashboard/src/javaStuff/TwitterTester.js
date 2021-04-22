@@ -186,11 +186,12 @@ class CountyTweetsToDatabase{
     var i=0
     while(i<this.countyHandles.length) {
 
-      await this.tweetExtractor.getTweets(this.countyHandles[0]).then((twitterData)=> {
+      await this.tweetExtractor.getTweets(this.countyHandles[i]).then((twitterData)=> {
 
         twitterData.data.forEach((tweet) => {
 
-          if((tweet.text.includes("Availab") || tweet.text.includes("availab")) && !tweet.text.includes("RT @")) {
+          if((tweet.text.includes("Availab") || tweet.text.includes("availab")) && !tweet.text.includes("RT @") && (tweet.entities.urls[0] != undefined || tweet.entities.media != undefined)) {
+
             this.db.collection(this.countyNames[i] + "Availability").add(tweet);
           }
 
@@ -207,11 +208,11 @@ class CountyTweetsToDatabase{
     var i=0
     while(i<this.countyHandles.length) {
 
-      await this.tweetExtractor.getTweets(this.countyHandles[0]).then((twitterData)=> {
+      await this.tweetExtractor.getTweets(this.countyHandles[i]).then((twitterData)=> {
 
         twitterData.data.forEach((tweet) => {
 
-          if((tweet.text.includes("eligib") || tweet.text.includes("Eligib")) && !tweet.text.includes("RT @")) {
+          if((tweet.text.includes("eligib") || tweet.text.includes("Eligib")) && !tweet.text.includes("RT @") && (tweet.entities.urls[0] != undefined || tweet.entities.media != undefined)) {
             this.db.collection(this.countyNames[i] + "Eligibility").add(tweet);
           }
 
@@ -226,4 +227,6 @@ class CountyTweetsToDatabase{
 }
 
 
-new CountyTweetsToDatabase().EligibilityTweetsTDB();
+var a = new CountyTweetsToDatabase();
+a.EligibilityTweetsTDB();
+a.AvailabilityTweetsTDB();
