@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -36,8 +34,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    AngularFireModule,
-    AngularFirestoreModule,
     LayoutModule,
     MatButtonModule,
     MatSidenavModule,

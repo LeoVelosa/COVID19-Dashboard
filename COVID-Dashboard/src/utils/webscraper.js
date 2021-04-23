@@ -3,7 +3,7 @@ const $ = require('cheerio');
 const url = 'https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/Pfizer-BioNTech.html';
 const text = [];
 var db;
-
+/*
 class FirebaseLeo{
 
     constructor(){
@@ -25,7 +25,7 @@ class FirebaseLeo{
         return this.firebase.firestore();
     }
 }
-
+*/
 class webscraper{
     
     constructor(){
