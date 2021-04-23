@@ -5,7 +5,8 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
 /* Gets the function from js.js */
-declare function getTweets(firebase: any): any;
+declare function getAllTweets(firebase: any): any;
+declare function getTweetss(firebase: any): any;
 
 @Component({
   selector: 'app-card',
@@ -16,9 +17,13 @@ export class CardComponent implements OnInit {
 
   @Input() title!: string;
 /*Gets the function from js.js  MUST BE LIKE THIS*/
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
     /*puts the firebase api into the getTweets function and it returns html which will go to ___ ID*/
-    getTweets(firebase);
+
+   await getAllTweets(firebase);
+//   await getTweetss(firebase);
+
   }
 }
 function validateInput(input: string) {

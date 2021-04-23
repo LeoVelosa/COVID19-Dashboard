@@ -139,7 +139,6 @@ class twitterHandle{
       consumer_secret: '8AecHqvhRUCXTlJuxEGBsXKXhnGKplTFulsJasTREtgFXib4Le',
       access_token: '1375638021207363584-Dtz8NuYkO7clHnbhPigDej0k77UO4E',
       access_token_secret: 'piAGbZouPjn2CYD2H0Z4LnWXTHNMr4vp5XlH5EJUnB5sr',
-      timeout_ms: 60 * 1000,  // optional HTTP request timeout to apply to all requests.
       strictSSL: true,     // optional - requires SSL certificates to be valid.
     });
   }
@@ -152,7 +151,7 @@ class ExtractTweets{
   }
 
   getTweets(handle){
-    return this.twitter.get('statuses/user_timeline', {screen_name: handle, count: 100});
+    return this.twitter.get('statuses/user_timeline', {screen_name: handle, count: 150});
   }
 
 //q:'availability OR available'
