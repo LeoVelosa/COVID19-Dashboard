@@ -64,15 +64,15 @@ async function getAllTweets(firebase){
   //Firebase acesses firestore
   const db = firebase.firestore();
 
-  await getTweetss(db);
-  await getTweets(db);
+  await getAvailabilityTweets(db);
+  await getEligibilityTweets(db);
 }
 
 //This is the way to get the JSON files and make them into html and sends them to card-component.ts
-async function getTweetss(db) {
+async function getAvailabilityTweets(db) {
 
   //Basically creates a storage for all the html. IT NEEDS TO BE THIS WAY OTHERWISE PAGE WILL REFRESH AND THINGS WILL MESS UP
-  const tweeters=document.getElementById("test2")
+  const tweeters=document.getElementById("test")
 
 
 //  getNames().forEach()((collect)=>{
@@ -118,10 +118,10 @@ async function getTweetss(db) {
 
 
 //This is the way to get the JSON files and make them into html and sends them to card-component.ts
-async function getTweets(db) {
+async function getEligibilityTweets(db) {
 
   //Basically creates a storage for all the html. IT NEEDS TO BE THIS WAY OTHERWISE PAGE WILL REFRESH AND THINGS WILL MESS UP
-  const tweets=document.getElementById("test")
+  const tweets=document.getElementById("test2")
 
 
 //  getNames().forEach()((collect)=>{
