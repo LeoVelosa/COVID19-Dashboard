@@ -17,7 +17,7 @@ firebaseConfig = {
     var searchRef = db.collection(collection_name).doc(doc_id);
     // [START get_document]
     // [START firestore_data_get_as_map]
-    
+
     var doc = await searchRef.get();
     if (!doc.exists) {
       console.log('No such document');
@@ -27,7 +27,7 @@ firebaseConfig = {
       // console.log("Document data", doc.data().eSummaryResult.DocSum);
       var search_results = doc.data().eSummaryResult.DocSum;
       for (var i = 0; i < 25; i++) {
-        console.log(search_results[0]);
+        console.log(search_results[0].Item[i]);
       }
       // This is the title of the document
       // console.log(doc.data().eSummaryResult.DocSum[0].Item[5]._);
@@ -36,10 +36,11 @@ firebaseConfig = {
         console.log("Entry at", i, " is", doc.data().eSummaryResult.DocSum[i]);
       */
       // This is the author's name
+
+      // This is the url
       return doc.data();
     }
   }
-  data = getDocument(db, "covid_pubmed_search", "KrFZZdQN6mmYI3u9cexd");
+  data = getDocument(db, "covid_pubmed_search", "lLyiMcd6bSvIkKvuldmi");
   console.log("Printing data");
   console.log("Data", data);
-  
