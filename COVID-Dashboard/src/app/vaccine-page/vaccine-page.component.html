@@ -50,7 +50,12 @@
 
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
-      <app-card title="News stories"><div>News info here</div></app-card>
+
+      <app-card title="News stories">
+        <div class="twitter" id="test3">
+        </div>
+      </app-card>
+
     </mat-grid-tile>
   </mat-grid-list>
 </div>

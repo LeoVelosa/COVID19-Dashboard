@@ -1,0 +1,54 @@
+[debug] [2021-04-22T02:22:20.639Z] ----------------------------------------------------------------------
+[debug] [2021-04-22T02:22:20.641Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Jaden Millington\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2021-04-22T02:22:20.641Z] CLI Version:   9.9.0
+[debug] [2021-04-22T02:22:20.641Z] Platform:      win32
+[debug] [2021-04-22T02:22:20.641Z] Node Version:  v15.13.0
+[debug] [2021-04-22T02:22:20.642Z] Time:          Wed Apr 21 2021 22:22:20 GMT-0400 (Eastern Daylight Time)
+[debug] [2021-04-22T02:22:20.642Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-04-22T02:22:20.645Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2021-04-22T02:22:20.666Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-04-22T02:22:20.666Z] > authorizing via signed-in user (jadenamillington@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Jaden Millington\WebstormProjects\COVID-Dashboard\COVID-Dashboard
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
+[debug] [2021-04-22T02:22:20.947Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2021-04-22T02:22:20.948Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  .firebaserc already has a default project, using covid-dashboard-10efe. 
+[debug] [2021-04-22T02:22:26.587Z] > refreshing access token with scopes: []
+[debug] [2021-04-22T02:22:26.588Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-04-22T02:22:26.753Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Thu, 22 Apr 2021 02:22:27 GMT","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-22T02:22:26.768Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/covid-dashboard-10efe [none]
+[debug] [2021-04-22T02:22:27.123Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/covid-dashboard-10efe 403
+[debug] [2021-04-22T02:22:27.123Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/covid-dashboard-10efe {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2021-04-22T02:22:27.124Z] HTTP Error: 403, The caller does not have permission
+[debug] [2021-04-22T02:22:27.233Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at module.exports (C:\Users\Jaden Millington\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:38:12)
+    at Client.doRequest (C:\Users\Jaden Millington\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:238:23)
+    at processTicksAndRejections (node:internal/process/task_queues:94:5)
+    at async Client.request (C:\Users\Jaden Millington\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:96:20)
+    at async Object.getFirebaseProject (C:\Users\Jaden Millington\AppData\Roaming\npm\node_modules\firebase-tools\lib\management\projects.js:290:21)
+    at async Object.doSetup [as project] (C:\Users\Jaden Millington\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\project.js:77:27)
+    at async init (C:\Users\Jaden Millington\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\index.js:19:9)
+[error] 
+[error] Error: Failed to get Firebase project covid-dashboard-10efe. Please make sure the project exists and your account has permission to access it.

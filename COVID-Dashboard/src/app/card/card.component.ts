@@ -22,7 +22,6 @@ export class CardComponent implements OnInit {
     /*puts the firebase api into the getTweets function and it returns html which will go to ___ ID*/
 
    await getAllTweets(firebase);
-//   await getTweetss(firebase);
 
   }
 }
