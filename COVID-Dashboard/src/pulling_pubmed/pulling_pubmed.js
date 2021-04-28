@@ -1,7 +1,9 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xml2js = require('xml2js');
 var fs = require('fs');
-
+/**
+ * TODO: integrate it with pubmed_to_firestore so that the data is uploaded directly to Firebase. Currently just saves to a file.
+ * */
 /**
  * Pubmed2.js
  * Loads a webpage from PubMed Entrez API and runs it
