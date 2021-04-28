@@ -17,8 +17,8 @@ async function getDocument(db, collection_name, doc_id) {
   // [START firestore_data_get_as_map]
 
   var doc =await searchRef.get().then(response => {
-    console.log("Document data", doc.data().eSummaryResult.DocSum);
-    var search_results = doc.data().eSummaryResult.DocSum;
+    console.log("Document data", response.data().eSummaryResult.DocSum);
+    var search_results = response.data().eSummaryResult.DocSum;
     return search_results;
   }).catch(err => {
     console.log(err);

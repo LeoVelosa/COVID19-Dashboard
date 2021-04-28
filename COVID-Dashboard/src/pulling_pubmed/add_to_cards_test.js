@@ -1,4 +1,4 @@
-async function test() {
+export async function test() {
   try {
     /*
     var document_part = document.getElementById("test");
