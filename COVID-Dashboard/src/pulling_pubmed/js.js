@@ -16,25 +16,22 @@ async function getDocument(db, collection_name, doc_id) {
   // [START get_document]
   // [START firestore_data_get_as_map]
 
-  var doc = await searchRef.get();
+  var doc =await searchRef.get().then(response => {
+    console.log("Document data", doc.data().eSummaryResult.DocSum);
+    var search_results = doc.data().eSummaryResult.DocSum;
+    return search_results;
+  }).catch(err => {
+    console.log(err);
+  });
+  /*
   if (!doc.exists) {
     console.log('No such document');
     return null;
   } else {
     // This is the array of search results
-    // console.log("Document data", doc.data().eSummaryResult.DocSum);
+    console.log("Document data", doc.data().eSummaryResult.DocSum);
     var search_results = doc.data().eSummaryResult.DocSum;
-    for (var i = 0; i < 25; i++) {
-      // console.log(i, search_results[0].Item[i]._);
-    }
-    // This is the title of the document
-    // console.log(doc.data().eSummaryResult.DocSum[0].Item[5]._);
-    // This is the first author's name
-    console.log(" ");
-    for (var i = 0; i < 5; i++) {
-      console.log(search_results[i].Item[5]._, search_results[i].Item[4]._, search_results[i].Item[23]._);
-
-    }
+  */
 
 
     /*
@@ -44,12 +41,27 @@ async function getDocument(db, collection_name, doc_id) {
     // This is the author's name
 
     // This is the url
-    return doc.data();
-  }
 }
-async function getSearchResults() {
-  var search_results = document.getElementById("covid_search_results");
-  var data = await getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi');
-  search_results.innerHTML += '<p>' + search_results[i].Item[5]._, search_results[i].Item[4]._, search_results[i].Item[23]._ + '</p>';
+/*
+async function test() {
+  try {
+    var document_part = document.getElementById("test");
+    document_part.innerHTML += '<p>' + "A" + '</p>';
+  } catch(err) {
+    console.log(err);
+  }
 
 }
+*/
+/*
+async function getAllSearches(db) {
+  var search_results = document.getElementById("covid_search_results");
+  var data = await getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi').then(response => {
+    search_results.innerHTML += '<div class="covid_search_results"><p>' + data[i].eSummaryResult.DocSum.Item[5]._, data[i].eSummaryResult.DocSum[4]._, data[i].eSummaryResult.DocSum[23]._ + '</p></div>';
+  }).catch(err => {
+    console.log(err);
+  });
+
+}
+*/
+// console.log(getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi'));

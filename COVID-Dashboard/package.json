@@ -27,7 +27,9 @@
     "@types/jquery": "^3.5.5",
     "bootstrap": "^4.5.0",
     "firebase": "^7.0 || ^8.0",
+    "middleware": "^1.0.0",
     "mime": "^2.5.2",
+    "mime-types": "^2.1.30",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

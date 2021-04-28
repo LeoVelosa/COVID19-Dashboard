@@ -18,25 +18,34 @@ async function getDocument(db, collection_name, doc_id) {
   // [START get_document]
   // [START firestore_data_get_as_map]
 
-  var doc = await searchRef.get();
-  if (!doc.exists) {
-    console.log('No such document');
-    return null;
-  } else {
-    // This is the array of search results
-    // console.log("Document data", doc.data().eSummaryResult.DocSum);
+  await searchRef.get().then(response => {
+    console.log(response.data());
+    var search_results = response.data().eSummaryResult.DocSum;
+    console.log(search_results[0].Item[5]._, search_results[0].Item[4]._, search_results[0].Item[23]._);
+    return search_results;
+  }).catch(err => {
+    console.log(err);
+  })
+    /*{
     var search_results = doc.data().eSummaryResult.DocSum;
+    /*
     for (var i = 0; i < 25; i++) {
       // console.log(i, search_results[0].Item[i]._);
     }
+    */
+    // This is the array of search results
+    // console.log("Document data", doc.data().eSummaryResult.DocSum);
     // This is the title of the document
     // console.log(doc.data().eSummaryResult.DocSum[0].Item[5]._);
     // This is the first author's name
+    /*
     console.log(" ");
     for (var i = 0; i < 5; i++) {
       console.log(search_results[i].Item[5]._, search_results[i].Item[4]._, search_results[i].Item[23]._);
-
     }
+    */
+
+
 
 
     /*
@@ -46,8 +55,7 @@ async function getDocument(db, collection_name, doc_id) {
     // This is the author's name
 
     // This is the url
-    return doc.data();
-  }
+    // return doc.data();
 }
 data = getDocument(db, "covid_pubmed_search", "lLyiMcd6bSvIkKvuldmi");
 console.log("Printing data");

@@ -40,7 +40,9 @@
             "scripts": [
               "src/javaStuff/js.js",
               "src/javaStuff/TwitterTester.js",
-              "src/pulling_pubmed/js.js"
+              "src/pulling_pubmed/js.js",
+              "src/pulling_pubmed/add_to_cards_test.js"
+
             ]
           },
           "configurations": {
