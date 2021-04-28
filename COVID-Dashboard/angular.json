@@ -37,7 +37,9 @@
               "src/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/pubmed_pulling/js.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -100,7 +102,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              
+            ]
           }
         },
         "lint": {

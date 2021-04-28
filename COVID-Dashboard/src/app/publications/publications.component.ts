@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-
+declare const getPubMedSearches: any;
 @Component({
   selector: 'app-publications',
   templateUrl: './publications.component.html',

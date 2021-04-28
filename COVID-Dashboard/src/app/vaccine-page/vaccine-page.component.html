@@ -5,7 +5,9 @@
       <app-card title="News Stories"><div>News content here</div></app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.tabCard.cols" [rowspan]="( cardLayout | async )?.tabCard.rows">
-      <app-card title="Vaccine Comparison"><div>Vaccine content here</div></app-card>
+      <app-card title="Vaccine Comparison">
+        <div id="test"></div>
+      </app-card>
     </mat-grid-tile>
     <mat-grid-tile *ngFor="let i of ['List of Comorbidities', 'CDC Eligibility Guidelines']" [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
       <app-card title="{{i}}"><div>Info</div></app-card>

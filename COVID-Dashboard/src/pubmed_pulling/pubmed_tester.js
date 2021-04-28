@@ -27,10 +27,18 @@ firebaseConfig = {
       // console.log("Document data", doc.data().eSummaryResult.DocSum);
       var search_results = doc.data().eSummaryResult.DocSum;
       for (var i = 0; i < 25; i++) {
-        console.log(search_results[0].Item[i]);
+        // console.log(i, search_results[0].Item[i]._);
       }
       // This is the title of the document
       // console.log(doc.data().eSummaryResult.DocSum[0].Item[5]._);
+      // This is the first author's name
+      console.log(" ");
+      for (var i = 0; i < 5; i++) {
+        console.log(search_results[i].Item[5]._, search_results[i].Item[4]._, search_results[i].Item[23]._);
+
+      }
+
+
       /*
       for (var i = 0; i < 5; i++)
         console.log("Entry at", i, " is", doc.data().eSummaryResult.DocSum[i]);
