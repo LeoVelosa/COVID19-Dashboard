@@ -23,8 +23,8 @@ export class CardComponent implements OnInit {
 
    await getAllTweets(firebase);
    await getAllSearches();
-
   }
+
 }
 function validateInput(input: string) {
   return input;
