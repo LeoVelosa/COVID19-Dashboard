@@ -1,3 +1,6 @@
+//This function will go to card-component.ts
+
+//All the names of the places where we are getting news tweets from
 function getNewsNames(){
   return [
     "TheWhiteHouse",
@@ -7,6 +10,7 @@ function getNewsNames(){
 
 }
 
+//All the names of the counties where we are getting tweets from
 function getCountyNames(){
   return [
     "AlachuaCounty",
@@ -55,6 +59,8 @@ function getCountyNames(){
 
 }
 
+//This is the function you will be calling in card-component.ts, so it puts the data into the id's of
+//vaccine-page that have the same id in the <div id=''> in vaccine-page.component.html
 async function getAllTweets(firebase){
   //Contains our firebase keys and such to access firebase
   var firebaseConfig = {
@@ -72,9 +78,11 @@ async function getAllTweets(firebase){
 
   //Firebase acesses firestore
   const db = firebase.firestore();
-
+  //gets all tweets that have to do with the avalibility of the COVID vaccine in the counties of florida twitters we have
   await getAvailabilityTweets(db);
+  //gets all tweets that have to do with the eligibility of the COVID vaccine in the counties of florida twitters we have
   await getEligibilityTweets(db);
+  //gets all tweets that have to do with the news stories about COVID in the twitters accounts we have for that
   await getNewsTweets(db);
 }
 
@@ -88,8 +96,12 @@ async function getAvailabilityTweets(db) {
 //  getCountyNames().forEach()((collect)=>{
   var names = getCountyNames();
 
-
+ // for every county name that we have
   for(var i=0; i<names.length; i++){
+
+    //This is what I am using to get the stuff from our database. Its getting a collection and then getting each document in the
+    //collection and processing the data into html.
+    //Adds avalibility to the end of the county names, to make sure that the eligibility and avalibility tweets do not get mixed up
     db.collection(names[i]+'Availability').get().then((twitterData) => {
 
       // Styles the html, cannot use card-component.css to do this, so it must be done here
@@ -101,10 +113,14 @@ async function getAvailabilityTweets(db) {
 
       //For every Json file in the collection
       twitterData.docs.forEach(doc => {
+
+        // This is used to either put an html link in a tweet, or skip this data/won't turn this JSON into a tweet
         var link;
 
+        //Makes sure that there is a place that is called urls in the JSON
         if(doc.data().entities.urls != undefined){
 
+          //Checks to see if any of this data contains a twitter link
           doc.data().entities.urls.forEach((url) =>{
 
               if(url.expanded_url.includes('twitter')){link=url.expanded_url}
@@ -113,7 +129,10 @@ async function getAvailabilityTweets(db) {
           )
 
         }
+
+        //Makes sure that there is a place that is called urls in the JSON
         if(doc.data().entities.media  != undefined){
+          //Checks to see if any of this data contains a twitter link
           doc.data().entities.media.forEach((media) =>{
 
               if(media.expanded_url.includes('twitter')){link=media.expanded_url}
@@ -123,7 +142,8 @@ async function getAvailabilityTweets(db) {
         }
 
 
-
+        //If there is no link, it turn the data into html code, as if this code doesn't have a
+        //link, it causes an error, and won't display the rest of the tweets
         if(link != undefined){
           //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
           tweeters.innerHTML += '<a href="' + link + '"><div class="tweet">' +
@@ -153,8 +173,12 @@ async function getEligibilityTweets(db) {
 //  getCountyNames().forEach()((collect)=>{
   var names = getCountyNames();
 
+  // for every county name that we have
+  for(var i=0; i<names.length; i++){
 
-for(var i=0; i<names.length; i++){
+  //This is what I am using to get the stuff from our database. Its getting a collection and then getting each document in the
+  //collection and processing the data into html.
+  //Adds avalibility to the end of the county names, to make sure that the eligibility and avalibility tweets do not get mixed up
   db.collection(names[i]+'Eligibility').get().then((twitterData) => {
 
     // Styles the html, cannot use card-component.css to do this, so it must be done here
@@ -166,11 +190,14 @@ for(var i=0; i<names.length; i++){
 
     //For every Json file in the collection
     twitterData.docs.forEach(doc => {
+
+      // This is used to either put an html link in a tweet, or skip this data/won't turn this JSON into a tweet
       var link;
 
-
+      //Makes sure that there is a place that is called urls in the JSON
       if(doc.data().entities.urls != undefined){
 
+        //Checks to see if any of this data contains a twitter link
         doc.data().entities.urls.forEach((url) =>{
 
             if(url.expanded_url.includes('twitter')){link=url.expanded_url}
@@ -179,7 +206,10 @@ for(var i=0; i<names.length; i++){
         )
 
       }
+
+      //Makes sure that there is a place that is called urls in the JSON
       if(doc.data().entities.media  != undefined){
+        //Checks to see if any of this data contains a twitter link
         doc.data().entities.media.forEach((media) =>{
 
             if(media.expanded_url.includes('twitter')){link=media.expanded_url}
@@ -189,14 +219,8 @@ for(var i=0; i<names.length; i++){
       }
 
 
-      /*
-      if(doc.data().entities.urls[doc.data().entities.urls.length-1].expanded_url != undefined){
-        link=doc.data().entities.urls[doc.data().entities.urls.length-1].expanded_url
-      }
-      else if(doc.data().entities.media[doc.data().entities.media.length-1].expanded_url != undefined){
-        link=doc.data().entities.media[doc.data().entities.media.length-1].expanded_url
-      }
-*/
+      //If there is no link, it turn the data into html code, as if this code doesn't have a
+      //link, it causes an error, and won't display the rest of the tweets
       if(link != undefined) {
 
         //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
@@ -228,8 +252,12 @@ async function getNewsTweets(db) {
 //  getCountyNames().forEach()((collect)=>{
   var names = getNewsNames();
 
-
+  // for every county name that we have
   for(var i=0; i<names.length; i++){
+
+    //This is what I am using to get the stuff from our database. Its getting a collection and then getting each document in the
+    //collection and processing the data into html.
+    //Adds avalibility to the end of the county names, to make sure that the eligibility and avalibility tweets do not get mixed up
     db.collection(names[i]+'News').get().then((twitterData) => {
 
       // Styles the html, cannot use card-component.css to do this, so it must be done here
@@ -241,11 +269,14 @@ async function getNewsTweets(db) {
 
       //For every Json file in the collection
       twitterData.docs.forEach(doc => {
+
+        // This is used to either put an html link in a tweet, or skip this data/won't turn this JSON into a tweet
         var link;
 
-
+        //Makes sure that there is a place that is called urls in the JSON
         if(doc.data().entities.urls != undefined){
 
+          //Checks to see if any of this data contains a twitter link
           doc.data().entities.urls.forEach((url) =>{
 
               if(url.expanded_url.includes('twitter')){link=url.expanded_url}
@@ -254,7 +285,10 @@ async function getNewsTweets(db) {
           )
 
         }
+
+        //Makes sure that there is a place that is called urls in the JSON
         if(doc.data().entities.media  != undefined){
+          //Checks to see if any of this data contains a twitter link
           doc.data().entities.media.forEach((media) =>{
 
               if(media.expanded_url.includes('twitter')){link=media.expanded_url}
@@ -263,15 +297,8 @@ async function getNewsTweets(db) {
           )
         }
 
-
-        /*
-        if(doc.data().entities.urls[doc.data().entities.urls.length-1].expanded_url != undefined){
-          link=doc.data().entities.urls[doc.data().entities.urls.length-1].expanded_url
-        }
-        else if(doc.data().entities.media[doc.data().entities.media.length-1].expanded_url != undefined){
-          link=doc.data().entities.media[doc.data().entities.media.length-1].expanded_url
-        }
-  */
+        //If there is no link, it turn the data into html code, as if this code doesn't have a
+        //link, it causes an error, and won't display the rest of the tweets
         if(link != undefined) {
 
           //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
