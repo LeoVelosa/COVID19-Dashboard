@@ -6,7 +6,7 @@ import 'firebase/firestore';
 import 'firebase/functions';
 /* Gets the function from js.js */
 declare function getAllTweets(firebase: any): any;
-declare function getTweetss(firebase: any): any;
+declare function getTweets(firebase: any): any;
 
 @Component({
   selector: 'app-card',
