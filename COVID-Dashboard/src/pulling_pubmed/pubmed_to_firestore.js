@@ -1,5 +1,5 @@
 /** PubMed to Firestore
- * Will eventually upload all the files to Firestore
+ * TODO: Make the code upload pulling_pubmed to firestore
  * For now, just uploads the text received from pulling_pubmed
  * */
 const { xml } = require('cheerio');
