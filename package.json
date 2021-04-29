@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "middleware": "^1.0.0",
     "mime": "^2.5.2",
     "mime-types": "^2.1.30",
     "webpack": "^5.36.0",

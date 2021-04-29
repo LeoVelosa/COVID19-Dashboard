@@ -5,9 +5,9 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
 /* Gets the function from js.js */
-declare function getAllTweets(firebase: any): any;
-declare function getAllSearches(firebase: any): any;
-declare function test(): any;
+// declare function getAllTweets(firebase: any): any;
+// declare function getAllSearches(firebase: any): any;
+// declare function test(): any;
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -21,8 +21,8 @@ export class CardComponent implements OnInit {
 
     /*puts the firebase api into the getTweets function and it returns html which will go to ___ ID*/
 
-   await getAllTweets(firebase);
-   await test();
+   // await getAllTweets(firebase);
+   // await test();
    // await getAllSearches(firebase);
   }
 
