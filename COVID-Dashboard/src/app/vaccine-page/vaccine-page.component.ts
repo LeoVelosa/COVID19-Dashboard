@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/functions';
+/* Gets the function from js.js */
+declare function getAllTweets(firebase: any): any;
+declare function getCountyTweets(firebase: any, id: any, addToName: any): any;
 
 @Component({
   selector: 'app-vaccine-page',
   templateUrl: './vaccine-page.component.html',
   styleUrls: ['./vaccine-page.component.css']
 })
-export class VaccinePageComponent {
+export class VaccinePageComponent implements OnInit{
+  public countyTweets = getCountyTweets(firebase, 'test', 'Eligibility');
   /** Based on the screen size, switch from standard to one column per row */
   cardLayout = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -29,7 +36,11 @@ export class VaccinePageComponent {
       };
     })
   );
+  async ngOnInit(): Promise<void> {
 
+    /*puts the firebase api into the getTweets function and it returns html which will go to ___ ID*/
+    await getAllTweets(firebase);
+  }
   constructor(private breakpointObserver: BreakpointObserver) {}
 }
 /*

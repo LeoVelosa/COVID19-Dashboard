@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +21,11 @@ import { PublicationsComponent } from './publications/publications.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from './card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import {CardWithDropDownComponent} from './cardWithDropDown/card.component';
+// New Imports
+import {MatSelectModule} from '@angular/material/select';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     NavComponent,
     VaccinePageComponent,
     PublicationsComponent,
-    CardComponent
+    CardComponent,
+    CardWithDropDownComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +52,11 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatCardModule,
     MatMenuModule,
     NgbModule,
+    MatSelectModule,
+    MatTooltipModule,
     MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { constructor(private sanitizer: DomSanitizer) {}}

@@ -1,80 +1,25 @@
-//This function will go to card-component.ts
-
-//All the names of the places where we are getting news tweets from
-function getNewsNames(){
-  return [
-    "TheWhiteHouse",
-    "CDC",
-    "FEMA"
-  ];
-
-}
-
-//All the names of the counties where we are getting tweets from
-function getCountyNames(){
-  return [
-    "AlachuaCounty",
-    "BayCounty",
-    "BrevardCounty",
-    "BrowardCounty",
-    "CharlotteCounty",
-    "CitrusCounty",
-    "ClayCounty",
-    "CollierCounty",
-    "DeSotoCounty",
-    "DuvalCounty",
-    "EscambiaCounty",
-    "FlaglerCounty",
-    "HernandoCounty",
-    "HighlandsCounty",
-    "HillsboroughCounty",
-    "IndianRiverCounty",
-    "JacksonCounty",
-    "LakeCounty",
-    "LeeCounty",
-    "LeonCounty",
-    "LevyCounty",
-    "ManateeCounty",
-    "MarionCounty",
-    "MartinCounty",
-    "Miami-DadeCounty",
-    "MonroeCounty",
-    "NassauCounty",
-    "OkaloosaCounty",
-    "OrangeCounty",
-    "OsceolaCounty",
-    "PalmBeachCounty",
-    "PascoCounty",
-    "PinellasCounty",
-    "PolkCounty",
-    "PutnamCounty",
-    "SantaRosaCounty",
-    "SarasotaCounty",
-    "SeminoleCounty",
-    "St.JohnsCounty",
-    "St.LucieCounty",
-    "VolusiaCounty"
-
-  ];
-
-}
 
 //This is the function you will be calling in card-component.ts, so it puts the data into the id's of
 //vaccine-page that have the same id in the <div id=''> in vaccine-page.component.html
 async function getAllTweets(firebase){
   //Contains our firebase keys and such to access firebase
   var firebaseConfig = {
-    apiKey: "AIzaSyDulDJhTOELGvn4zlBB5PFtf05y19T3yjY",
-    authDomain: "fir-test-ebd4c.firebaseapp.com",
-    projectId: "fir-test-ebd4c",
-    storageBucket: "fir-test-ebd4c.appspot.com",
-    messagingSenderId: "498339362637",
-    appId: "1:498339362637:web:7d99f2f22284507a956904",
-    measurementId: "G-1F87Y1K1GB"
+    apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+    authDomain: "covid-dashboard-10efe.firebaseapp.com",
+    databaseURL: "https://covid-dashboard-10efe-default-rtdb.firebaseio.com",
+    projectId: "covid-dashboard-10efe",
+    storageBucket: "covid-dashboard-10efe.appspot.com",
+    messagingSenderId: "933584669394",
+    appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+    measurementId: "G-XVWT1E6R8B"
   };
 
-  //Initalizes app
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  else {
+    firebase.app(); // if already initialized, use that one
+  }
 
   //Firebase acesses firestore
   const db = firebase.firestore();
@@ -106,9 +51,9 @@ async function getAvailabilityTweets(db) {
 
       // Styles the html, cannot use card-component.css to do this, so it must be done here
       tweeters.innerHTML += '<style> ' +
-        'div.tweet{ width: 300px; border: 3px solid grey; text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 5px; height: 100%;}' +
+        'div.tweet{border: 3px solid grey; text-align: left;  padding-left: 15px; padding-right: 15px; padding-bottom: 15px; padding-top: 10px; border-radius: 5px; height: 100%;}' +
         'img.profile {border: 1px solid black; border-radius: 50%;}' +
-        'p.text, div.text {color:black;}' +
+        'p.text, div.text {color:black; font-size: 13px;}' +
         '</style>'
 
       //For every Json file in the collection
@@ -146,14 +91,15 @@ async function getAvailabilityTweets(db) {
         //link, it causes an error, and won't display the rest of the tweets
         if(link != undefined){
           //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
-          tweeters.innerHTML += '<a href="' + link + '"><div class="tweet">' +
+          tweeters.innerHTML += '<div class="tweet">' +
             //Adds profile pic, twitter name and handle
             '<p class="text">' + '<img src=' + doc.data().user.profile_image_url_https + ' class="profile">  ' + doc.data().user.name + '  @' + doc.data().user.screen_name + ' </p>' +
 
             //Adds text from tweet
-            '<div class="text">' + doc.data().text + '</div>' +
+            '<div class="text">' + doc.data().text + '</div><div class="text">Source:' +
 
-            '</div></a>';
+            '<a href="' + link + '" style="word-wrap: break-word;">'+ link
+            + '</a></div></div>';
         }
 
 
@@ -224,14 +170,15 @@ async function getEligibilityTweets(db) {
       if(link != undefined) {
 
         //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
-        tweets.innerHTML += '<a href="' + link + '"><div class="tweet">' +
+        tweets.innerHTML += '<div class="tweet">' +
           //Adds profile pic, twitter name and handle
           '<p class="text">' + '<img src=' + doc.data().user.profile_image_url_https + ' class="profile">  ' + doc.data().user.name + '  @' + doc.data().user.screen_name + ' </p>' +
 
           //Adds text from tweet
-          '<div class="text">' + doc.data().text + '</div>' +
+          '<div class="text">' + doc.data().text + '</div><div class="text">Source:' +
 
-          '</div></a>';
+          '<a href="' + link + '" style="word-wrap: break-word;">'+ link
+          + '</a></div></div>';
       }
 
 
@@ -302,14 +249,15 @@ async function getNewsTweets(db) {
         if(link != undefined) {
 
           //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
-          tweets.innerHTML += '<a href="' + link + '"><div class="tweet">' +
+          tweets.innerHTML += '<div class="tweet">' +
             //Adds profile pic, twitter name and handle
             '<p class="text">' + '<img src=' + doc.data().user.profile_image_url_https + ' class="profile">  ' + doc.data().user.name + '  @' + doc.data().user.screen_name + ' </p>' +
 
             //Adds text from tweet
-            '<div class="text">' + doc.data().text + '</div>' +
+            '<div class="text">' + doc.data().text + '</div><div class="text">Source:' +
 
-            '</div></a>';
+            '<a href="' + link + '" style="word-wrap: break-word;">'+ link
+            + '</a></div></div>';
         }
 
 
@@ -318,3 +266,197 @@ async function getNewsTweets(db) {
   }
 
 }
+
+//List of florida counties of which we can get twitter handles from
+function getCountyNames(){
+  return [
+    "AlachuaCounty",
+    "BayCounty",
+    "BrevardCounty",
+    "BrowardCounty",
+    "CharlotteCounty",
+    "CitrusCounty",
+    "ClayCounty",
+    "CollierCounty",
+    "DeSotoCounty",
+    "DuvalCounty",
+    "EscambiaCounty",
+    "FlaglerCounty",
+    "HernandoCounty",
+    "HighlandsCounty",
+    "HillsboroughCounty",
+    "IndianRiverCounty",
+    "JacksonCounty",
+    "LakeCounty",
+    "LeeCounty",
+    "LeonCounty",
+    "LevyCounty",
+    "ManateeCounty",
+    "MarionCounty",
+    "MartinCounty",
+    "Miami-DadeCounty",
+    "MonroeCounty",
+    "NassauCounty",
+    "OkaloosaCounty",
+    "OrangeCounty",
+    "OsceolaCounty",
+    "PalmBeachCounty",
+    "PascoCounty",
+    "PinellasCounty",
+    "PolkCounty",
+    "PutnamCounty",
+    "SantaRosaCounty",
+    "SarasotaCounty",
+    "SeminoleCounty",
+    "St.JohnsCounty",
+    "St.LucieCounty",
+    "VolusiaCounty"
+
+  ];
+
+}
+
+//List of florida county twitter handles
+function getCountyTwitterHandles(){
+
+  return [
+    "AlachuaCounty",
+    "BOCCPIO",
+    "BrevardEOC",
+    "FLHealthBroward",
+    "CCOEM",
+    "FLHealthCitrus",
+    "ClayCounty_EM",
+    "HealthyCollier",
+    "DeSotoCountyEM",
+    "FLHealthDuval",
+    "HealthyEscambia",
+    "FlaglerEOC",
+    "HealthyHernando",
+    "HighlandsFLBCC",
+    "DOHHillsborough",
+    "IRCGOV",
+    "JCFloridanNews",
+    "FLHealthLake",
+    "flhealthlee",
+    "healthyleonfl",
+    "LevyCountyEM",
+    "HealthyManatee",
+    "FLHealthMarion",
+    "GoHealthyMartin",
+    "MiamiDadeCovid",
+    "monroecounty",
+    "NassauEM",
+    "OkaloosaCounty",
+    "DohOrange",
+    "OsceolaCountyFl",
+    "pbcgov",
+    "HealthyPasco",
+    "HealthyPinellas",
+    "PolkCountyFL",
+    "PutnamCountyEM",
+    "SRC_EM",
+    "SRQCountyGov",
+    "seminolecounty",
+    "StJohnsCounty",
+    "FDOHStLucie",
+    "CountyOfVolusia"
+  ];
+
+}
+
+//Names of CDC, FEMA, WhiteHouse
+function getNewsNames(){
+  return [
+    "FEMA",
+    "TheWhiteHouse",
+    "CDC"
+  ];
+
+}
+
+//List of CDC, FEMA, WhiteHouse twitter handles
+function getNewsTwitterHandles(){
+
+  return [
+    "fema",
+    "WhiteHouse",
+    "CDCgov"
+  ];
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getCountyTwitterHandles(){
+
+  return [
+    "AlachuaCounty",
+    "BOCCPIO",
+    "BrevardEOC",
+    "FLHealthBroward",
+    "CCOEM",
+    "FLHealthCitrus",
+    "ClayCounty_EM",
+    "HealthyCollier",
+    "DeSotoCountyEM",
+    "FLHealthDuval",
+    "HealthyEscambia",
+    "FlaglerEOC",
+    "HealthyHernando",
+    "HighlandsFLBCC",
+    "DOHHillsborough",
+    "IRCGOV",
+    "JCFloridanNews",
+    "FLHealthLake",
+    "flhealthlee",
+    "healthyleonfl",
+    "LevyCountyEM",
+    "HealthyManatee",
+    "FLHealthMarion",
+    "GoHealthyMartin",
+    "MiamiDadeCovid",
+    "monroecounty",
+    "NassauEM",
+    "OkaloosaCounty",
+    "DohOrange",
+    "OsceolaCountyFl",
+    "pbcgov",
+    "HealthyPasco",
+    "HealthyPinellas",
+    "PolkCountyFL",
+    "PutnamCountyEM",
+    "SRC_EM",
+    "SRQCountyGov",
+    "seminolecounty",
+    "StJohnsCounty",
+    "FDOHStLucie",
+    "CountyOfVolusia"
+  ];
+
+}
+
+
+
+
+
+
+
+
+
+
