@@ -66,17 +66,21 @@ async function getAllSearches(db) {
   var abstracts = document.getElementById("covid_pubmed_search");
   console.log("Abstracts in top", abstracts);
   var data = await getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi').then(response => {
-    console.log("Abstracts in getDocument", abstracts);
-    console.log("I got this response", data, response);
-    console.log("Response" + response);
-    for (var ele in response) {
-
-    }
-    abstracts.innerHTML += '<div class="covid_search_results"><p>' + response[0].Item[5]._, response[0][4]._, response[0][23]._ + '</p></div>';
+    return response;
   }).catch(err => {
     console.log(err);
   });
-  return data;
+  // data = JSON.stringify(data);
+
+  for (var i = 0; i < data.length; i++) {
+    console.log("This is the", i, "response", JSON.stringify(data[i]));
+    console.log();
+  }
+  for (var i = 0; i < data.length; i++) {
+    abstracts.innerHTML += '<h1> Title</h1><p>' + JSON.stringify(data[i].Item[5]._) + '<h1>Author</h1>' +
+      JSON.stringify(data[i].Item[4]._) + '<h1>DOI:</h1>' + JSON.stringify(data[i].Item[23]._ + '</p>');
+  }
+
 
 }
 

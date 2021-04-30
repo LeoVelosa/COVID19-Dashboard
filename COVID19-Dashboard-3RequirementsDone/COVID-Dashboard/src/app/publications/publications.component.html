@@ -2,7 +2,9 @@
   <h1 class="mat-h1">Scientific Publications</h1>
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
     <mat-grid-tile [colspan]="( cardLayout | async )?.Abstracts.cols" [rowspan]="( cardLayout | async )?.Abstracts.rows">
-      <app-card title="Abstracts"><div id="covid_pubmed_search"></div></app-card>
+      <app-card title="Abstracts">
+        <div id="covid_pubmed_search"></div>
+      </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.Visualization.cols" [rowspan]="( cardLayout | async )?.Visualization.rows">
       <app-card title="Visualization"><div>Visualization here</div></app-card>

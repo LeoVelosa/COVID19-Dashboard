@@ -24,9 +24,7 @@ var firebase = require('firebase');
  * 3. The json will be saved as a file.
  * Thank you!
  * */
-class initializeFirebase {
-  constructor() {
-    this.firebaseConfig = {
+var firebaseConfig = {
       apiKey: "AIzaSyDulDJhTOELGvn4zlBB5PFtf05y19T3yjY",
       authDomain: "fir-test-ebd4c.firebaseapp.com",
       projectId: "fir-test-ebd4c",
@@ -35,18 +33,12 @@ class initializeFirebase {
       appId: "1:498339362637:web:7d99f2f22284507a956904",
       measurementId: "G-1F87Y1K1GB"
     }
-  }
-  getDB() {
-      firebase.initializeApp(firebase);
-      return firebase.firestore();
-  }
-}
-class UploadToFirebase {
-  constructor() {
-    this.db = initializeFirebase().getDB();
-  }
-  uploadTextToFirebase(my_text) {
 
+firebase.initializeApp(firebaseConfig);
+db = firebase.firestore();
+class UploadToFirebase {
+  uploadJSONToFirestore(my_json, collection_name, doc_name) {
+    db.collection(collection_name).add(my_json).set(doc_name);
   }
 }
 class PullFromFirebase {
@@ -90,7 +82,7 @@ class MyXMLHTTPRequest {
     xhr.send();
   }
   // From a list of search ids gotten from search request, gets the ids for the search result.
-  getSearchResults(id_list) {
+  getSearchResults(id_list, doc_name) {
     const xhr = new XMLHttpRequest(),
       method = "GET",
       responseType = "document";
@@ -100,7 +92,10 @@ class MyXMLHTTPRequest {
       var my_xml_text = xhr.responseText;
       console.log(my_xml_text);
       new ReadingAndWritingFiles().writeToAnXMLFile(my_xml_text, "search_results.xml");
-      console.log(new XMLToJSONParser().parseXml(my_xml_text));
+      var my_json = new XMLToJSONParser().parseXml(my_xml_text).then(response => {
+        new UploadToFirebase().uploadJSONToFirestore(response,
+          "covid_pubmed_search", doc_name);
+      });
     }
     xhr.onreadystatechange = function () {
       // In local files, status is 0 upon success in Mozilla Firefox
@@ -138,7 +133,7 @@ class DocumentParsers {
         break;
       }
     }
-    new ReadingAndWritingFiles().writeToaFile(ids);
+    new ReadingAndWritingFiles().writeToaFile(ids, "ids.txt");
     return ids;
   }
   getTextFromXMLHTTPResponse(xmlhttp){
@@ -170,14 +165,15 @@ class ReadingAndWritingFiles {
   // given a file, reads data from it and returns the string array
   // filename = the name of a file stored in data
   readFromAFile(filename) {
-    // default filename = data.txt
+    // default filename = ids.txt
     filename = __dirname + "/" + filename;
     console.log("Filename", filename);
 
     try {
       const data = fs.readFileSync(filename, 'utf8')
       console.log("Data", data)
-      var data_list = data.split(" ");
+      var data_list = data.split(",");
+      console.log(data_list);
       return data_list;
     } catch (err) {
       console.error(err)
@@ -192,16 +188,16 @@ class ReadingAndWritingFiles {
       console.log("Data >" + filename);
     });
   }
-  // Given an array, writes each element to a file called data.txt
+  // Given an array, writes each element to a file called ids.txt
   writeArrayToaFile(my_arr, filename) {
     filename = __dirname + "/" + filename;
     var my_string = "";
     for (var i = 0; i < my_arr.length; i++) {
       my_string += String(my_arr[i]) + " ";
     }
-    fs.writeFile("data.txt", my_string, function(err) {
+    fs.writeFile("ids.txt", my_string, function(err) {
       if (err) return console.log(err);
-      console.log("Data > data.txt");
+      console.log("Data >", filename);
     });
   }
   writeToaFile(data, filename) {
@@ -285,10 +281,10 @@ myPubMedSearchResults = new getSearchResultFromPubMed();
 myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubmed");
 
 my_arr = [1,2,3,4];
-var my_list = new ReadingAndWritingFiles().readFromAFile("data.txt");
+var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 console.log("List of IDs", my_list);
 var my_Urls = new PubMedURLs().downloadResultFromIDList(my_list, 'pubmed');
 var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubmed");
 
-var my_list = new ReadingAndWritingFiles().readFromAFile("data.txt");
+var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list);
