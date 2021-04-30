@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { VaccinePageComponent } from './vaccine-page.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TabcardComponent } from '../tabcard/tabcard.component';
 
 describe('VaccinePageComponent', () => {
   let component: VaccinePageComponent;
@@ -24,7 +25,8 @@ describe('VaccinePageComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
-        MatTabsModule
+        MatTabsModule,
+        TabcardComponent
       ]
     }).compileComponents();
   }));

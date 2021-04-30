@@ -1,19 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { async } from 'rxjs';
 /*FOR FRONT END YOU NEED THE FOLLOWING CODE FOR FIREBASE AND MAKE SURE FIREBASE GOES INTO THE GET TWEETS COMMAND*/
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/functions';
 /* Gets the function from js.js */
-declare function getAllTweets(firebase: any): any;
-declare function getTweetss(firebase: any): any;
+declare function getScrapes(firebase: any): any;
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, AfterViewInit {
 
   @Input() title!: string;
 /*Gets the function from js.js  MUST BE LIKE THIS*/
@@ -21,11 +17,11 @@ export class CardComponent implements OnInit {
 
     /*puts the firebase api into the getTweets function and it returns html which will go to ___ ID*/
 
-   await getAllTweets(firebase);
-//   await getTweetss(firebase);
+   //await getScrapes(firebase);
 
   }
+  async ngAfterViewInit() {
+    //await getScrapes(firebase);
+  }
 }
-function validateInput(input: string) {
-  return input;
-}
+

@@ -38,8 +38,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/javaStuff/js.js",
-              "src/javaStuff/TwitterTester.js"
+              "src/javaStuff/webscrapePuller.js"
             ]
           },
           "configurations": {

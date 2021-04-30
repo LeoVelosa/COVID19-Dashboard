@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +21,7 @@ import { PublicationsComponent } from './publications/publications.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from './card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TabcardComponent } from './tabcard/tabcard.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     NavComponent,
     VaccinePageComponent,
     PublicationsComponent,
-    CardComponent
+    CardComponent,
+    TabcardComponent
   ],
   imports: [
     BrowserModule,
