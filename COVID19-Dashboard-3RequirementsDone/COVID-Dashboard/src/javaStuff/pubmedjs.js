@@ -63,7 +63,7 @@ async function test() {
 
 async function getAllSearches(db) {
   console.log("Preparing to add the document to the search results")
-  var abstracts = document.getElementById("covid_pubmed_search");
+  const abstracts = document.getElementById("covid_pubmed_search");
   console.log("Abstracts in top", abstracts);
   var data = await getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi').then(response => {
     return response;
@@ -95,16 +95,15 @@ abstracts.innerHTML += '<table>';
   }
   abstracts.innerHTML += '</table>';
    */
-  abstracts = document.getElementById("covid_pubmed_search");
   console.log(abstracts);
 
-  abstracts.innerHTML = '<style> ' +
-    'div.paper{ width: 300px; border: 3px solid grey; text-align: left;  ' +
-    'padding-left: 15px; padding-top: 10px; border-radius: 5px; height: 100%;}' +
-    'div.title, p.title {color:red;}' +
-    'div.author, p.author {color:green}' +
-    '</style>';
   for (var i = 0; i < data.length; i++) {
+    abstracts.innerHTML += '<style> ' +
+      'div.paper{ width: 300px; border: 3px solid black; text-align: left;  ' +
+      'padding-left: 15px; padding-top: 10px; border-radius: 5px; height: 100%;}' +
+      'div.title, p.title {color:black;}' +
+      'div.author, p.author {color:black}' +
+      '</style>';
     var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[","").replace("]", "");
     var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
     var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"","");
@@ -113,7 +112,7 @@ abstracts.innerHTML += '<table>';
 
     abstracts.innerHTML += '<div id="paper">'+
      "<div id='title'>" + '<a href='+ link + '>' + title +'</a>' + ' </div>' + "<div id='author'>" +
-      author + "</div>" + doi_with_label + '</div>';
+      author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
   }
 
 }
