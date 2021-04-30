@@ -95,6 +95,7 @@ abstracts.innerHTML += '<table>';
   }
   abstracts.innerHTML += '</table>';
    */
+<<<<<<< HEAD
   console.log(abstracts);
 
   for (var i = 0; i < data.length; i++) {
@@ -104,16 +105,32 @@ abstracts.innerHTML += '<table>';
       'div.title, p.title {color:black;}' +
       'div.author, p.author {color:black}' +
       '</style>';
+=======
+  abstracts = document.getElementById("covid_pubmed_search");
+  abstracts.innerHTML += '<table>'+
+  '<tr>' +
+  '</tr>' +
+  '</table>';
+  for (var i = 0; i < data.length; i++) {
+
+>>>>>>> parent of 7ef52b2 (added formatting)
     var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[","").replace("]", "");
     var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
     var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"","");
     var doi_with_label = JSON.stringify(data[0].Item[23]._);
 
 
+<<<<<<< HEAD
     abstracts.innerHTML += '<div id="paper">'+
      "<div id='title'>" + '<a href='+ link + '>' + title +'</a>' + ' </div>' + "<div id='author'>" +
       author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
+=======
+    abstracts.innerHTML += '<tr><td>'+
+    '<h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author +
+      doi_with_label + '</tr></td>';
+>>>>>>> parent of 7ef52b2 (added formatting)
   }
+  abstracts.innerHTML += '</table>';
 
 }
 
