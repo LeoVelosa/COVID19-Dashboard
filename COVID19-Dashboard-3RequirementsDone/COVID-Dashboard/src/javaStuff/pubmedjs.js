@@ -71,16 +71,55 @@ async function getAllSearches(db) {
     console.log(err);
   });
   // data = JSON.stringify(data);
-
+  console.log('Link: https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6));
+  /*abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
+  'td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}' +
+    'tr:nth-child(odd)' +
+  '{background-color: #dddddd;}</style>';
+abstracts.innerHTML += '<table>';
   for (var i = 0; i < data.length; i++) {
-    console.log("This is the", i, "response", JSON.stringify(data[i]));
-    console.log();
-  }
-  for (var i = 0; i < data.length; i++) {
-    abstracts.innerHTML += '<h1> Title</h1><p>' + JSON.stringify(data[i].Item[5]._) + '<h1>Author</h1>' +
-      JSON.stringify(data[i].Item[4]._) + '<h1>DOI:</h1>' + JSON.stringify(data[i].Item[23]._ + '</p>');
-  }
 
+    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[","").replace("]", "");
+    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"","");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._);
+    /*
+    // console.log(<a href='+ link + '>' + doi_with_label +'</a>');
+    abstracts.innerHTML += '<div id=search_result><p class="text"><div class="text">' +
+    '<h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author +
+      doi_with_label + '</p></div></div>';
+
+    abstracts.innerHTML +=
+      // adds title, author, doi
+      '<tr> <h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author + doi_with_label + '</tr>';
+  }
+  abstracts.innerHTML += '</table>';
+   */
+  abstracts = document.getElementById("covid_pubmed_search");
+  abstracts.innerHTML += '<style> table {font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
+    'tr:{border: 1px solid #dddddd;text-align: left;padding: 8px;}' +
+    'tr:nth-child(odd)' +
+    '{background-color: #dddddd;}</style>';
+  abstracts.innerHTML += '<h2>HTML Table</h2>'+
+    '<table id="search_table">';
+  abstracts.innerHTML += '<table>';
+  for (var i = 0; i < data.length; i++) {
+
+    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[","").replace("]", "");
+    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"","");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._);
+
+    // console.log(<a href='+ link + '>' + doi_with_label +'</a>');
+    abstracts.innerHTML += '<tr><div class="text">' +
+    '<h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author +
+      doi_with_label + '</tr></div>';
+
+    abstracts.innerHTML +=
+      // adds title, author, doi
+      '<tr> <h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author + doi_with_label + '</tr>';
+  }
+  abstracts.innerHTML += '</table>';
 
 }
 
