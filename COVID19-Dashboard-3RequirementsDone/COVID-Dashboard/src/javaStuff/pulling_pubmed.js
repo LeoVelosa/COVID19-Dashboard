@@ -36,13 +36,57 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 db = firebase.firestore();
+class Id {
+  constructor(id_list) {
+    this.id = id_list;
+  }
+}
+class IdList {
+  constructor(id_array, collection_name, doc_name) {
+    this.idList = this.parseIDArray(id_array);
+  }
+  // creates a json object from the array of ids
+  parseIDArray(id_array) {
+    var json = {
+      "ids" : id_array
+    };
+    return json;
+  }
+  async uploadIdsToFirebase(db, collection_name, doc_name) {
+    if (collection_name == null) {
+      collection_name = "covid_pubmed_search";
+    }
+    if (doc_name == null) {
+      doc_name = "covid_ids";
+    }
+    await new UploadToFirebase().uploadJSONToFirestore(this.idList, collection_name, doc_name).then(response => {
+      console.log("Successfully uploaded", doc_name, "to", collection_name);
+    }).catch(err => {
+      console.log("Error", err);
+    });
+  }
+
+}
 class UploadToFirebase {
-  uploadJSONToFirestore(my_json, collection_name, doc_name) {
-    db.collection(collection_name).add(my_json).set(doc_name);
+  async uploadJSONToFirestore(my_json, collection_name, doc_name) {
+    console.log("JSON", my_json, JSON.stringify(my_json));
+    db.collection(collection_name).add(doc_name).set(my_json);
   }
 }
 class PullFromFirebase {
 
+}
+class Test {
+  uploadIdsToFirebaseFromFile() {
+    var ids = new ReadingAndWritingFiles().readFromAFile("ids.txt");
+    new IdList(ids, "test", "test").uploadIdsToFirebase(db, "test", "test");
+  }
+  uploadTestFileToFirebase() {
+    var my_json = {
+      name: "Melanie"
+  }
+    new UploadToFirebase().uploadToFirebase(my_json, "test", "test");
+}
 }
 // default class for making generalized xml http requests
 class MyXMLHTTPRequest {
@@ -133,6 +177,9 @@ class DocumentParsers {
         break;
       }
     }
+    var myIDs = new IdList(ids, "covid_pubmed_search", "covid_ids");
+    console.assert(db != null);
+    myIDs.uploadIdsToFirebase(db, "covid_pubmed_search", "covid_ids");
     new ReadingAndWritingFiles().writeToaFile(ids, "ids.txt");
     return ids;
   }
@@ -274,8 +321,8 @@ class XMLToJSONParser {
   }
 }
 
-
-
+new Test().uploadTestFileToFirebase();
+/*
 myPubMedSearchResults = new getSearchResultFromPubMed();
 // console.log(myPubMedSearchResults.downloadResults('33858023').responseText);
 myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubmed");
@@ -288,3 +335,4 @@ var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubme
 
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list);
+*/
