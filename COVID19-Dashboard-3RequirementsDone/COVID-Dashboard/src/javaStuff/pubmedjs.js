@@ -96,11 +96,7 @@ abstracts.innerHTML += '<table>';
   abstracts.innerHTML += '</table>';
    */
   abstracts = document.getElementById("covid_pubmed_search");
-  abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
-    'td, th, tr {border: 1px solid #dddddd;text-align: left;padding: 8px;}' +
-    'tr:nth-child(even)' +
-    '{background-color: #dddddd;}</style>' +
-  '<table id="search_table">'+
+  abstracts.innerHTML += '<table>'+
   '<tr>' +
   '</tr>' +
   '</table>';

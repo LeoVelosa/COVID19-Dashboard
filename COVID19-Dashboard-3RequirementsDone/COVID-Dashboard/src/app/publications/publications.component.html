@@ -3,7 +3,7 @@
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
     <mat-grid-tile [colspan]="( cardLayout | async )?.Abstracts.cols" [rowspan]="( cardLayout | async )?.Abstracts.rows">
       <app-card title="Articles">
-        <div id="covid_pubmed_search"><table id="search_table"></table></div>
+        <div id="covid_pubmed_search"></div>
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.Visualization.cols" [rowspan]="( cardLayout | async )?.Visualization.rows">
