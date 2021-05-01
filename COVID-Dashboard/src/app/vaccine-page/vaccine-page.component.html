@@ -3,13 +3,14 @@
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
 
+      <div id="IMAPHUCCINGENIUS"></div>
 
-      <app-drop-down-card title="Vaccine Availability">
+      <app-aval-dd-card title="Vaccine Availability">
 
         <div class="twitter" id="test">
         </div>
 
-      </app-drop-down-card>
+      </app-aval-dd-card>
     </mat-grid-tile>
 
 
@@ -42,12 +43,12 @@
 
 
 
-      <app-drop-down-card  title="Florida county Eligibility">
+      <app-elig-dd-card  title="Florida county Eligibility">
         <div class="twitter" id="test2">
 
         </div>
 
-      </app-drop-down-card>
+      </app-elig-dd-card>
 
 
 

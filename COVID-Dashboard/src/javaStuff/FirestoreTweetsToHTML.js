@@ -105,64 +105,27 @@ async function getTweets(firebase, id, name, addToName) {
 
 }
 
+
+
+
 async function getNumOfTweets(firebase, id, name, addToName) {
-
+  document.getElementById(id).innerHTML='';
+  var htmlUsedToGetTweetNumbers='<div></div>';
   var db = getDatabase(firebase);
-  //Basically creates a storage for all the html. IT NEEDS TO BE THIS WAY OTHERWISE PAGE WILL REFRESH AND THINGS WILL MESS UP
-  var num=0
-
-
-
-  //This is what I am using to get the stuff from our database. Its getting a collection and then getting each document in the
-  //collection and processing the data into html.
-  //Adds avalibility to the end of the county names, to make sure that the eligibility and avalibility tweets do not get mixed up
   await db.collection(name + addToName).get().then((twitterData) => {
-
-    //For every Json file in the collection
+    const tweeters=document.getElementById(id)
     twitterData.docs.forEach(doc => {
-
-      // This is used to either put an html link in a tweet, or skip this data/won't turn this JSON into a tweet
       var link;
+      if(doc.data().entities.urls != undefined){doc.data().entities.urls.forEach((url) =>{if(url.expanded_url.includes('twitter')){link=url.expanded_url}})}
+      if(doc.data().entities.media  != undefined){doc.data().entities.media.forEach((media) =>{if(media.expanded_url.includes('twitter')){link=media.expanded_url}})}
 
-      //Makes sure that there is a place that is called urls in the JSON
-      if(doc.data().entities.urls != undefined){
-
-        //Checks to see if any of this data contains a twitter link
-        doc.data().entities.urls.forEach((url) =>{
-
-            if(url.expanded_url.includes('twitter')){link=url.expanded_url}
-
-          }
-        )
-
-      }
-
-      //Makes sure that there is a place that is called urls in the JSON
-      if(doc.data().entities.media  != undefined){
-        //Checks to see if any of this data contains a twitter link
-        doc.data().entities.media.forEach((media) =>{
-
-            if(media.expanded_url.includes('twitter')){link=media.expanded_url}
-
-          }
-        )
-      }
-
-
-      //If there is no link, it turn the data into html code, as if this code doesn't have a
-      //link, it causes an error, and won't display the rest of the tweets
       if(link != undefined){
-        num+=1;
+        tweeters.innerHTML+='<div></div>';
       }
 
 
     })}) ;
 
-  if(num==0 ){
-    num='No Tweets Avaliable'
-  }
-
-  return num;
 }
 
 //List of florida counties of which we can get twitter handles from
@@ -209,7 +172,6 @@ function getCountyNames(){
     "St.JohnsCounty",
     "St.LucieCounty",
     "VolusiaCounty"
-
   ];
 
 }

@@ -23,7 +23,9 @@ import { CardComponent } from './card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { FormsModule } from '@angular/forms';
-import { CardWithDropDownComponent } from './cardWithDropDown/card.component';
+import { AvalibilityDropDownCardComponent } from './avalibilityDropDownCard/card.component';
+import { EligibilityDropDownCardComponent } from './eligibilityDropDownCard/card.component';
+
 import { HttpClientModule } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
@@ -34,7 +36,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     VaccinePageComponent,
     PublicationsComponent,
     CardComponent,
-    CardWithDropDownComponent
+    AvalibilityDropDownCardComponent,
+    EligibilityDropDownCardComponent
   ],
   imports: [
     BrowserModule,
