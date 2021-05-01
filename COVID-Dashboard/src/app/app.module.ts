@@ -21,11 +21,10 @@ import { PublicationsComponent } from './publications/publications.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from './card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import {CardWithDropDownComponent} from './cardWithDropDown/card.component';
-// New Imports
-import {MatSelectModule} from '@angular/material/select';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+//import { TabcardComponent } from './tabcard/tabcard.component';
+import { CardWithDropDownComponent } from './cardWithDropDown/card.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -52,11 +51,12 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
     MatCardModule,
     MatMenuModule,
     NgbModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide : LocationStrategy, useClass: HashLocationStrategy}
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { constructor(private sanitizer: DomSanitizer) {}}
+export class AppModule { }
