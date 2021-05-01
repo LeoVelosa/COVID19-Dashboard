@@ -1,16 +1,15 @@
 <mat-card class="dashboard-card">
     <mat-card-header>
-        <mat-card-title>
-            {{title}}
 
+      <mat-card-title>
+        {{title}}
+        <select [(ngModel)]="county" (change)="getTweetByCounty()">
 
-          <select>
+          <option *ngFor="let county of countyTweets" [value]=county>
+            {{county}}
+          </option>
 
-            <option *ngFor="let county of countyTweets" [value]=county.name [title]=county.num (click)=county.tweets>
-              {{county.name}}
-            </option>
-
-          </select>
+        </select>
 
 
           <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">

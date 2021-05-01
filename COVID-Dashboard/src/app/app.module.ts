@@ -21,7 +21,8 @@ import { PublicationsComponent } from './publications/publications.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from './card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
-//import { TabcardComponent } from './tabcard/tabcard.component';
+
+import { FormsModule } from '@angular/forms';
 import { CardWithDropDownComponent } from './cardWithDropDown/card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -52,7 +53,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MatMenuModule,
     NgbModule,
     MatTabsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     {provide : LocationStrategy, useClass: HashLocationStrategy}

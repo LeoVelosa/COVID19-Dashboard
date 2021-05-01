@@ -27,7 +27,7 @@ function getDatabase(firebase){
 
 
 async function getTweets(firebase, id, name, addToName) {
-
+  document.getElementById(id).innerHTML='';
   var db = getDatabase(firebase);
   //Basically creates a storage for all the html. IT NEEDS TO BE THIS WAY OTHERWISE PAGE WILL REFRESH AND THINGS WILL MESS UP
   if(document.getElementById(id) != null){
@@ -95,6 +95,14 @@ async function getTweets(firebase, id, name, addToName) {
 
     })}) ;
   }
+  if(document.getElementById(id).innerHTML== '<style> ' +
+    'div.tweet{ width: 300px; border: 3px solid grey; text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 5px; height: 100%;}' +
+    'img.profile {border: 1px solid black; border-radius: 50%;}' +
+    'p.text, div.text {color:black;}' +
+    '</style>'){
+    document.getElementById(id).innerHTML="There Are No Tweets Available For This County";
+  }
+
 }
 
 async function getNumOfTweets(firebase, id, name, addToName) {
@@ -158,49 +166,49 @@ async function getNumOfTweets(firebase, id, name, addToName) {
 }
 
 //List of florida counties of which we can get twitter handles from
-function getCountyTweets(firebase, id, addToName){
+function getCountyNames(){
   return [
-    {name: "AlachuaCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"BayCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"BrevardCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"BrowardCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"CharlotteCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"CitrusCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"ClayCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"CollierCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"DeSotoCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"DuvalCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"EscambiaCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"FlaglerCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"HernandoCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"HighlandsCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"HillsboroughCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"IndianRiverCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"JacksonCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"LakeCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"LeeCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"LeonCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"LevyCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"ManateeCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"MarionCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"MartinCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"Miami-DadeCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"MonroeCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"NassauCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"OkaloosaCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"OrangeCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"OsceolaCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"PalmBeachCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"PascoCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"PinellasCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"PolkCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"PutnamCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"SantaRosaCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"SarasotaCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"SeminoleCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"St.JohnsCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"St.LucieCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)},
-    {name:"VolusiaCounty", tweets:getTweets(firebase, id, name, addToName), num: getNumOfTweets(firebase, id, name, addToName)}
+    "AlachuaCounty",
+    "BayCounty",
+    "BrevardCounty",
+    "BrowardCounty",
+    "CharlotteCounty",
+    "CitrusCounty",
+    "ClayCounty",
+    "CollierCounty",
+    "DeSotoCounty",
+    "DuvalCounty",
+    "EscambiaCounty",
+    "FlaglerCounty",
+    "HernandoCounty",
+    "HighlandsCounty",
+    "HillsboroughCounty",
+    "IndianRiverCounty",
+    "JacksonCounty",
+    "LakeCounty",
+    "LeeCounty",
+    "LeonCounty",
+    "LevyCounty",
+    "ManateeCounty",
+    "MarionCounty",
+    "MartinCounty",
+    "Miami-DadeCounty",
+    "MonroeCounty",
+    "NassauCounty",
+    "OkaloosaCounty",
+    "OrangeCounty",
+    "OsceolaCounty",
+    "PalmBeachCounty",
+    "PascoCounty",
+    "PinellasCounty",
+    "PolkCounty",
+    "PutnamCounty",
+    "SantaRosaCounty",
+    "SarasotaCounty",
+    "SeminoleCounty",
+    "St.JohnsCounty",
+    "St.LucieCounty",
+    "VolusiaCounty"
 
   ];
 
