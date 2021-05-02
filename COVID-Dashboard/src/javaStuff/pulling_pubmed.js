@@ -226,7 +226,7 @@ class DocumentParsers {
     var myIDs = new IdList(ids, "covid_pubmed_search", "covid_ids");
     console.assert(db != null);
     myIDs.uploadIdsToFirebase(db, "covid_pubmed_search", my_string + '_ids');
-    new ReadingAndWritingFiles().writeToaFile(ids, "ids.txt");
+    // new ReadingAndWritingFiles().writeToaFile(ids, "ids.txt");
     return ids;
   }
   getTextFromXMLHTTPResponse(xmlhttp){
@@ -348,7 +348,7 @@ class XMLToJSONParser {
           reject(err);
         } else {
           resolve(result);
-          new ReadingAndWritingFiles().writeToaFile(JSON.stringify(result), "covid_search.json");
+          // new ReadingAndWritingFiles().writeToaFile(JSON.stringify(result), "covid_search.json");
         }
       });
     });
@@ -356,7 +356,7 @@ class XMLToJSONParser {
 
   processResult(result) {
     // console.log("processResult: result: ", result);
-    new ReadingAndWritingFiles().writeToaFile(result, "covid_search.json");
+   // new ReadingAndWritingFiles().writeToaFile(result, "covid_search.json");
   }
 
   async testXmlParse(xml) {
