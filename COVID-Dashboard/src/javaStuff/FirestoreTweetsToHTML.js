@@ -107,7 +107,12 @@ async function getTweets(firebase, id, name, addToName) {
 
 
 
+function getNumOfTweets(firebase, id, name, addToName) {
+  var db = getDatabase(firebase);
+  return db.collection(name + addToName);
+}
 
+/*
 async function getNumOfTweets(firebase, id, name, addToName) {
   document.getElementById(id).innerHTML='';
   var htmlUsedToGetTweetNumbers='<div></div>';
@@ -127,8 +132,82 @@ async function getNumOfTweets(firebase, id, name, addToName) {
     })}) ;
 
 }
-
+*/
 //List of florida counties of which we can get twitter handles from
+
+function getCountyNames(){
+  return [
+    {name:"AlachuaCounty", color:'color: #000000', disabled:false},
+    {name:"BakerCounty", color:'color: #cccccc', disabled:true},
+    {name:"BayCounty", color:'color: #000000', disabled:false},
+    {name:"BradfordCounty", color:'color: #cccccc', disabled:true},
+    {name:"BrevardCounty", color:'color: #000000', disabled:false},
+    {name:"BrowardCounty", color:'color: #000000', disabled:false},
+    {name:"CalhounCounty", color:'color: #cccccc', disabled:true},
+    {name:"CharlotteCounty", color:'color: #000000', disabled:false},
+    {name:"CitrusCounty", color:'color: #000000', disabled:false},
+    {name:"ClayCounty", color:'color: #000000', disabled:false},
+    {name:"CollierCounty", color:'color: #000000', disabled:false},
+    {name:"ColumbiaCounty", color:'color: #cccccc', disabled:true},
+    {name:"DeSotoCounty", color:'color: #000000', disabled:false},
+    {name:"DixieCounty", color:'color: #cccccc', disabled:true},
+    {name:"DuvalCounty", color:'color: #000000', disabled:false},
+    {name:"EscambiaCounty", color:'color: #000000', disabled:false},
+    {name:"FlaglerCounty", color:'color: #000000', disabled:false},
+    {name:"FranklinCounty", color:'color: #cccccc', disabled:true},
+    {name:"GadsdenCounty", color:'color: #cccccc', disabled:true},
+    {name:"GilchristCounty", color:'color: #cccccc', disabled:true},
+    {name:"GladesCounty", color:'color: #cccccc', disabled:true},
+    {name:"GulfCounty", color:'color: #cccccc', disabled:true},
+    {name:"HamiltonCounty", color:'color: #cccccc', disabled:true},
+    {name:"HardeeCounty", color:'color: #cccccc', disabled:true},
+    {name:"HendryCounty", color:'color: #cccccc', disabled:true},
+    {name:"HernandoCounty", color:'color: #000000', disabled:false},
+    {name:"HighlandsCounty", color:'color: #000000', disabled:false},
+    {name:"HillsboroughCounty", color:'color: #000000', disabled:false},
+    {name:"HolmesCounty", color:'color: #cccccc', disabled:true},
+    {name:"IndianRiverCounty", color:'color: #000000', disabled:false},
+    {name:"JacksonCounty", color:'color: #000000', disabled:false},
+    {name:"JeffersonCounty", color:'color: #cccccc', disabled:true},
+    {name:"LafayetteCounty", color:'color: #cccccc', disabled:true},
+    {name:"LakeCounty", color:'color: #000000', disabled:false},
+    {name:"LeeCounty", color:'color: #000000', disabled:false},
+    {name:"LeonCounty", color:'color: #000000', disabled:false},
+    {name:"LevyCounty", color:'color: #000000', disabled:false},
+    {name:"LibertyCounty", color:'color: #cccccc', disabled:true},
+    {name:"MadisonCounty", color:'color: #cccccc', disabled:true},
+    {name:"ManateeCounty", color:'color: #000000', disabled:false},
+    {name:"MarionCounty", color:'color: #000000', disabled:false},
+    {name:"MartinCounty", color:'color: #000000', disabled:false},
+    {name:"Miami-DadeCounty", color:'color: #000000', disabled:false},
+    {name:"MonroeCounty", color:'color: #000000', disabled:false},
+    {name:"NassauCounty", color:'color: #000000', disabled:false},
+    {name:"OkaloosaCounty", color:'color: #000000', disabled:false},
+    {name:"OkeechobeeCounty", color:'color: #cccccc', disabled:true},
+    {name:"OrangeCounty", color:'color: #000000', disabled:false},
+    {name:"OsceolaCounty", color:'color: #000000', disabled:false},
+    {name:"PalmBeachCounty", color:'color: #000000', disabled:false},
+    {name:"PascoCounty", color:'color: #000000', disabled:false},
+    {name:"PinellasCounty", color:'color: #000000', disabled:false},
+    {name:"PolkCounty", color:'color: #000000', disabled:false},
+    {name:"PutnamCounty", color:'color: #000000', disabled:false},
+    {name:"SantaRosaCounty", color:'color: #000000', disabled:false},
+    {name:"SarasotaCounty", color:'color: #000000', disabled:false},
+    {name:"SeminoleCounty", color:'color: #000000', disabled:false},
+    {name:"St.JohnsCounty", color:'color: #000000', disabled:false},
+    {name:"St.LucieCounty", color:'color: #000000', disabled:false},
+    {name:"SumterCounty", color:'color: #cccccc', disabled:true},
+    {name:"SuwanneeCounty", color:'color: #cccccc', disabled:true},
+    {name:"TaylorCounty", color:'color: #cccccc', disabled:true},
+    {name:"UnionCounty", color:'color: #cccccc', disabled:true},
+    {name:"VolusiaCounty", color:'color: #000000', disabled:false},
+    {name:"WakullaCounty", color:'color: #cccccc', disabled:true},
+    {name:"WaltonCounty", color:'color: #cccccc', disabled:true},
+    {name:"WashingtonCounty", color:'color: #cccccc', disabled:true}
+  ];
+
+}
+/*
 function getCountyNames(){
   return [
     "AlachuaCounty",
@@ -175,6 +254,8 @@ function getCountyNames(){
   ];
 
 }
+*/
+
 
 //List of florida county twitter handles
 function getCountyTwitterHandles(){
