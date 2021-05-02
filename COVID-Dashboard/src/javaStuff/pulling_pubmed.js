@@ -144,38 +144,52 @@ class MyXMLHTTPRequest {
     }
     // gets the ids and uploads them to Firebase
     this.makeSearchQuest(this.pubmedUrls.getIDsforSearchResults(search_query, "pubmed"));
+    console.log(search_query + "_ids");
     var searchRef = db.collection(collection_name).doc(search_query + '_ids');
     // [START get_document]
     // [START firestore_data_get_as_map]
     console.log("Getting the document from the search results");
-    var doc =await searchRef.get().then(response => {
-      console.log("Got this document here" + response.data());
-      console.log("Document data", response.data().eSummaryResult.DocSum);
-      var search_results = response.data().eSummaryResult.DocSum;
-      console.log("Successfully retrieved", search_results);
-      return search_results;
+    var ids =await searchRef.get().then(response => {
+      response = (response.data());
+      console.log("Got this document here" + response);
+      var ids = response.ids;
+      console.log("Successfully retrieved", ids);
+      return ids;
     }).catch(err => {
       console.log(err);
     });
-    console.log(doc);
-    var id_list = doc.ids;
-    this.getSearchResults(id_list, "covid");
+    var id_list = ids;
+    console.log("Id List", id_list)
+    await this.getSearchResults(id_list, "covid").then(response => {
+      console.log("Success!");
+    }).catch(err => {
+      console.log(err);
+    });
   }
   // From a list of search ids gotten from search request, gets the ids for the search result.
-  getSearchResults(id_list, doc_name) {
+  async getSearchResults(id_list, doc_name) {
     const xhr = new XMLHttpRequest(),
       method = "GET",
       responseType = "document";
     var url = this.pubmedUrls.downloadResultFromIDList(id_list, "pubmed");
-    xhr.open(method, url, false);
-    xhr.onload = function() {
+    console.log("Url I'm searching for", this.main_url + url);
+    xhr.open(method, this.main_url + url, false);
+    xhr.onload = async function () {
+      console.log("Retrieving results")
       var my_xml_text = xhr.responseText;
       console.log(my_xml_text);
-      new ReadingAndWritingFiles().writeToAnXMLFile(my_xml_text, "search_results.xml");
-      var my_json = new XMLToJSONParser().parseXml(my_xml_text).then(response => {
-        new UploadToFirebase().uploadJSONToFirestore(response,
-          "covid_pubmed_search", doc_name);
-      });
+      // new ReadingAndWritingFiles().writeToAnXMLFile(my_xml_text, "search_results.xml");
+      var my_json = await new XMLToJSONParser().parseXml(my_xml_text).then(response => {
+        console.log("JSOn of Results", my_json);
+        });
+      await new UploadToFirebase().uploadJSONToFirestore(my_json, "covid_pubmed_search", doc_name).then(response => {
+        console.log("Success!");
+        return response;
+      }).catch(err => {
+        console.log(err);
+      })
+
+
     }
     xhr.onreadystatechange = function () {
       // In local files, status is 0 upon success in Mozilla Firefox
@@ -204,8 +218,8 @@ class DocumentParsers {
     var ids = [];
     for (var i = 0; i < numbersFromString.length; i++) {
       var num = numbersFromString[i];
-      // If this is a valid id
-      ids[count] = num;
+      let re = "\\b\\d{8}\\b";
+      ids[count] = parseInt(num.match(re));
       count += 1;
       if (count >= 5) {
         break;
@@ -235,7 +249,10 @@ class PubMedURLs {
     return 'esearch.fcgi?db=' + database + '&term=' + keyword;
   }
   downloadResultFromIDList(id_list, database) {
-    return 'esummary.fcgi?db=' + database + '&id=' + id_list;
+    console.log(id_list.toString());
+    var url = 'esummary.fcgi?db=' + database + '&id=' + id_list;
+    console.log(this.main_url + url);
+    return url;
   }
 }
 
@@ -357,7 +374,7 @@ class XMLToJSONParser {
 }
 
 
-
+/*
 myPubMedSearchResults = new getSearchResultFromPubMed();
 // console.log(myPubMedSearchResults.downloadResults('33858023').responseText);
 myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubmed");
@@ -370,3 +387,5 @@ var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubme
 
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
+*/
+new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore("covid", "covid_pubmed_search");
