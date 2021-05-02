@@ -3,8 +3,8 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
 declare function getCountyNames(): any;
-declare function getTweets(firebase: any, id: any, name: any, addToName: any): any;
-declare function getNumOfTweets(firebase: any, id: any, name: any, addToName: any): any;
+declare function getTweets(firebase: any, id: any, name: any, addToName: any, reset: boolean): any;
+
 @Component({
   selector: 'app-elig-dd-card',
   templateUrl: './card.component.html',
@@ -18,9 +18,7 @@ export class EligibilityDropDownCardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
   }
   getTweetByCounty(): void{
-    getTweets(firebase, 'test2', this.county , 'Eligibility');
-  }
-  getNumOfTweets(name: string): any{
+    getTweets(firebase, 'test2', this.county , 'Eligibility', true);
   }
 
 }

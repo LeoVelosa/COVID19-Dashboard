@@ -26,8 +26,10 @@ function getDatabase(firebase){
 }
 
 
-async function getTweets(firebase, id, name, addToName) {
-  document.getElementById(id).innerHTML='';
+async function getTweets(firebase, id, name, addToName, reset) {
+
+  if(reset){document.getElementById(id).innerHTML='';}
+
   var db = getDatabase(firebase);
   //Basically creates a storage for all the html. IT NEEDS TO BE THIS WAY OTHERWISE PAGE WILL REFRESH AND THINGS WILL MESS UP
   if(document.getElementById(id) != null){
@@ -104,6 +106,7 @@ async function getTweets(firebase, id, name, addToName) {
   }
 
 }
+
 
 
 

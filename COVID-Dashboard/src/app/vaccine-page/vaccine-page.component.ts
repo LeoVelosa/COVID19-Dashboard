@@ -4,8 +4,8 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
-declare function getTweets(firebase: any, id: any, name: any, addToName: any): any;
-
+declare function getTweets(firebase: any, id: any, name: any, addToName: any, reset: boolean): any;
+declare function getNewsNames(): any;
 @Component({
   selector: 'app-vaccine-page',
   templateUrl: './vaccine-page.component.html',
@@ -13,6 +13,7 @@ declare function getTweets(firebase: any, id: any, name: any, addToName: any): a
 })
 export class VaccinePageComponent implements OnInit{
   /** Based on the screen size, switch from standard to one column per row */
+ public newsNames = getNewsNames();
   cardLayout = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
@@ -34,8 +35,11 @@ export class VaccinePageComponent implements OnInit{
     })
   );
   ngOnInit(): void {
-    getTweets(firebase, 'test', 'AlachuaCounty' , 'Availability');
-    getTweets(firebase, 'test2', 'AlachuaCounty' , 'Eligibility');
+    getTweets(firebase, 'test', 'AlachuaCounty' , 'Availability', true);
+    getTweets(firebase, 'test2', 'AlachuaCounty' , 'Eligibility', true);
+    getTweets(firebase, 'test3', this.newsNames[0] , 'News', false);
+    getTweets(firebase, 'test3', this.newsNames[1] , 'News', false);
+    getTweets(firebase, 'test3', this.newsNames[2] , 'News', false);
   }
   constructor(private breakpointObserver: BreakpointObserver) {}
 }
