@@ -25,14 +25,15 @@ var firebase = require('firebase');
  * Thank you!
  * */
 var firebaseConfig = {
-      apiKey: "AIzaSyDulDJhTOELGvn4zlBB5PFtf05y19T3yjY",
-      authDomain: "fir-test-ebd4c.firebaseapp.com",
-      projectId: "fir-test-ebd4c",
-      storageBucket: "fir-test-ebd4c.appspot.com",
-      messagingSenderId: "498339362637",
-      appId: "1:498339362637:web:7d99f2f22284507a956904",
-      measurementId: "G-1F87Y1K1GB"
-    }
+  apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+  authDomain: "covid-dashboard-10efe.firebaseapp.com",
+  databaseURL: "https://covid-dashboard-10efe-default-rtdb.firebaseio.com",
+  projectId: "covid-dashboard-10efe",
+  storageBucket: "covid-dashboard-10efe.appspot.com",
+  messagingSenderId: "933584669394",
+  appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+  measurementId: "G-XVWT1E6R8B"
+};
 
 firebase.initializeApp(firebaseConfig);
 db = firebase.firestore();
@@ -41,6 +42,10 @@ class Id {
     this.id = id_list;
   }
 }
+/**
+* Creates an id list to upload the ids to get the search results
+ * Need in order to get the xmlhttprequest.
+* */
 class IdList {
   constructor(id_array, collection_name, doc_name) {
     this.idList = this.parseIDArray(id_array);
@@ -70,7 +75,15 @@ class IdList {
 class UploadToFirebase {
   async uploadJSONToFirestore(my_json, collection_name, doc_name) {
     console.log("JSON", my_json, JSON.stringify(my_json));
-    db.collection(collection_name).add(doc_name).set(my_json);
+    await db.collection(collection_name).doc(doc_name).set(my_json).then(response => {
+      console.log("Successfully uploaded", JSON.stringify(my_json));
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  async uploadToFirebase(my_json, test, test2) {
+    await this.uploadJSONToFirestore(my_json, test, test2);
   }
 }
 class PullFromFirebase {
@@ -125,6 +138,29 @@ class MyXMLHTTPRequest {
     };
     xhr.send();
   }
+  async uploadSearchResultsToFirestore(search_query, collection_name) {
+    if (collection_name == null) {
+      collection_name = "covid_pubmed_search";
+    }
+    // gets the ids and uploads them to Firebase
+    this.makeSearchQuest(this.pubmedUrls.getIDsforSearchResults(search_query, "pubmed"));
+    var searchRef = db.collection(collection_name).doc(search_query + '_ids');
+    // [START get_document]
+    // [START firestore_data_get_as_map]
+    console.log("Getting the document from the search results");
+    var doc =await searchRef.get().then(response => {
+      console.log("Got this document here" + response.data());
+      console.log("Document data", response.data().eSummaryResult.DocSum);
+      var search_results = response.data().eSummaryResult.DocSum;
+      console.log("Successfully retrieved", search_results);
+      return search_results;
+    }).catch(err => {
+      console.log(err);
+    });
+    console.log(doc);
+    var id_list = doc.ids;
+    this.getSearchResults(id_list, "covid");
+  }
   // From a list of search ids gotten from search request, gets the ids for the search result.
   getSearchResults(id_list, doc_name) {
     const xhr = new XMLHttpRequest(),
@@ -162,24 +198,23 @@ class DocumentParsers {
   // From a string object, loops through
   getIDs(my_string) {
     // Create a re object to find the numbers with 8 digits
-    let re = /\d{8}/g;
+    let re = /<Id>(.*?)<\/Id>/g
     var numbersFromString = Array.from(my_string.match(re));
     var count = 0;
     var ids = [];
     for (var i = 0; i < numbersFromString.length; i++) {
       var num = numbersFromString[i];
       // If this is a valid id
-      if (String(num).startsWith("33")) {
-        ids[count] = num;
-        count += 1;
-      }
+      ids[count] = num;
+      count += 1;
       if (count >= 5) {
         break;
       }
     }
+    console.log("Initial id list", ids);
     var myIDs = new IdList(ids, "covid_pubmed_search", "covid_ids");
     console.assert(db != null);
-    myIDs.uploadIdsToFirebase(db, "covid_pubmed_search", "covid_ids");
+    myIDs.uploadIdsToFirebase(db, "covid_pubmed_search", my_string + '_ids');
     new ReadingAndWritingFiles().writeToaFile(ids, "ids.txt");
     return ids;
   }
@@ -197,10 +232,10 @@ class PubMedURLs {
     this.main_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
   }
   getIDsforSearchResults(keyword, database) {
-    return this.main_url + 'esearch.fcgi?db=' + database + '&term=' + keyword;
+    return 'esearch.fcgi?db=' + database + '&term=' + keyword;
   }
   downloadResultFromIDList(id_list, database) {
-    return this.main_url + 'esummary.fcgi?db=' + database + '&id=' + id_list;
+    return 'esummary.fcgi?db=' + database + '&id=' + id_list;
   }
 }
 
@@ -321,8 +356,8 @@ class XMLToJSONParser {
   }
 }
 
-new Test().uploadTestFileToFirebase();
-/*
+
+
 myPubMedSearchResults = new getSearchResultFromPubMed();
 // console.log(myPubMedSearchResults.downloadResults('33858023').responseText);
 myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubmed");
@@ -334,5 +369,4 @@ var my_Urls = new PubMedURLs().downloadResultFromIDList(my_list, 'pubmed');
 var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubmed");
 
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
-new MyXMLHTTPRequest().getSearchResults(my_list);
-*/
+new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
