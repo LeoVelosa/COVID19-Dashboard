@@ -65,7 +65,7 @@ class IdList {
       doc_name = "covid_ids";
     }
     await new UploadToFirebase().uploadJSONToFirestore(this.idList, collection_name, doc_name).then(response => {
-      console.log("Successfully uploaded", doc_name, "to", collection_name);
+      console.log("Successfully uploaded to", collection_name);
     }).catch(err => {
       console.log("Error", err);
     });
@@ -74,9 +74,10 @@ class IdList {
 }
 class UploadToFirebase {
   async uploadJSONToFirestore(my_json, collection_name, doc_name) {
-    console.log("JSON", my_json, JSON.stringify(my_json));
+    console.log("Currently uploading the json to Firebase")
+    // console.log("JSON", my_json, JSON.stringify(my_json));
     await db.collection(collection_name).doc(doc_name).set(my_json).then(response => {
-      console.log("Successfully uploaded", JSON.stringify(my_json));
+      console.log("Successfully uploaded the json");
     }).catch(err => {
       console.log(err);
     })
@@ -119,7 +120,7 @@ class MyXMLHTTPRequest {
     xhr.onload = function() {
       var myDocParser = new DocumentParsers();
       var ids = myDocParser.getIDs(myDocParser.getTextFromXMLHTTPResponse(xhr));
-      console.log("Ids", ids);
+      // ("Ids", ids);
       // console.log("On load!");
       // console.log(this);
       // console.log(this.responseType);
@@ -144,14 +145,14 @@ class MyXMLHTTPRequest {
     }
     // gets the ids and uploads them to Firebase
     this.makeSearchQuest(this.pubmedUrls.getIDsforSearchResults(search_query, "pubmed"));
-    console.log(search_query + "_ids");
+    // console.log(search_query + "_ids");
     var searchRef = db.collection(collection_name).doc(search_query + '_ids');
     // [START get_document]
     // [START firestore_data_get_as_map]
     console.log("Getting the document from the search results");
     var ids =await searchRef.get().then(response => {
       response = (response.data());
-      console.log("Got this document here" + response);
+      // console.log("Got this document here" + response);
       var ids = response.ids;
       console.log("Successfully retrieved", ids);
       return ids;
@@ -159,7 +160,7 @@ class MyXMLHTTPRequest {
       console.log(err);
     });
     var id_list = ids;
-    console.log("Id List", id_list)
+    // console.log("Id List", id_list)
     await this.getSearchResults(id_list, "covid").then(response => {
       console.log("Success!");
     }).catch(err => {
@@ -177,17 +178,13 @@ class MyXMLHTTPRequest {
     xhr.onload = async function () {
       console.log("Retrieving results")
       var my_xml_text = xhr.responseText;
-      console.log(my_xml_text);
+      // console.log(my_xml_text);
       // new ReadingAndWritingFiles().writeToAnXMLFile(my_xml_text, "search_results.xml");
-      var my_json = await new XMLToJSONParser().parseXml(my_xml_text).then(response => {
-        console.log("JSOn of Results", my_json);
-        });
-      await new UploadToFirebase().uploadJSONToFirestore(my_json, "covid_pubmed_search", doc_name).then(response => {
-        console.log("Success!");
-        return response;
-      }).catch(err => {
-        console.log(err);
-      })
+      var my_json = new XMLToJSONParser().parseXml(my_xml_text).then(response => {
+        console.log("Successfully created a json of the search results.");
+        new UploadToFirebase().uploadJSONToFirestore(response, "covid_pubmed_search", doc_name);
+        // console.log("JSON of Results", my_json);
+      });
 
 
     }
@@ -233,7 +230,7 @@ class DocumentParsers {
     return ids;
   }
   getTextFromXMLHTTPResponse(xmlhttp){
-    console.log("Response text", xmlhttp);
+    // console.log("Response text", xmlhttp);
     var txt=xmlhttp.responseText + "";
     txt.replace(/<&#91;^>&#93;*>/g, "");
     //Convert txt into a string so that I can use it
@@ -358,7 +355,7 @@ class XMLToJSONParser {
   }
 
   processResult(result) {
-    console.log("processResult: result: ", result);
+    // console.log("processResult: result: ", result);
     new ReadingAndWritingFiles().writeToaFile(result, "covid_search.json");
   }
 
