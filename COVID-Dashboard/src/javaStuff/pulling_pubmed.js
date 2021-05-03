@@ -2,6 +2,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xml2js = require('xml2js');
 var fs = require('fs');
 var firebase = require('firebase');
+const {ajax} = require("rxjs/ajax");
 /**
  * TODO: integrate it with pubmed_to_firestore so that the data is uploaded directly to Firebase. Currently just saves to a file.
  * */
@@ -109,6 +110,30 @@ class MyXMLHTTPRequest {
     this.main_url = main_url;
     this.pubmedUrls = new PubMedURLs();
   };
+  ajax(url /* ,params */, callback) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = async function () {
+      // return if not ready state 4
+      if (this.readyState !== 4) {
+        return;
+      }
+
+      // check for redirect
+      if (this.status === 302 || this.status === 301 /* or may any other redirect? */) {
+        var location = this.getResponseHeader("Location");
+        return ajax.call(this, location /*params*/, callback);
+      }
+
+      // return data
+      console.log(this.responseText)
+      var data = await new XMLToJSONParser().parseXml(new DocumentParsers().getTextFromXMLHTTPResponse(this)).then(response => {
+        return response;
+      });
+      callback && callback(data, "pubmed_statistics", "covid");
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
   // Creates a xml http request based on a url
   // params: sub_url, the sub category (i.e. if main_url is sample.com, then the additional results would be "keyword=34/")
   makeSearchQuest(sub_url) {
@@ -136,9 +161,49 @@ class MyXMLHTTPRequest {
           // Oh no! There has been an error with the request!
         }
       }
+      xhr.onerror = function() {
+        console.log("There has been an error with the request");
+      }
     };
     xhr.send();
   }
+  // Gets the statistics about a search result from pubmed and
+  // uploads a json with this information to Firebase.
+  async getStatisticsAboutKeyword(search_query, collection_name) {
+
+    /*const xhr = new XMLHttpRequest(),
+      method = "GET",
+      responseType = "document";
+    var url = this.pubmedUrls.getSearchStatistics(search_query);
+    function handleEvent(e) {
+      log.textContent = log.textContent + `${e.type}: ${e.loaded} bytes transferred\n`;
+    }
+    xhr.addEventListener('error', handleEvent);
+    console.log("Url I'm searching for", this.main_url + url);
+    xhr.open(method, this.main_url + url, false);
+    xhr.onload = async function () {
+      console.log(xhr.status);
+      console.log("Retrieving results")
+      var my_xml_text = xhr.responseText;
+      console.log("Results", xhr.responseText);
+      console.assert(xhr.responseText !== null);
+      // console.log(my_xml_text);
+      // new ReadingAndWritingFiles().writeToAnXMLFile(my_xml_text, "search_results.xml");
+      var my_json = new XMLToJSONParser().parseXml(my_xml_text).then(response => {
+        console.log("Successfully created a json of the search results", response);
+        new UploadToFirebase().uploadJSONToFirestore(response, "covid_pubmed_search", search_query);
+
+        // console.log("JSON of Results", my_json);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+    xhr.send();
+     */
+    this.ajax(this.main_url + (new PubMedURLs().getSearchStatistics(search_query)),
+      new UploadToFirebase().uploadJSONToFirestore);
+  }
+
   async uploadSearchResultsToFirestore(search_query, collection_name) {
     if (collection_name == null) {
       collection_name = "covid_pubmed_search";
@@ -248,6 +313,12 @@ class PubMedURLs {
   downloadResultFromIDList(id_list, database) {
     console.log(id_list.toString());
     var url = 'esummary.fcgi?db=' + database + '&id=' + id_list;
+    console.log(this.main_url + url);
+    return url;
+  }
+  // Searches the entire database for Covid
+  getSearchStatistics(keyword) {
+    var url =  'egquery.fcgi?term=' + keyword;
     console.log(this.main_url + url);
     return url;
   }
@@ -386,3 +457,4 @@ var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
 */
 new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore("covid", "covid_pubmed_search");
+new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword("covid");
