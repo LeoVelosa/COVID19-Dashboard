@@ -20,7 +20,9 @@
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
-      <app-card title="Vaccine Data"></app-card>
+      <app-card title="Vaccine Data">
+        <app-vaccinedata></app-vaccinedata>
+      </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
       <app-elig-dd-card  title="Florida county Eligibility">
