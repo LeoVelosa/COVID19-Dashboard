@@ -2,7 +2,10 @@
 // This is where you put in your javascript files in
 // to put your firebase firestore data into html
 import { Component, OnInit, Input } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { async } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { YoutubeService } from '../youtube.service';
 /*FOR FRONT END YOU NEED THE FOLLOWING CODE FOR FIREBASE AND MAKE SURE FIREBASE GOES INTO THE GET TWEETS COMMAND*/
 
 @Component({
@@ -13,12 +16,8 @@ import { async } from 'rxjs';
 export class CardComponent implements OnInit {
 
   @Input() title!: string;
-/*Gets the function from js.js  MUST BE LIKE THIS*/
-  async ngOnInit(): Promise<void> {
-
-    /*puts the firebase api into the getTweets function and it returns html which will go to ___ ID*/
+  /*Gets the function from js.js  MUST BE LIKE THIS*/
+  ngOnInit(){
+    
   }
-}
-function validateInput(input: string) {
-  return input;
 }

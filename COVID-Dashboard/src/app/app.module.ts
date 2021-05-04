@@ -28,6 +28,11 @@ import { EligibilityDropDownCardComponent } from './eligibilityDropDownCard/card
 
 import { HttpClientModule } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { PfizerComponent } from './pfizer/pfizer.component';
+import { ModernaComponent } from './moderna/moderna.component';
+import { JandJComponent } from './jand-j/jand-j.component';
+import { NgxSpinner, NgxSpinnerComponent, NgxSpinnerModule } from 'ngx-spinner';
+import { ListofComorbiditiesComponent } from './listof-comorbidities/listof-comorbidities.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,11 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     PublicationsComponent,
     CardComponent,
     AvalibilityDropDownCardComponent,
-    EligibilityDropDownCardComponent
+    EligibilityDropDownCardComponent,
+    PfizerComponent,
+    ModernaComponent,
+    JandJComponent,
+    ListofComorbiditiesComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +66,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     NgbModule,
     MatTabsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [
     {provide : LocationStrategy, useClass: HashLocationStrategy}
