@@ -12,8 +12,9 @@ declare function getTweets(firebase: any, id: any, name: any, addToName: any, re
 })
 export class EligibilityDropDownCardComponent implements OnInit {
   public countyTweets = getCountyNames();
-  county = ' ';
-  @Input() title!: string;
+  county = this.countyTweets[0].name;
+  //Cannot use title, unless you want the tooltip to be the same as title
+  @Input() titleOfCard!: string;
 /*Gets the function from js.js  MUST BE LIKE THIS*/
   async ngOnInit(): Promise<void> {
   }

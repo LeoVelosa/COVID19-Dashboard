@@ -1,4 +1,6 @@
-
+options {
+  text-align: center;
+}
 .more-button {
     position: absolute;
     top: 5px;
@@ -19,10 +21,10 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    max-height: 100%;
-    justify-content: center;
-    align-items: stretch;
+    align-items: start;
+    max-height: 90.5%;
+    max-width: 110%;
+   justify-content: start;
  }
 
  mat-card {

@@ -2,9 +2,8 @@
     <mat-card-header>
 
       <mat-card-title>
-        {{title}}
-        <select [(ngModel)]="county" (change)="getTweetByCounty()">
-
+        {{titleOfCard}}
+        <select  [(ngModel)]=county (change)="getTweetByCounty()">
           <option  *ngFor="let county of countyTweets" [style]=county.color [value]=county.name [disabled]=county.disabled>
             {{county.name}}
           </option>

@@ -15,14 +15,11 @@
 
 
  .dashboard-card-content {
-    text-align: center;
+    text-align: left;
     flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-height: 100%;
-    justify-content: center;
-    align-items: stretch;
+    max-height: 1110%;
+    justify-content: left;
  }
 
  mat-card {

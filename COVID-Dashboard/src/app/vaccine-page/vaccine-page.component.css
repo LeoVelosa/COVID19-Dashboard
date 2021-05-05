@@ -1,12 +1,33 @@
 
-.twitter{
+.twitterRow{
+  font-size: 1em;
   display: grid;
-  grid-template-columns: repeat(auto-fill);
-  height:100%;
   padding: 1%;
-  overflow:scroll;
+  height: 100%;
+  width: 100%;
+  overflow:auto;
+
+  grid-auto-columns: 98%;
+  grid-auto-rows: 40%;
+  grid-auto-flow: row;
+
+  grid-gap: 3%;
+  overflow-x: hidden;
+}
+
+.twitterCol{
+  box-align: stretch;
+  font-size: 1em;
+  display: grid;
+  padding: 1%;
+  height: 100%;
+  width: 100%;
+  overflow:auto;
+
+  grid-auto-columns: 30%;
   grid-auto-flow: column;
-  column-width: 400px;
+  grid-auto-rows: 105%;
+
   grid-gap: 3%;
   overflow-y: hidden;
 }
@@ -31,7 +52,7 @@
   padding: 16px;
   border-radius: 8px;
   height: 600px;
-  width: 95%;
+  width: 100%;
 }
 
 .more-button {

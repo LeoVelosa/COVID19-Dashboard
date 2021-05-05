@@ -2,10 +2,10 @@
     <mat-card-header>
 
       <mat-card-title>
-        {{title}}
+        {{titleOfCard}}
         <select [(ngModel)]="county" (change)="getTweetByCounty()">
 
-          <option  *ngFor="let county of countyTweets" [style]=county.color [value]=county.name [disabled]=county.disabled>
+          <option  *ngFor="let county of countyTweets" [style]=county.color [disabled]=county.disabled [value]=county.name>
             {{county.name}}
           </option>
 
@@ -21,6 +21,7 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content class="dashboard-card-content">
-        <ng-content></ng-content>
+        <ng-content>
+        </ng-content>
     </mat-card-content>
  </mat-card>
