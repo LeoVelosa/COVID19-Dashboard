@@ -11,7 +11,7 @@ export class VaccinedataComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    //var ctx = document.getElementById('vaccinedata');
+    // var ctx = document.getElementById('vaccinedata');
     var myChart = new Chart("myChart", {
       type: 'line',
       data: {

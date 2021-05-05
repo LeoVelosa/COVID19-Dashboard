@@ -11,10 +11,11 @@ export class PubmeddataComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // var ctx = document.getElementById('vaccinedata');
     // tslint:disable-next-line:prefer-const
-    const myChart = new Chart('myChart', {
-      type: 'line',
+    // var ctx = document.getElementById('pubmedChart');
+    // tslint:disable-next-line:prefer-const
+    const pubmedChart = new Chart("pubmedChart", {
+      type: 'bar',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
