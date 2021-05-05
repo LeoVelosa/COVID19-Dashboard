@@ -67,7 +67,7 @@ async function getAllSearches(db) {
   console.log("Preparing to add the document to the search results")
   const abstracts = document.getElementById("covid_pubmed_search");
   console.log("Abstracts in top", abstracts);
-  var data = await getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi').then(response => {
+  var data = await getDocument(db, "covid_pubmed_search", 'covid').then(response => {
     return response;
   }).catch(err => {
     console.log(err);
