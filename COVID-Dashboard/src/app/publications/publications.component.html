@@ -5,7 +5,7 @@
       <app-card title="Abstracts"><div id="covid_pubmed_search"></div></app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.Visualization.cols" [rowspan]="( cardLayout | async )?.Visualization.rows">
-      <app-card title="Visualization"><div>Visualization here</div></app-card>
+      <app-card title="Visualization"><app-pubmeddata></app-pubmeddata></app-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
