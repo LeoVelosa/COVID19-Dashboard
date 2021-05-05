@@ -34,6 +34,7 @@ import { JandJComponent } from './jand-j/jand-j.component';
 import { NgxSpinner, NgxSpinnerComponent, NgxSpinnerModule } from 'ngx-spinner';
 import { ListofComorbiditiesComponent } from './listof-comorbidities/listof-comorbidities.component';
 import { VaccinedataComponent } from './vaccinedata/vaccinedata.component';
+import { VaccinetypedataComponent } from './vaccinetypedata/vaccinetypedata.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { VaccinedataComponent } from './vaccinedata/vaccinedata.component';
     ModernaComponent,
     JandJComponent,
     ListofComorbiditiesComponent,
-    VaccinedataComponent
+    VaccinedataComponent,
+    VaccinetypedataComponent
   ],
   imports: [
     BrowserModule,

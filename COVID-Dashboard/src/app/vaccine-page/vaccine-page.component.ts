@@ -27,7 +27,7 @@ export class VaccinePageComponent implements OnInit{
       }
       return {
         columns: 3,
-        sidewayCards: {cols: 3, rows: 1},
+        sidewayCards: {cols: 2, rows: 1},
         tabCard: {cols: 1, rows: 2},
         regCards: {cols: 1, rows: 1},
         longCards: {cols: 1, rows: 2},

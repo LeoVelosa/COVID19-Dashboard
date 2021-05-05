@@ -2,9 +2,9 @@
   <h1 class="mat-h1">COVID19 Informational Hub</h1>
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
     <mat-grid-tile [colspan]="( cardLayout | async )?.longCards.cols" [rowspan]="( cardLayout | async )?.longCards.rows">
-
+      <!--
       //Original Title: Vaccine Availability
-      // &#013;  is just how you put a new line in.
+      // &#013;  is just how you put a new line in.-->
       <app-aval-dd-card titleOfCard="COVID Vaccine Availability Tweets For " title="This section shows tweets about COVID vaccine availability &#013;in a Florida county that is selected in the drop down menu.&#013;AlachuaCounty is the default option.">
         <div class ="twitterRow" id="test"></div>
       </app-aval-dd-card>
@@ -27,19 +27,26 @@
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
-      <app-card title="Vaccine Data">
-        <app-vaccinedata></app-vaccinedata>
+      <app-card title="Vaccinations">
+        <div class="updatedInfo">Last updated: 5/5/2021</div>
+        <app-vaccinedata class="under"></app-vaccinedata>
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
-
+      <!---
       //Original Title:  Florida county Eligibility
-      // &#013;  is just how you put a new line in.
+      // &#013;  is just how you put a new line in. -->
       <app-elig-dd-card  titleOfCard="COVID Vaccine Eligibility Tweets For " title="This section shows tweets about COVID vaccine eligibility &#013;in a Florida county that is selected in the drop down menu.&#013;AlachuaCounty is the default option.">
         <div class="twitterCol" id="test2" >
         </div>
 
       </app-elig-dd-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <app-card title="Vaccinations">
+        <div class="updatedInfo">Last updated: 5/5/2021</div>
+        <app-vaccinetypedata class="under"></app-vaccinetypedata>
+      </app-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

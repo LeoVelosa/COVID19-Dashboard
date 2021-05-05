@@ -64,3 +64,15 @@
 .dashboard-card-content {
   text-align: center;
 }
+
+.updatedInfo {
+  position: absolute;
+  width: 85%;
+  height: 100%;
+  font-size: 80%;
+  font-style: italic;
+  font-weight: lighter;
+}
+.under {
+  position: relative;
+}
