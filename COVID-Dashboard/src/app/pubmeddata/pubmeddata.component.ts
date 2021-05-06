@@ -6,6 +6,7 @@ Chart.register(...registerables);
   templateUrl: './pubmeddata.component.html',
   styleUrls: ['./pubmeddata.component.css']
 })
+declare
 export class PubmeddataComponent implements OnInit {
 
   constructor() { }
@@ -14,10 +15,12 @@ export class PubmeddataComponent implements OnInit {
     // tslint:disable-next-line:prefer-const
     // var ctx = document.getElementById('pubmedChart');
     // tslint:disable-next-line:prefer-const
-    const pubmedChart = new Chart("pubmedChart", {
+    const keywords = ['covid'];
+    const data
+    const pubmedChart = new Chart('pubmedChart', {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: keywords,
         datasets: [{
           label: '# of Votes',
           data: [12, 19, 3, 5, 2, 3],
