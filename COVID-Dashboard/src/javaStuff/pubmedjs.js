@@ -61,62 +61,8 @@ async function test() {
   }
 
 }
-<<<<<<< Updated upstream
 
 
-=======
-async function getAllStatistics(db) {
-  console.log("Preparing to get the statistics from pubmed");
-  if(firebase.apps.length==0){
-    //console.log(firebase.app.length);
-    var firebaseConfig = {
-      apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
-      authDomain: "covid-dashboard-10efe.firebaseapp.com",
-      projectId: "covid-dashboard-10efe",
-      storageBucket: "covid-dashboard-10efe.appspot.com",
-      messagingSenderId: "933584669394",
-      appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
-      measurementId: "G-XVWT1E6R8B"
-    };
-    firebase.initializeApp(firebaseConfig);
-  }
-  console.log("Preparing to add the document to the search results")
-  // const abstracts = document.getElementById("covid_pubmed_search");
-  // console.log("Abstracts in top", abstracts);
-  var searchRef = db.collection("pubmed_statistics").doc("covid");
-  // [START get_document]
-  // [START firestore_data_get_as_map]
-  console.log("Getting the document from the search results");
-  var doc =await searchRef.get().then(response => {
-    console.log("Got this document here" + response.data());
-    console.log("Document data", response.data().Result);
-    var search_results = response.data();
-    console.log("Successfully retrieved", search_results);
-    console.log("Search Results", search_results.Result.eGQueryResult[0].ResultItem[0].Count);
-    console.log("Term", search_results.Result.Term)
-    return search_results;
-  }).catch(err => {
-    console.log(err);
-  });
-  console.log(doc);
-  return doc;
-}
-getKeyWordStats = async function() {
-  var db = firebase.firestore();
-  var tuple = []
-  var doc = await getAllStatistics(db);
-  var term = doc.Result.Term;
-  var count = search_results.Result.eGQueryResult[0].ResultItem[0].Count;
-  tuple.push(new KeyWordStats(term, count));
-  return tuple;
-}
-class KeyWordStats {
-  constructor(term, count) {
-    this.term = term;
-    this.count = parseInt(count);
-  }
-}
->>>>>>> Stashed changes
 async function getAllSearches(db) {
   console.log("Preparing to add the document to the search results")
   const abstracts = document.getElementById("covid_pubmed_search");

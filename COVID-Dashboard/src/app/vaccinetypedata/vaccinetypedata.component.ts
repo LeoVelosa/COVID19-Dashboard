@@ -7,7 +7,6 @@ Chart.register(...registerables);
   templateUrl: './vaccinetypedata.component.html',
   styleUrls: ['./vaccinetypedata.component.css']
 })
-<<<<<<< Updated upstream:COVID-Dashboard/src/app/vaccinetypedata/vaccinetypedata.component.ts
 export class VaccinetypedataComponent implements OnInit {
   constructor() { }
 
@@ -49,19 +48,6 @@ export class VaccinetypedataComponent implements OnInit {
           borderWidth: 1
           
         }]
-=======
-declare const getKeyWordStats: any;
-export class PubmeddataComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-    // var ctx = document.getElementById('vaccinedata');
-    var data = getKeyWordStats();
-    var myChart = new Chart("pubmedChart", {
-      type: 'bar',
-      data: data
->>>>>>> Stashed changes:COVID-Dashboard/src/app/pubmeddata/pubmeddata.component.ts
       },
       options: {
         scales: {
