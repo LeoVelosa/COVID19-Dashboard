@@ -44,9 +44,9 @@ async function getTweets(firebase, id, name, addToName, reset) {
 
     // Styles the html, cannot use card-component.css to do this, so it must be done here
     tweeters.innerHTML += '<style> ' +
-      'div.tweet{ width: 100%; border: 3px solid grey; text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
+      'div.tweet{ width: 100%; border: 3px solid grey;  text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
       'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-      'p.text, div.text {color:black;}' +
+      'p.text, div.text {text-size-adjust: auto; color:black;}' +
       '</style>'
 
     //For every Json file in the collection
@@ -86,11 +86,11 @@ async function getTweets(firebase, id, name, addToName, reset) {
         //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
         tweeters.innerHTML += '<div class="tweet">' +
           //Adds profile pic, twitter name and handle
-          '<img src=' + doc.data().user.profile_image_url_https + ' class="profile"> <br> <p class="text"> &nbsp;&nbsp;' + doc.data().user.name + ' &nbsp;@' + doc.data().user.screen_name + ' </p>' +
+          '<img src=' + doc.data().user.profile_image_url_https + ' class="profile" width="14.4%";  height="24%"> <br> <p class="text"> &nbsp;&nbsp;' + doc.data().user.name + ' &nbsp;@' + doc.data().user.screen_name + ' </p>' +
 
           //Adds text from tweet
           '<br> <div class="text">' + doc.data().text + '</div> <br> <div class="text">Source:' +
-        '<br> <a href="' + link + '" style="word-wrap: break-word;" target="_blank">'+ link
+        '<a href="' + link + '" style="word-wrap: break-word;" target="_blank"> '+ link
         + '</a></div></div>';
       }
 
@@ -98,11 +98,11 @@ async function getTweets(firebase, id, name, addToName, reset) {
     })}) ;
   }
   if(document.getElementById(id).innerHTML== '<style> ' +
-    'div.tweet{ width: 100%; border: 3px solid grey; text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
+    'div.tweet{ width: 100%; border: 3px solid grey;  text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
     'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-    'p.text, div.text {color:black;}' +
+    'p.text, div.text {text-size-adjust: auto; color:black;}' +
     '</style>'){
-    document.getElementById(id).innerHTML ='<div style="border-radius: 10px; font-size:2em;   line-height: 1.4em; display: flex;  justify-content: center; align-items: center; text-align: center; border: 3px solid grey ;">There Are No Tweets Available For This County</div>';
+    document.getElementById(id).innerHTML ='<div style="border-radius: 10px; font-size: 2.75vmin;   line-height: 140%; display: flex;  justify-content: center; align-items: center; text-align: center; border: 3px solid grey ;">There Are No Tweets Available For This County</div>';
   }
 
 }

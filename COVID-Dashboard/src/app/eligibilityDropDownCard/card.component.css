@@ -18,7 +18,7 @@
     text-align: left;
     flex-grow: 1;
     display: flex;
-    max-height: 1110%;
+    max-height: 100%;
     justify-content: left;
  }
 
