@@ -35,6 +35,8 @@ import { NgxSpinner, NgxSpinnerComponent, NgxSpinnerModule } from 'ngx-spinner';
 import { ListofComorbiditiesComponent } from './listof-comorbidities/listof-comorbidities.component';
 import { VaccinedataComponent } from './vaccinedata/vaccinedata.component';
 import { VaccinetypedataComponent } from './vaccinetypedata/vaccinetypedata.component';
+import { PubmeddataComponent } from './pubmeddata/pubmeddata.component';
+import { PubmeddropdownComponent } from './pubmeddropdown/pubmeddropdown.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { VaccinetypedataComponent } from './vaccinetypedata/vaccinetypedata.comp
     JandJComponent,
     ListofComorbiditiesComponent,
     VaccinedataComponent,
-    VaccinetypedataComponent
+    VaccinetypedataComponent,
+    PubmeddataComponent,
+    PubmeddropdownComponent
   ],
   imports: [
     BrowserModule,
