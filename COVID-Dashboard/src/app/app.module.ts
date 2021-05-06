@@ -34,12 +34,10 @@ import { JandJComponent } from './jand-j/jand-j.component';
 import { NgxSpinner, NgxSpinnerComponent, NgxSpinnerModule } from 'ngx-spinner';
 import { ListofComorbiditiesComponent } from './listof-comorbidities/listof-comorbidities.component';
 import { VaccinedataComponent } from './vaccinedata/vaccinedata.component';
-<<<<<<< Updated upstream
 import { VaccinetypedataComponent } from './vaccinetypedata/vaccinetypedata.component';
-=======
+
 import { PubmeddataComponent } from './pubmeddata/pubmeddata.component';
 import { PubmedDropDownCardComponent } from './pubmed-drop-down-card/pubmed-drop-down-card.component';
->>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -55,12 +53,11 @@ import { PubmedDropDownCardComponent } from './pubmed-drop-down-card/pubmed-drop
     JandJComponent,
     ListofComorbiditiesComponent,
     VaccinedataComponent,
-<<<<<<< Updated upstream
-    VaccinetypedataComponent
-=======
+
+    VaccinetypedataComponent,
+PubmeddataComponent,
     PubmeddataComponent,
     PubmedDropDownCardComponent
->>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,

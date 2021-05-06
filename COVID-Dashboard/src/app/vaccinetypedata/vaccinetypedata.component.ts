@@ -7,7 +7,6 @@ Chart.register(...registerables);
   templateUrl: './vaccinetypedata.component.html',
   styleUrls: ['./vaccinetypedata.component.css']
 })
-<<<<<<< Updated upstream:COVID-Dashboard/src/app/vaccinetypedata/vaccinetypedata.component.ts
 export class VaccinetypedataComponent implements OnInit {
   constructor() { }
 
@@ -29,39 +28,26 @@ export class VaccinetypedataComponent implements OnInit {
             8444321,
           ],
           //backgroundColor: 'rgba(0,255,0,0.2)',
-          
+
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
-            
-            
+
+
             'rgba(153, 102, 255, 0.2)',
             'rgba(255, 159, 64, 0.2)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
-            
-            
+
+
             'rgba(153, 102, 255, 1)',
             'rgba(255, 159, 64, 1)'
           ],
           borderWidth: 1
-          
+
         }]
-=======
-declare const getKeyWordStats: any;
-export class PubmeddataComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-    // var ctx = document.getElementById('vaccinedata');
-    var data = getKeyWordStats();
-    var myChart = new Chart("pubmedChart", {
-      type: 'bar',
-      data: data
->>>>>>> Stashed changes:COVID-Dashboard/src/app/pubmeddata/pubmeddata.component.ts
       },
       options: {
         scales: {
