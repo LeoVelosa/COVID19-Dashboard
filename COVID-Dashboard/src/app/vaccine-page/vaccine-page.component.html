@@ -22,12 +22,12 @@
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
       <app-card title="Youtube">
         <iframe id="player" type="text/html" width="430" height="250"
-          src="http://www.youtube.com/embed/1Mf3ZWmK1wM?enablejsapi=1&origin" frameborder="0">
+          src="https://www.youtube.com/embed/1Mf3ZWmK1wM?enablejsapi=1&origin" frameborder="0">
         </iframe>
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
-      <app-card title="Vaccinations">
+      <app-card title="Vaccinations in the US">
         <div class="updatedInfo">Last updated: 5/5/2021</div>
         <app-vaccinedata class="under"></app-vaccinedata>
       </app-card>
@@ -43,7 +43,7 @@
       </app-elig-dd-card>
     </mat-grid-tile>
     <mat-grid-tile>
-      <app-card title="Vaccinations">
+      <app-card title="Vaccinations by Type">
         <div class="updatedInfo">Last updated: 5/5/2021</div>
         <app-vaccinetypedata class="under"></app-vaccinetypedata>
       </app-card>
