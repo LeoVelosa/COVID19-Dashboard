@@ -21,11 +21,21 @@ export class PubmeddataComponent implements OnInit {
       type: 'bar',
       data: {
         labels: [
-          'covid'
+          // 'covid',
+          'symptoms',
+          'vaccine',
+          'molecular_epidemiology',
+          'clinical'
         ],
         datasets: [{
           label: 'Papers Published On Covid By Keyword',
-          data: ['33932943'],
+          data: [
+            // '33932943',
+            '37092',
+            '9452',
+            '2236',
+            '3995'
+          ],
           backgroundColor: 'rgba(0,255,0,0.2)',
           borderWidth: 2,
           /*

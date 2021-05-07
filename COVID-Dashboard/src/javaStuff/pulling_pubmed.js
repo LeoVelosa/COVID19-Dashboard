@@ -75,8 +75,12 @@ class IdList {
 }
 class UploadToFirebase {
   async uploadJSONToFirestore(my_json, collection_name, doc_name) {
+    if (collection_name == null && doc_name == null) {
+      collection_name = "pubmed_statistics";
+      doc_name = "covid_symptoms";
+    }
     if (doc_name.includes('+')) {
-      doc_name = doc_name.substr(doc_name.indexOf('+'))
+      doc_name = doc_name.substr(doc_name.indexOf('+') + 1)
     }
     console.log("Currently uploading the json to Firebase")
     // console.log("JSON", my_json, JSON.stringify(my_json));
@@ -139,7 +143,9 @@ class MyXMLHTTPRequest {
   }
   // Creates a xml http request based on a url
   // params: sub_url, the sub category (i.e. if main_url is sample.com, then the additional results would be "keyword=34/")
-  makeSearchQuest(sub_url) {
+  makeSearchQuest(sub_url, keyword) {
+    if (keyword == null)
+      keyword = 'covid';
     const xhr = new XMLHttpRequest(),
       method = "GET",
       responseType = "document";
@@ -147,7 +153,7 @@ class MyXMLHTTPRequest {
     xhr.open(method, url, false);
     xhr.onload = function() {
       var myDocParser = new DocumentParsers();
-      var ids = myDocParser.getIDs(myDocParser.getTextFromXMLHTTPResponse(xhr));
+      var ids = myDocParser.getIDs(myDocParser.getTextFromXMLHTTPResponse(xhr), keyword);
       // ("Ids", ids);
       // console.log("On load!");
       // console.log(this);
@@ -211,7 +217,7 @@ class MyXMLHTTPRequest {
       collection_name = "covid_pubmed_search";
     }
     // gets the ids and uploads them to Firebase
-    this.makeSearchQuest(this.pubmedUrls.getIDsforSearchResults(search_query, "pubmed"));
+    this.makeSearchQuest(this.pubmedUrls.getIDsforSearchResults(search_query, "pubmed"), search_query);
     // console.log(search_query + "_ids");
     var searchRef = db.collection(collection_name).doc(search_query + '_ids');
     // [START get_document]
@@ -274,7 +280,10 @@ class MyXMLHTTPRequest {
 class DocumentParsers {
   constructor() {}
   // From a string object, loops through
-  getIDs(my_string) {
+  getIDs(my_string, keyword) {
+    if (keyword == null) {
+      keyword = 'covid';
+    }
     // Create a re object to find the numbers with 8 digits
     let re = /<Id>(.*?)<\/Id>/g
     var numbersFromString = Array.from(my_string.match(re));
@@ -290,9 +299,9 @@ class DocumentParsers {
       }
     }
     console.log("Initial id list", ids);
-    var myIDs = new IdList(ids, "covid_pubmed_search", "covid_ids");
+    var myIDs = new IdList(ids, "covid_pubmed_search", keyword+ '_ids');
     console.assert(db != null);
-    myIDs.uploadIdsToFirebase(db, "covid_pubmed_search", my_string + '_ids');
+    myIDs.uploadIdsToFirebase(db, "covid_pubmed_search", keyword + '_ids');
     // new ReadingAndWritingFiles().writeToaFile(ids, "ids.txt");
     return ids;
   }
@@ -472,8 +481,10 @@ new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywor
 */
 
 
-for (var keyword in keywords) {
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
-}
+//for (var i = 0; i < keywords.length; i++) {
+i = 4;
+  keyword = keywords[i];
+  // new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
+//}
 
