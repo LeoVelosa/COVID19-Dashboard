@@ -44,7 +44,7 @@ async function getTweets(firebase, id, name, addToName, reset) {
 
     // Styles the html, cannot use card-component.css to do this, so it must be done here
     tweeters.innerHTML += '<style> ' +
-      'div.tweet{ width: 100%; border: 3px solid grey; text-align: left;  padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
+      'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
       'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
       'p.text, div.text {text-size-adjust: auto; color:black;}' +
       '</style>'
