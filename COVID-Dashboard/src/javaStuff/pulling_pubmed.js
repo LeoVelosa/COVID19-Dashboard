@@ -79,9 +79,6 @@ class UploadToFirebase {
       collection_name = "pubmed_statistics";
       doc_name = "covid_symptoms";
     }
-    if (doc_name.includes('+')) {
-      doc_name = doc_name.substr(doc_name.indexOf('+') + 1)
-    }
     console.log("Currently uploading the json to Firebase")
     // console.log("JSON", my_json, JSON.stringify(my_json));
     await db.collection(collection_name).doc(doc_name).set(my_json).then(response => {
@@ -223,7 +220,7 @@ class MyXMLHTTPRequest {
     // [START get_document]
     // [START firestore_data_get_as_map]
     console.log("Getting the document from the search results");
-    var ids =await searchRef.get().then(response => {
+    var ids =await searchRef.get(search_query + '_ids').then(response => {
       response = (response.data());
       // console.log("Got this document here" + response);
       var ids = response.ids;
@@ -232,9 +229,10 @@ class MyXMLHTTPRequest {
     }).catch(err => {
       console.log(err);
     });
+    console.log(ids);
     var id_list = ids;
-    // console.log("Id List", id_list)
-    await this.getSearchResults(id_list, "covid").then(response => {
+    console.log("Id List", id_list)
+    await this.getSearchResults(id_list, search_query).then(response => {
       console.log("Success!");
     }).catch(err => {
       console.log(err);
@@ -481,10 +479,11 @@ new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywor
 */
 
 
-//for (var i = 0; i < keywords.length; i++) {
-i = 4;
+for (var i = 0; i < keywords.length; i++) {
   keyword = keywords[i];
-  // new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
   new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
-//}
+
+}
+
 

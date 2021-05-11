@@ -1,3 +1,10 @@
+const keywords = [
+  'covid',
+  'covid+symptoms',
+  'covid+vaccine',
+  'covid+molecular+epidemiology',
+  'covid+clinical'
+]
 async function initializeFirebase(firebase) {
   if(firebase.apps.length==0){
     //console.log(firebase.app.length);
@@ -13,7 +20,7 @@ async function initializeFirebase(firebase) {
     firebase.initializeApp(firebaseConfig);
   }
   db = firebase.firestore();
-  await getAllSearches(db);
+  await getAllSearches(db, 'covid');
 }
 async function getDocument(db, collection_name, doc_id) {
   var searchRef = db.collection(collection_name).doc(doc_id);
@@ -62,8 +69,125 @@ async function test() {
 
 }
 
+async function getSearch(db, search_query) {
+  if (search_query.includes('+')) {
+    search_query = search_query.substring(search_query.indexOf('+') + 1)
+  }
+  print(search_query)
+  console.log("Preparing to add the document to the search results")
+  const abstracts = document.getElementById("covid_pubmed_search");
+  console.log("Abstracts in top", abstracts);
+  var data = await getDocument(db, "covid_pubmed_search", search_query).then(response => {
+    return response;
+  }).catch(err => {
+    console.log(err);
+  });
+  // data = JSON.stringify(data);
+  console.log('Link: https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6));
+  /*abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
+  'td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}' +
+    'tr:nth-child(odd)' +
+  '{background-color: #dddddd;}</style>';
+abstracts.innerHTML += '<table>';
+  for (var i = 0; i < data.length; i++) {
+    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[","").replace("]", "");
+    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"","");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._);
+    /*
+    // console.log(<a href='+ link + '>' + doi_with_label +'</a>');
+    abstracts.innerHTML += '<div id=search_result><p class="text"><div class="text">' +
+    '<h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author +
+      doi_with_label + '</p></div></div>';
+    abstracts.innerHTML +=
+      // adds title, author, doi
+      '<tr> <h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author + doi_with_label + '</tr>';
+  }
+  abstracts.innerHTML += '</table>';
+   */
+  console.log(abstracts);
 
+  abstracts.innerHTML += '<style> ' +
+    'div.title, p.title {color:black;}' +
+    'div.author, p.author {color:black}' +
+    '</style>';
+
+  for (var i = 0; i < data.length; i++) {
+
+    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[", "").replace("]", "");
+    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"", "");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._);
+
+
+    abstracts.innerHTML += '<div id="paper">' +
+      "<div id='title'>" + '<a href=' + link + '>' + title + '</a>' + ' </div>' + "<div id='author'>" +
+      author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
+
+  }
+}
 async function getAllSearches(db) {
+  var search_query = keywords[0];
+  if (search_query.includes('+')) {
+    search_query = search_query.substring(search_query.indexOf('+') + 1)
+  }
+  print(search_query)
+  console.log("Preparing to add the document to the search results")
+  const abstracts = document.getElementById("covid_pubmed_search");
+  console.log("Abstracts in top", abstracts);
+  var data = await getDocument(db, "covid_pubmed_search", search_query).then(response => {
+    return response;
+  }).catch(err => {
+    console.log(err);
+  });
+  // data = JSON.stringify(data);
+  console.log('Link: https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6));
+  /*abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
+  'td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}' +
+    'tr:nth-child(odd)' +
+  '{background-color: #dddddd;}</style>';
+abstracts.innerHTML += '<table>';
+  for (var i = 0; i < data.length; i++) {
+    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[","").replace("]", "");
+    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"","");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._);
+    /*
+    // console.log(<a href='+ link + '>' + doi_with_label +'</a>');
+    abstracts.innerHTML += '<div id=search_result><p class="text"><div class="text">' +
+    '<h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author +
+      doi_with_label + '</p></div></div>';
+    abstracts.innerHTML +=
+      // adds title, author, doi
+      '<tr> <h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author + doi_with_label + '</tr>';
+  }
+  abstracts.innerHTML += '</table>';
+   */
+  console.log(abstracts);
+
+  abstracts.innerHTML += '<style> ' +
+    'div.title, p.title {color:black;}' +
+    'div.author, p.author {color:black}' +
+    '</style>';
+  print("Data length", data.length);
+  for (var i = 0; i < data.length; i++) {
+
+    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[", "").replace("]", "");
+    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"", "");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._);
+
+
+    abstracts.innerHTML += '<div id="paper">' +
+      "<div id='title'>" + '<a href=' + link + '>' + title + '</a>' + ' </div>' + "<div id='author'>" +
+      author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
+
+  }
+  /*
+  for (var k in keywords) {
+    getSearch(db, k);
+  }
+  /*
   console.log("Preparing to add the document to the search results")
   const abstracts = document.getElementById("covid_pubmed_search");
   console.log("Abstracts in top", abstracts);
@@ -113,7 +237,7 @@ abstracts.innerHTML += '<table>';
     abstracts.innerHTML += '<div id="paper">' +
       "<div id='title'>" + '<a href=' + link + '>' + title + '</a>' + ' </div>' + "<div id='author'>" +
       author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
-    
+
   }
 
 }
