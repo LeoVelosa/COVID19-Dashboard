@@ -291,12 +291,11 @@ abstracts.innerHTML += '<table>';
 
   for (var i = 0; i < data.length; i++) {
     console.log("We're getting the", i, "th paper");
-    var title = JSON.stringify(data[i].Item[5]._).replace("\"", '').replace("[", ).replace("]", '');
-    var author = JSON.stringify(data[i].Item[4]._).replace("\"", '').replace("[", ).replace("]", '');
+    var title = JSON.stringify(data[i].Item[5]._).replaceAll("\"", '').replaceAll("[", ).replace("]", '');
     var author_list = data[i].Item[3].Item;
     var authors = "";
     for (var j = 0; j < author_list.length; j++) {
-      authors += JSON.stringify(author_list[j]._);
+      authors += JSON.stringify(author_list[j]._).replaceAll("\"", "");
       if (j === author_list.length - 2) {
         authors += ' & '
       } else if (j !== author_list.length - 1) {
@@ -306,10 +305,10 @@ abstracts.innerHTML += '<table>';
     }
     console.log(authors);
 
-    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"", "");
-    var doi_with_label = JSON.stringify(data[0].Item[23]._);
-    var pubdate = JSON.stringify(data[0].Item[0]._);
-    var periodical = JSON.stringify(data[0].Item[2]._);
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replaceAll("\"", "");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._).replaceAll("\"", '');
+    var pubdate = JSON.stringify(data[0].Item[0]._).replaceAll('\"', '');
+    var periodical = JSON.stringify(data[0].Item[2]._).replaceAll("\"", "");
     var issue_number = JSON.stringify(data[0].Item[6]._);
     console.log("Issue number and volume", JSON.stringify(data[0].Item[6]));
     abstracts.innerHTML +=

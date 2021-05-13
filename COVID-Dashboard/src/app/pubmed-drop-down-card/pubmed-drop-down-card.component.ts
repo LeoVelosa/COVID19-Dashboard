@@ -3,23 +3,23 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
 declare function getKeywords(): any;
-declare function getSearches(firebase: any, id: any, name: any, addToName: any, reset: boolean): any;
+declare function getSearches(firebase: any, search_query: any): any;
 
 @Component({
   selector: 'app-elig-dd-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  templateUrl: './pubmed-drop-down-card.component.html',
+  styleUrls: ['./pubmed-drop-down-card.component.css']
 })
 export class PubmedDropDownCardComponent implements OnInit {
-  public countyTweets = getKeywords();
-  county = this.countyTweets[0];
+  public covidKeywords = getKeywords();
+  var current_keyword = this.covidKeywords[0];
   //Cannot use title, unless you want the tooltip to be the same as title
   @Input() titleOfCard!: string;
   /*Gets the function from js.js  MUST BE LIKE THIS*/
   async ngOnInit(): Promise<void> {
   }
-  getTweetByCounty(): void{
-    getTweets(firebase, 'test2', this.county , 'Eligibility', true);
+  getSearchByKeyword(): void{
+    getSearches(firebase, 'covid+vaccines');
   }
 
 }

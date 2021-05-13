@@ -293,7 +293,7 @@ class DocumentParsers {
       let re = "\\b\\d{8}\\b";
       ids[count] = parseInt(num.match(re));
       count += 1;
-      if (count >= 5) {
+      if (count >= 10) {
         break;
       }
     }
@@ -322,7 +322,6 @@ class PubMedURLs {
 
   }
   getIDsforSearchResults(keyword, database) {
-    "{} AND English[Language]".format(keyword);
     return 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
   }
   downloadResultFromIDList(id_list, database) {
@@ -489,13 +488,15 @@ console.log(new PubMedURLs().downloadResultFromIDList([
   33964602,
   33964591], "pubmed"));
 
-new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywords[4], "pubmed_statistics");
+// new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywords[4], "pubmed_statistics");
 for (var i = 0; i < keywords.length; i++) {
-  keyword = keywords[i];
+  var keyword = keywords[i];
   console.log(keyword);
-  // new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
-
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 }
-
+/*
+for (var i = 0; i < keywords.length; i++) {
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
+}
+*/
 
