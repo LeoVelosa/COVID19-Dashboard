@@ -114,7 +114,7 @@ class MyXMLHTTPRequest {
     this.main_url = main_url;
     this.pubmedUrls = new PubMedURLs();
   };
-  ajax(url /* ,params */, callback) {
+  ajax(url /* ,params */, callback, search_query) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = async function () {
       // return if not ready state 4
@@ -129,11 +129,12 @@ class MyXMLHTTPRequest {
       }
 
       // return data
-      console.log(this.responseText)
+      // console.log(this.responseText)
       var data = await new XMLToJSONParser().parseXml(new DocumentParsers().getTextFromXMLHTTPResponse(this)).then(response => {
+        console.log(response);
         return response;
       });
-      callback && callback(data, "pubmed_statistics", "covid");
+      callback && callback(data, "pubmed_statistics", search_query);
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
@@ -206,7 +207,7 @@ class MyXMLHTTPRequest {
     xhr.send();
      */
     this.ajax(this.main_url + (new PubMedURLs().getSearchStatistics(search_query)),
-      new UploadToFirebase().uploadJSONToFirestore);
+      new UploadToFirebase().uploadJSONToFirestore, search_query);
   }
 
   async uploadSearchResultsToFirestore(search_query, collection_name) {
@@ -303,22 +304,26 @@ class DocumentParsers {
     // new ReadingAndWritingFiles().writeToaFile(ids, "ids.txt");
     return ids;
   }
+  // Parses the response text into a format that the json parser can read
   getTextFromXMLHTTPResponse(xmlhttp){
     // console.log("Response text", xmlhttp);
     var txt=xmlhttp.responseText + "";
     txt.replace(/<&#91;^>&#93;*>/g, "");
     //Convert txt into a string so that I can use it
-    console.log("Text", txt);
+    // console.log("Text", txt);
     return txt;
   }
 }
 class PubMedURLs {
   constructor() {
     this.main_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
-    this.apiKey = '/api_key=da3f695a22cf95ba939d5c477fe843a6e508'
+    this.apiKey = '/api_key=da3f695a22cf95ba939d5c477fe843a6e508';
+    this.lang = '+AND+English[language]'
+
   }
   getIDsforSearchResults(keyword, database) {
-    return 'esearch.fcgi?db=' + database + '&term=' + keyword + this.apiKey;
+    "{} AND English[Language]".format(keyword);
+    return 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
   }
   downloadResultFromIDList(id_list, database) {
     console.log(id_list.toString());
@@ -464,12 +469,12 @@ var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubme
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
 */
-keywords = [
-  'covid',
-  'covid+symptoms',
+const keywords = [
   'covid+vaccine',
-  'covid+molecular+epidemiology',
-  'covid+clinical'
+  'covid+vaccine+symptoms',
+  'covid+vaccine+immunological',
+  'covid+vaccine+molecular+epidemiology',
+  'covid+vaccine+clinical'
 ]
 console.log(new PubMedURLs().getSearchStatistics('covid+symptoms'));
 /*
@@ -478,10 +483,11 @@ new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(k
 new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
 */
 
-
+new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywords[4], "pubmed_statistics");
 for (var i = 0; i < keywords.length; i++) {
   keyword = keywords[i];
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+  console.log(keyword);
+  // new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
   new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
 
 }

@@ -1,10 +1,15 @@
+// import firebase from "firebase";
+// import {Chart} from "chart.js";
+
 const keywords = [
-  'covid',
-  'covid+symptoms',
+  'covid+vaccine+symptoms',
+  'covid+vaccine+immunological',
+  'covid+vaccine+molecular+epidemiology',
+  'covid+vaccine+clinical',
   'covid+vaccine',
-  'covid+molecular+epidemiology',
-  'covid+clinical'
 ]
+// Where each pubmed statistic is stored
+const statistics_collection = 'pubmed_statistics';
 async function initializeFirebase(firebase) {
   if(firebase.apps.length==0){
     //console.log(firebase.app.length);
@@ -19,8 +24,131 @@ async function initializeFirebase(firebase) {
     };
     firebase.initializeApp(firebaseConfig);
   }
-  db = firebase.firestore();
+  var db = firebase.firestore();
   await getAllSearches(db, 'covid');
+}
+async function createChartVisualization(firebase, Chart) {
+  if(firebase.apps.length==0){
+    //console.log(firebase.app.length);
+    var firebaseConfig = {
+      apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+      authDomain: "covid-dashboard-10efe.firebaseapp.com",
+      projectId: "covid-dashboard-10efe",
+      storageBucket: "covid-dashboard-10efe.appspot.com",
+      messagingSenderId: "933584669394",
+      appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+      measurementId: "G-XVWT1E6R8B"
+    };
+    firebase.initializeApp(firebaseConfig);
+  }
+  var db = firebase.firestore();
+  const chart_data = await getSearchStatisticsDataFromFirebase(firebase).then(response => {
+    console.log("Retrieved", response);
+    return response;
+  });
+  const pubmedChart = new Chart('pubmedChart', {
+    type: 'bar',
+    data: {
+      labels: chart_data[0],
+      datasets: [{
+        label: 'Papers Published On Covid Vaccine By Keyword',
+        data: chart_data[1],
+        backgroundColor: 'rgba(0,255,0,0.2)',
+        borderWidth: 2,
+        /*
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+        */
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  const chartElement = document.getElementById("pubmedChart");
+}
+async function getSearchStatisticsDataFromFirebase(firebase) {
+  if(firebase.apps.length==0){
+    //console.log(firebase.app.length);
+    var firebaseConfig = {
+      apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+      authDomain: "covid-dashboard-10efe.firebaseapp.com",
+      projectId: "covid-dashboard-10efe",
+      storageBucket: "covid-dashboard-10efe.appspot.com",
+      messagingSenderId: "933584669394",
+      appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+      measurementId: "G-XVWT1E6R8B"
+    };
+    firebase.initializeApp(firebaseConfig);
+  }
+  var db = firebase.firestore();
+  // Creates a list of both keywords and statistics
+  var tuple = []
+  var num_entries = []
+  var new_key_words = []
+  for (var i = 0; i < keywords.length; i++) {
+    var key = keywords[i];
+    var temp = keywords[i];
+    console.log("Keyword", key, "Replaced in graph with", temp);
+    if (key === 'covid+vaccine') {
+      temp = 'Total'
+    } else {
+      console.log("Key is not total");
+      temp = temp.replaceAll('covid+vaccine', '');
+      temp = temp.replaceAll('+', ' ');
+      console.log(temp);
+    }
+    new_key_words.push(temp)
+    var data = await getStatsDocument(db, statistics_collection, key).then(response => {
+      // console.log(response.data().Result);
+      return response.data();
+    }).catch(err => {
+      console.log(err);
+    });
+    console.log(data.Result.eGQueryResult[0].ResultItem[0].Count[0]);
+
+    num_entries.push(data.Result.eGQueryResult[0].ResultItem[0].Count[0]);
+  }
+  tuple.push(new_key_words, num_entries);
+  return tuple;
+}
+
+async function getStatsDocument(db, collection_name, doc_id) {
+    var searchRef = db.collection(collection_name).doc(doc_id);
+    console.log(collection_name, doc_id);
+    // [START get_document]
+    // [START firestore_data_get_as_map]
+    // console.log("Getting the document from the search results");
+    var doc =await searchRef.get().then(response => {
+      // console.log("Got this document here" + response.data());
+      // console.log("Document data", response.data());
+      var search_results = response;
+      // console.log("Successfully retrieved", search_results);
+      return search_results;
+    }).catch(err => {
+      console.log(err);
+    });
+    console.log(doc);
+    return doc;
 }
 async function getDocument(db, collection_name, doc_id) {
   var searchRef = db.collection(collection_name).doc(doc_id);
@@ -70,9 +198,6 @@ async function test() {
 }
 
 async function getSearch(db, search_query) {
-  if (search_query.includes('+')) {
-    search_query = search_query.substring(search_query.indexOf('+') + 1)
-  }
   print(search_query)
   console.log("Preparing to add the document to the search results")
   const abstracts = document.getElementById("covid_pubmed_search");
@@ -128,9 +253,6 @@ abstracts.innerHTML += '<table>';
 }
 async function getAllSearches(db) {
   var search_query = keywords[0];
-  if (search_query.includes('+')) {
-    search_query = search_query.substring(search_query.indexOf('+') + 1)
-  }
   print(search_query)
   console.log("Preparing to add the document to the search results")
   const abstracts = document.getElementById("covid_pubmed_search");
@@ -176,11 +298,14 @@ abstracts.innerHTML += '<table>';
     var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
     var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"", "");
     var doi_with_label = JSON.stringify(data[0].Item[23]._);
+    var pubdate = '(2019)';
+    var periodical = 'PubMed';
+    var issue_number = '13';
 
-
-    abstracts.innerHTML += '<div id="paper">' +
+    abstracts.innerHTML += '<div id="paper">' + "<div id='author'>" +
+      author + "</div>" + "<div id='pubdate'>" + pubdate + "</div>" +
       "<div id='title'>" + '<a href=' + link + '>' + title + '</a>' + ' </div>' + "<div id='author'>" +
-      author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
+      periodical + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
 
   }
   /*
@@ -221,24 +346,6 @@ abstracts.innerHTML += '<table>';
    */
   console.log(abstracts);
 
-  abstracts.innerHTML += '<style> ' +
-    'div.title, p.title {color:black;}' +
-    'div.author, p.author {color:black}' +
-    '</style>';
-
-  for (var i = 0; i < data.length; i++) {
-
-    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[", "").replace("]", "");
-    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
-    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"", "");
-    var doi_with_label = JSON.stringify(data[0].Item[23]._);
-
-
-    abstracts.innerHTML += '<div id="paper">' +
-      "<div id='title'>" + '<a href=' + link + '>' + title + '</a>' + ' </div>' + "<div id='author'>" +
-      author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
-
-  }
 
 }
 // console.log(getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi'));
