@@ -334,5 +334,30 @@ var my_Urls = new PubMedURLs().downloadResultFromIDList(my_list, 'pubmed');
 var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubmed");
 
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
+Updated upstream
 new MyXMLHTTPRequest().getSearchResults(my_list);
 */
+new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
+
+keywords = [
+  'covid+vaccine',
+  'covid+vaccine+symptoms',
+  'covid+vaccine+immunology',
+  'covid+vaccine+molecular+epidemiology',
+  'covid+vaccine+clinical'
+]
+console.log(new PubMedURLs().getSearchStatistics('covid+symptoms'));
+/*
+var keyword = 'covid,symptoms';
+new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
+*/
+
+
+for (var i = 0; i < keywords.length; i++) {
+  keyword = keywords[i];
+  // new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
+
+}
+
