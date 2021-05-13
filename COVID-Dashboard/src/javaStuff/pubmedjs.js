@@ -258,6 +258,7 @@ async function getAllSearches(db) {
   const abstracts = document.getElementById("covid_pubmed_search");
   console.log("Abstracts in top", abstracts);
   var data = await getDocument(db, "covid_pubmed_search", search_query).then(response => {
+    console.log(response);
     return response;
   }).catch(err => {
     console.log(err);
@@ -287,25 +288,34 @@ abstracts.innerHTML += '<table>';
    */
   console.log(abstracts);
 
-  abstracts.innerHTML += '<style> ' +
-    'div.title, p.title {color:black;}' +
-    'div.author, p.author {color:black}' +
-    '</style>';
-  print("Data length", data.length);
-  for (var i = 0; i < data.length; i++) {
 
-    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[", "").replace("]", "");
-    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
+  for (var i = 0; i < data.length; i++) {
+    console.log("We're getting the", i, "th paper");
+    var title = JSON.stringify(data[i].Item[5]._).replace("\"", '').replace("[", ).replace("]", '');
+    var author = JSON.stringify(data[i].Item[4]._).replace("\"", '').replace("[", ).replace("]", '');
+    var author_list = data[i].Item[3].Item;
+    var authors = "";
+    for (var j = 0; j < author_list.length; j++) {
+      authors += JSON.stringify(author_list[j]._);
+      if (j === author_list.length - 2) {
+        authors += ' & '
+      } else if (j !== author_list.length - 1) {
+        authors += ',';
+      }
+      authors += ' ';
+    }
+    console.log(authors);
+
     var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"", "");
     var doi_with_label = JSON.stringify(data[0].Item[23]._);
-    var pubdate = '(2019)';
-    var periodical = 'PubMed';
-    var issue_number = '13';
-
-    abstracts.innerHTML += '<div id="paper">' + "<div id='author'>" +
-      author + "</div>" + "<div id='pubdate'>" + pubdate + "</div>" +
-      "<div id='title'>" + '<a href=' + link + '>' + title + '</a>' + ' </div>' + "<div id='author'>" +
-      periodical + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
+    var pubdate = JSON.stringify(data[0].Item[0]._);
+    var periodical = JSON.stringify(data[0].Item[2]._);
+    var issue_number = JSON.stringify(data[0].Item[6]._);
+    console.log("Issue number and volume", JSON.stringify(data[0].Item[6]));
+    abstracts.innerHTML +=
+      authors +
+      " (" + pubdate + ") " + '<a href=' + link + '>' + ' ' + title + '</a>' + ' ' +
+      periodical +  " (" + issue_number + ") " + '<a href=' + link + '>' + ' ' + doi_with_label + '</a>' + '<p></p>';
 
   }
   /*

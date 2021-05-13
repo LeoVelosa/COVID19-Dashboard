@@ -482,6 +482,12 @@ var keyword = 'covid,symptoms';
 new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
 */
+console.log(new PubMedURLs().downloadResultFromIDList([
+  33964818,
+  33964815,
+  33964720,
+  33964602,
+  33964591], "pubmed"));
 
 new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywords[4], "pubmed_statistics");
 for (var i = 0; i < keywords.length; i++) {
