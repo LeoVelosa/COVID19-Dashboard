@@ -46,7 +46,7 @@ async function getTweets(firebase, id, name, addToName, reset) {
     tweeters.innerHTML += '<style> ' +
       'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
       'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-      'p.text, div.text {text-size-adjust: auto; color:black;}' +
+      'p.text, div.text {text-size-adjust: auto;}' +
       '</style>'
 
     //For every Json file in the collection

@@ -4,10 +4,7 @@ var fs = require('fs');
 var firebase = require('firebase');
 const {ajax} = require("rxjs/ajax");
 /**
- * TODO: integrate it with pubmed_to_firestore so that the data is uploaded directly to Firebase. Currently just saves to a file.
- * */
-/**
- * Pubmed2.js
+ * pulling_pubmed.js
  * Loads a webpage from PubMed Entrez API and runs it
  * Classes = MyXMLHTTPRequest: creates an xml http request based on a main url (the database's main page)
  *          because of asynchronous requests, each xmlhttprequest function creates a different xmlhttprequest object for separate uses

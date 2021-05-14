@@ -72,8 +72,9 @@
   font-size: 80%;
   font-style: italic;
   font-weight: lighter;
-  z-index: 1;
+  z-index: 0;
 }
 .under {
   position: relative;
+  z-index: 1;
 }

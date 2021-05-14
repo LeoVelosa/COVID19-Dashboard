@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavComponent } from './nav.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -23,6 +24,7 @@ describe('NavComponent', () => {
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
+        MatSlideToggleModule
       ]
     }).compileComponents();
   }));

@@ -21,7 +21,7 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
       <app-card title="Youtube">
-        <iframe id="player" type="text/html" width="430" height="250"
+        <iframe id="player" type="text/html" maxWidth="100%" height="250"
           src="https://www.youtube.com/embed/1Mf3ZWmK1wM?enablejsapi=1&origin" frameborder="0">
         </iframe>
       </app-card>
