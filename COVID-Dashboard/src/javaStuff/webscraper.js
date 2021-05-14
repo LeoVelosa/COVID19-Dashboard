@@ -1,3 +1,4 @@
+//@LV_OneLess unused code
 const rp = require('request-promise');
 const $ = require('cheerio');
 const url = 'https://www.google.com/search?sxsrf=ALeKk01p-6H2nIZYsEs-Dfwiq1ucQ4Wtwg:1620240981977&q=COVID-19&si=AHBsk9vsNMN-5CnKWo3cqxYPWtR4rSuwLYnEEZdxxTCy9atbcIAIuYDq5ucrVvmQU502waZdHLZaapPcpHI_0RXD_QY_aZN1eUJ1WPO0rXG039qFdJ9xJrA%3D&biw=768&bih=720#wptab=s:H4sIAAAAAAAAAONgVuLVT9c3NMwySk6OL8zJecTozS3w8sc9YSmnSWtOXmO04eIKzsgvd80rySypFNLjYoOyVLgEpVB1ajBI8XOhCvHsYuL2SE3MKckILkksKV7EKpicX5Sfl1iWWVRarFAMEgMAoubRkIEAAAA';
