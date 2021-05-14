@@ -1,3 +1,4 @@
+//@JM_OneLess unused code (This was a previous itteration of one of my codes that I kept in here to make sure I have it just in case I needed it again)
 
 //This is the function you will be calling in card-component.ts, so it puts the data into the id's of
 //vaccine-page that have the same id in the <div id=''> in vaccine-page.component.html
