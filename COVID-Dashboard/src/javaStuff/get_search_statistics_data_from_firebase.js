@@ -1,4 +1,4 @@
-const my_keywords = [
+const my_pubmedKeywords = [
   'covid+vaccine',
   'covid+vaccine+symptoms',
   'covid+vaccine+immunological',
@@ -19,10 +19,10 @@ function convertSearchStatisticsIntoAGraph(firebase) {
     };
     firebase.initializeApp(firebaseConfig);
   }
- // Creates an array of arrays that will be used to get the keywords and search stats
-  var tuple = [my_keywords]
+ // Creates an array of arrays that will be used to get the pubmedKeywords and search stats
+  var tuple = [my_pubmedKeywords]
   // For each keyword
-  for (var k in my_keywords) {
+  for (var k in my_pubmedKeywords) {
 
   }
 }

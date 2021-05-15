@@ -1,3 +1,20 @@
+async function getDocument(db, collection_name, doc_id) {
+  var searchRef = db.collection(collection_name).doc(doc_id);
+  // [START get_document]
+  // [START firestore_data_get_as_map]
+  console.log("Getting the document from the search results");
+  var doc = await searchRef.get().then(response => {
+    console.log("Got this document here" + response.data());
+    console.log("Document data", response.data().eSummaryResult.DocSum);
+    var search_results = response.data().eSummaryResult.DocSum;
+    console.log("Successfully retrieved", search_results);
+    return search_results;
+  }).catch(err => {
+    console.log(err);
+  });
+  console.log(doc);
+  return doc;
+}
 function getDatabase(firebase) {
   if(firebase.apps.length==0){
     //console.log(firebase.app.length);
@@ -16,20 +33,7 @@ function getDatabase(firebase) {
   return db;
 }
 
-async function getDocument(db, collection_name, doc_id) {
-  var searchRef = db.collection(collection_name).doc(doc_id);
-  console.log("Getting the document from the search results");
-  var doc = await searchRef.get().then(response => {
-    console.log("Got this document here" + response.data());
-    console.log("Document data", response.data());
-    console.log("Successfully retrieved", search_results);
-    return search_results;
-  }).catch(err => {
-    console.log(err);
-  });
-  console.log(doc);
-  return doc;
-}
+
 
   async function getSearches(firebase, id, keyword, reset) {
     // Default name: currently abstracts are stored in covid pubmed search
@@ -43,7 +47,7 @@ async function getDocument(db, collection_name, doc_id) {
 
     var db = getDatabase(firebase);
     var data = await getDocument(db, collection_name, keyword).then(response => {
-      return response.Result;
+      return response;
     });
 
     for (var i = 0; i < data.length; i++) {
@@ -61,12 +65,13 @@ async function getDocument(db, collection_name, doc_id) {
       }
       console.log(authors);
 
-      var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replaceAll("\"", "");
-      var doi_with_label = JSON.stringify(data[0].Item[23]._).replaceAll("\"", '');
-      var pubdate = JSON.stringify(data[0].Item[0]._).replaceAll('\"', '');
-      var periodical = JSON.stringify(data[0].Item[2]._).replaceAll("\"", "");
-      var issue_number = JSON.stringify(data[0].Item[6]._);
-      console.log("Issue number and volume", JSON.stringify(data[0].Item[6]));
+      var link = 'https://doi.org/' + JSON.stringify(data[i].Item[23]._).substring(34).replace("\"", "");
+      console.log("Link: ", link);
+      var doi_with_label = JSON.stringify(data[i].Item[23]._);
+      var pubdate = JSON.stringify(data[i].Item[0]._).replaceAll('\"', '');
+      var periodical = JSON.stringify(data[i].Item[2]._).replaceAll("\"", "");
+      var issue_number = JSON.stringify(data[i].Item[6]._);
+      console.log("Issue number and volume", JSON.stringify(data[i].Item[6]));
       abstracts.innerHTML +=
         authors +
         " (" + pubdate + ") " + '<a href=' + link + '>' + ' ' + title + '</a>' + ' ' +

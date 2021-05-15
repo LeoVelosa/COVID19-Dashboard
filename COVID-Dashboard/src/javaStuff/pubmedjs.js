@@ -3,15 +3,15 @@
 /**
  * @author Melanie McCord
  * */
-const keywords = [
+const pubmedKeywords = [
   'covid+vaccine+symptoms',
   'covid+vaccine+immunological',
   'covid+vaccine+molecular+epidemiology',
   'covid+vaccine+clinical',
   'covid+vaccine',
 ]
-function getKeywords() {
-  return keywords;
+function getpubmedKeywords() {
+  return pubmedKeywords;
 }
 // Where each pubmed statistic is stored
 const statistics_collection = 'pubmed_statistics';
@@ -106,13 +106,13 @@ async function getSearchStatisticsDataFromFirebase(firebase) {
     firebase.initializeApp(firebaseConfig);
   }
   var db = firebase.firestore();
-  // Creates a list of both keywords and statistics
+  // Creates a list of both pubmedKeywords and statistics
   var tuple = []
   var num_entries = []
   var new_key_words = []
-  for (var i = 0; i < keywords.length; i++) {
-    var key = keywords[i];
-    var temp = keywords[i];
+  for (var i = 0; i < pubmedKeywords.length; i++) {
+    var key = pubmedKeywords[i];
+    var temp = pubmedKeywords[i];
     console.log("Keyword", key, "Replaced in graph with", temp);
     if (key === 'covid+vaccine') {
       temp = 'Total'
@@ -339,7 +339,7 @@ async function getSearches(firebase, id, keyword, reset) {
   }
 }
 async function getAllSearches(db) {
-  var search_query = keywords[0];
+  var search_query = pubmedKeywords[0];
   print(search_query)
   console.log("Preparing to add the document to the search results")
   const abstracts = document.getElementById("covid_pubmed_search");
@@ -405,7 +405,7 @@ abstracts.innerHTML += '<table>';
 
   }
   /*
-  for (var k in keywords) {
+  for (var k in pubmedKeywords) {
     getSearch(db, k);
   }
   /*

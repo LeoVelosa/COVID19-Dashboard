@@ -474,7 +474,7 @@ var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubme
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
 */
-const keywords = [
+const pubmedKeywords = [
   'covid+vaccine',
   'covid+vaccine+symptoms',
   'covid+vaccine+immunological',
@@ -488,23 +488,23 @@ new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(k
 new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
 */
 
-// new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywords[4], "pubmed_statistics");
-async function getAllPapersOnKeywords() {
-  for (var i = 0; i < keywords.length; i++) {
-    var keyword = keywords[i];
+// new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
+async function getAllPapersOnpubmedKeywords() {
+  for (var i = 0; i < pubmedKeywords.length; i++) {
+    var keyword = pubmedKeywords[i];
     console.log(keyword);
     await new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
   }
 }
-async function getAllStatisticsOnKeywords() {
-  for (var i = 0; i < keywords.length; i++) {
+async function getAllStatisticsOnpubmedKeywords() {
+  for (var i = 0; i < pubmedKeywords.length; i++) {
     await new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
   }
 }
 
-//Uploads all statistics on the keywords every 5 days at 3am
+//Uploads all statistics on the pubmedKeywords every 5 days at 3am
 exports.Statistics = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
-  await getAllStatisticsOnKeywords().then(response => {
+  await getAllStatisticsOnpubmedKeywords().then(response => {
     console.log("Success!");
   }).catch(err => {
     console.log(err);
@@ -513,7 +513,7 @@ exports.Statistics = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('e
 
 // Uploads all papers by keyword every 5 days
 exports.Papers = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
-  await getAllPapersOnKeywords().then(response => {
+  await getAllPapersOnpubmedKeywords().then(response => {
     console.log("Success!");
   }).catch(err => {
     console.log(err);

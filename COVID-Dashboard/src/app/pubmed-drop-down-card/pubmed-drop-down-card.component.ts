@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
-declare function getKeywords(): any;
+declare function getpubmedKeywords(): any;
 declare function getSearches(firebase: any, search_query: any): any;
 
 @Component({
@@ -16,8 +16,8 @@ declare function getSearches(firebase: any, search_query: any): any;
 })
 
 export class PubmedDropDownCardComponent implements OnInit {
-  public keywords = getKeywords();
-  keyword = this.keywords[0];
+  public pubmedKeywords = getpubmedKeywords();
+  keyword = this.pubmedKeywords[0];
   // Cannot use title, unless you want the tooltip to be the same as title
   @Input() titleOfCard!: string;
   /*Gets the function from js.js  MUST BE LIKE THIS*/

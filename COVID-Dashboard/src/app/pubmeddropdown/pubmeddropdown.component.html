@@ -7,7 +7,7 @@ Author: Melanie McCord
     <mat-card-title>
       {{titleOfCard}}
       <select [(ngModel)]="key" (change)="getSearchByKeyword()">
-        <option  *ngFor="let key of keywords">
+        <option  *ngFor="let key of pubmedKeywords">
           {{key}}
         </option>
       </select>
