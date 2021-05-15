@@ -299,7 +299,7 @@ class DocumentParsers {
       let re = "\\b\\d{8}\\b";
       ids[count] = parseInt(num.match(re));
       count += 1;
-      if (count >= 5) {
+      if (count >= 10) {
         break;
       }
     }
