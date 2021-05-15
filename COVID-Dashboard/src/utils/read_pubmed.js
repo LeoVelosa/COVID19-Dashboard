@@ -1,3 +1,7 @@
+/**
+ * Deprecated. See pulling_pubmed.js for the pulling pubmed.
+ * @author Melanie McCord.
+ * */
 require('./read_httpxml.js');
 class getSearchResultFromPubMed {
     constructor() {

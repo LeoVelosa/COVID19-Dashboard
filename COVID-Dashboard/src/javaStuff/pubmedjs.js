@@ -1,6 +1,8 @@
 // import firebase from "firebase";
 // import {Chart} from "chart.js";
-
+/**
+ * @author Melanie McCord
+ * */
 const keywords = [
   'covid+vaccine+symptoms',
   'covid+vaccine+immunological',
@@ -8,6 +10,9 @@ const keywords = [
   'covid+vaccine+clinical',
   'covid+vaccine',
 ]
+function getKeywords() {
+  return keywords;
+}
 // Where each pubmed statistic is stored
 const statistics_collection = 'pubmed_statistics';
 async function initializeFirebase(firebase) {
@@ -197,16 +202,18 @@ async function test() {
 
 }
 
+
 async function getSearch(db, search_query) {
   print(search_query)
   console.log("Preparing to add the document to the search results")
-  const abstracts = document.getElementById("covid_pubmed_search");
+  const abstracts = document.getElementById("papers_by_keyword");
   console.log("Abstracts in top", abstracts);
   var data = await getDocument(db, "covid_pubmed_search", search_query).then(response => {
     return response;
   }).catch(err => {
     console.log(err);
   });
+  /*
   // data = JSON.stringify(data);
   console.log('Link: https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6));
   /*abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
@@ -230,6 +237,7 @@ abstracts.innerHTML += '<table>';
   }
   abstracts.innerHTML += '</table>';
    */
+  /*
   console.log(abstracts);
 
   abstracts.innerHTML += '<style> ' +
@@ -250,6 +258,7 @@ abstracts.innerHTML += '<table>';
       author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
 
   }
+   */
 }
 async function getAllSearches(db) {
   var search_query = keywords[0];

@@ -1,3 +1,7 @@
+/**
+ * Visualization of papers published on Covid by keyword.
+ * @author Melanie McCord
+ * */
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'node_modules/chart.js';
 import firebase from 'firebase/app';

@@ -1,3 +1,6 @@
+/**
+ * Deprecated please use pubmeddropdown instead
+ * */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PubmedDropDownCardComponent } from './pubmed-drop-down-card.component';

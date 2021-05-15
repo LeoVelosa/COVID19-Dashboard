@@ -1,3 +1,6 @@
+/** Pulling Pubmed
+* @author Melanie McCord
+* **/
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xml2js = require('xml2js');
 var fs = require('fs');
@@ -293,7 +296,7 @@ class DocumentParsers {
       let re = "\\b\\d{8}\\b";
       ids[count] = parseInt(num.match(re));
       count += 1;
-      if (count >= 10) {
+      if (count >= 5) {
         break;
       }
     }
@@ -494,9 +497,9 @@ for (var i = 0; i < keywords.length; i++) {
   console.log(keyword);
   new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 }
-/*
+
 for (var i = 0; i < keywords.length; i++) {
   new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
 }
-*/
+
 

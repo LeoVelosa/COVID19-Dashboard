@@ -1,1 +1,22 @@
-<p>pubmeddropdown works!</p>
+<!-- Drop down cards for the pubmed abstracts.
+Author: Melanie McCord
+-->
+<mat-card class="dashboard-card">
+  <mat-card-header>
+
+    <mat-card-title>
+      {{titleOfCard}}
+      <select [(ngModel)]="keyword" (change)="getSearchByKeyword()">
+
+        <option  *ngFor="let key of keywords" [value]=keyword>
+          {{keyword}}
+        </option>
+
+      </select>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="dashboard-card-content">
+    <ng-content>
+    </ng-content>
+  </mat-card-content>
+</mat-card>
