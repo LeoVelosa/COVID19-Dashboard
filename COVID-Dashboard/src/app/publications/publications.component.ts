@@ -6,7 +6,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
 /* Gets the function from js.js */
-declare function initializeFirebase(firebase: any): any;
+// declare function initializeFirebase(firebase: any): any;
 
 @Component({
   selector: 'app-publications',
@@ -35,7 +35,7 @@ export class PublicationsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     /*puts the firebase api into the getTweets function and it returns html which will go to ___ ID*/
-    await initializeFirebase(firebase);
+    // await initializeFirebase(firebase);
   }
 
   constructor(private breakpointObserver: BreakpointObserver) {}

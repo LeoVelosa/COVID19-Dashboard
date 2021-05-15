@@ -13,84 +13,64 @@ function getDatabase(firebase) {
     firebase.initializeApp(firebaseConfig);
   }
     var db = firebase.firestore();
+  return db;
 }
-async function getSearches(firebase, id, name, addToName, reset) {
 
-  if(reset){document.getElementById(id).innerHTML='';}
-
-  var db = getDatabase(firebase);
-  //Basically creates a storage for all the html. IT NEEDS TO BE THIS WAY OTHERWISE PAGE WILL REFRESH AND THINGS WILL MESS UP
-  if(document.getElementById(id) != null){
-    const tweeters=document.getElementById(id)
-
-
-
-    //This is what I am using to get the stuff from our database. Its getting a collection and then getting each document in the
-    //collection and processing the data into html.
-    //Adds avalibility to the end of the county names, to make sure that the eligibility and avalibility tweets do not get mixed up
-    await db.collection(name + addToName).get().then((twitterData) => {
-
-      // Styles the html, cannot use card-component.css to do this, so it must be done here
-      tweeters.innerHTML += '<style> ' +
-        'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
-        'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-        'p.text, div.text {text-size-adjust: auto; color:black;}' +
-        '</style>'
-
-      //For every Json file in the collection
-      twitterData.docs.forEach(doc => {
-
-        // This is used to either put an html link in a tweet, or skip this data/won't turn this JSON into a tweet
-        var link;
-
-        //Makes sure that there is a place that is called urls in the JSON
-        if(doc.data().entities.urls != undefined){
-
-          //Checks to see if any of this data contains a twitter link
-          doc.data().entities.urls.forEach((url) =>{
-
-              if(url.expanded_url.includes('twitter')){link=url.expanded_url}
-
-            }
-          )
-
-        }
-
-        //Makes sure that there is a place that is called urls in the JSON
-        if(doc.data().entities.media  != undefined){
-          //Checks to see if any of this data contains a twitter link
-          doc.data().entities.media.forEach((media) =>{
-
-              if(media.expanded_url.includes('twitter')){link=media.expanded_url}
-
-            }
-          )
-        }
-
-
-        //If there is no link, it turn the data into html code, as if this code doesn't have a
-        //link, it causes an error, and won't display the rest of the tweets
-        if(link != undefined){
-          //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
-          tweeters.innerHTML += '<div class="tweet">' +
-            //Adds profile pic, twitter name and handle
-            '<img src=' + doc.data().user.profile_image_url_https + ' class="profile" width="14.4%"; height="24%";> <br> <p class="text"> &nbsp;&nbsp;' + doc.data().user.name + ' &nbsp;@' + doc.data().user.screen_name + ' </p>' +
-
-            //Adds text from tweet
-            '<br> <div class="text">' + doc.data().text + '</div> <br> <div class="text">Source:' +
-            '<a href="' + link + '" style="word-wrap: break-word;" target="_blank">'+ link
-            + '</a></div></div>';
-        }
-
-
-      })}) ;
-  }
-  if(document.getElementById(id).innerHTML== '<style> ' +
-    'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
-    'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-    'p.text, div.text {text-size-adjust: auto; color:black;}' +
-    '</style>'){
-    document.getElementById(id).innerHTML ='<div style="border-radius: 10px; font-size:2.75vmin;   line-height: 140%; display: flex;  justify-content: center; align-items: center; text-align: center; border: 3px solid grey ;">There Are No Tweets Available For This County</div>';
-  }
-
+async function getDocument(db, collection_name, doc_id) {
+  var searchRef = db.collection(collection_name).doc(doc_id);
+  console.log("Getting the document from the search results");
+  var doc = await searchRef.get().then(response => {
+    console.log("Got this document here" + response.data());
+    console.log("Document data", response.data());
+    console.log("Successfully retrieved", search_results);
+    return search_results;
+  }).catch(err => {
+    console.log(err);
+  });
+  console.log(doc);
+  return doc;
 }
+
+  async function getSearches(firebase, id, keyword, reset) {
+    // Default name: currently abstracts are stored in covid pubmed search
+    const collection_name = "covid_pubmed_search";
+    if (reset) {
+      document.getElementById(id).innerHTML = '';
+    }
+    if (keyword == null) {
+      keyword = "covid+vaccine";
+    }
+
+    var db = getDatabase(firebase);
+    var data = await getDocument(db, collection_name, keyword).then(response => {
+      return response.Result;
+    });
+
+    for (var i = 0; i < data.length; i++) {
+      var title = JSON.stringify(data[i].Item[5]._).replaceAll("\"", '').replaceAll("[",).replace("]", '');
+      var author_list = data[i].Item[3].Item;
+      var authors = "";
+      for (var j = 0; j < author_list.length; j++) {
+        authors += JSON.stringify(author_list[j]._).replaceAll("\"", "");
+        if (j === author_list.length - 2) {
+          authors += ' & '
+        } else if (j !== author_list.length - 1) {
+          authors += ',';
+        }
+        authors += ' ';
+      }
+      console.log(authors);
+
+      var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replaceAll("\"", "");
+      var doi_with_label = JSON.stringify(data[0].Item[23]._).replaceAll("\"", '');
+      var pubdate = JSON.stringify(data[0].Item[0]._).replaceAll('\"', '');
+      var periodical = JSON.stringify(data[0].Item[2]._).replaceAll("\"", "");
+      var issue_number = JSON.stringify(data[0].Item[6]._);
+      console.log("Issue number and volume", JSON.stringify(data[0].Item[6]));
+      abstracts.innerHTML +=
+        authors +
+        " (" + pubdate + ") " + '<a href=' + link + '>' + ' ' + title + '</a>' + ' ' +
+        periodical + " (" + issue_number + ") " + '<a href=' + link + '>' + ' ' + doi_with_label + '</a>' + '<p></p>';
+
+    }
+  }

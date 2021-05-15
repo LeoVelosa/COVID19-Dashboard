@@ -4,9 +4,9 @@
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
     <mat-grid-tile [colspan]="( cardLayout | async )?.Abstracts.cols" [rowspan]="( cardLayout | async )?.Abstracts.rows">
       <app-card title="Recent Articles on Covid Vaccines">
-        <div class="scrollable"></div>
-        <!-- <app-pubmeddropdown> </app-pubmeddropdown> -->
-         <div id="covid_pubmed_search"></div>
+        <!-- <div class="scrollable"></div> -->
+        <app-pubmeddropdown> </app-pubmeddropdown>
+        <!--  <div id="covid_pubmed_search"></div> -->
 
 
       </app-card>

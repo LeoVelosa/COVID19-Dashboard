@@ -6,16 +6,16 @@ Author: Melanie McCord
 
     <mat-card-title>
       {{titleOfCard}}
-      <select [(ngModel)]="keyword" (change)="getSearchByKeyword()">
-
-        <option  *ngFor="let key of keywords" [value]=keyword>
-          {{keyword}}
+      <select [(ngModel)]="key" (change)="getSearchByKeyword()">
+        <option  *ngFor="let key of keywords">
+          {{key}}
         </option>
-
       </select>
+
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
+    <div id="abstracts"></div>
     <ng-content>
     </ng-content>
   </mat-card-content>

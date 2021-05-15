@@ -5,8 +5,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import firebase from 'firebase';
 
-// declare function getSearches(firebase: any, keyword: any): any;
+// declare function getSearches(firebase: any, reset: any, keyword: any): any;
 declare function getKeywords(): any;
+declare function getSearches(firebase: any, id: any, keyword: any, reset: any): any;
 @Component({
   selector: 'app-pubmeddropdown',
   templateUrl: './pubmeddropdown.component.html',
@@ -15,14 +16,17 @@ declare function getKeywords(): any;
 export class PubmeddropdownComponent implements OnInit {
 
   public keywords = getKeywords();
-  keyword = this.keywords[0];
+  public key = this.keywords[0];
+  public displayKey = this.key.replaceAll('+', ' ');
+  // keyword = this.keywords[0];
   // Cannot use title, unless you want the tooltip to be the same as title
   @Input() titleOfCard!: string;
   /*Gets the function from js.js  MUST BE LIKE THIS*/
   async ngOnInit(): Promise<void> {
+    await getSearches(firebase, 'abstracts', this.key, false);
   }
   getSearchByKeyword(): void{
-    // getSearches(firebase, this.keyword);
+    getSearches(firebase, 'abstracts', this.key, true);
   }
 
 }

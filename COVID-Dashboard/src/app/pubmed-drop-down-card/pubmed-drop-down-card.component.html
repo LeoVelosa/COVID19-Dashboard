@@ -8,15 +8,12 @@ Displays the pubmed abstracts by keyword
 
     <mat-card-title>
       {{titleOfCard}}
-      <select>
-
-        <option ng-repeat ="k in keywords">
-        </option>
-
-      </select>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
+    <select>
+
+      <option ng-repeat ="k in keywords"></option> </select>
     <ng-content>
     </ng-content>
   </mat-card-content>
