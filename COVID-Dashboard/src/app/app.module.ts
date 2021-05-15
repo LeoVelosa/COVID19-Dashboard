@@ -1,3 +1,4 @@
+//@ALL_OneLess
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +22,7 @@ import { PublicationsComponent } from './publications/publications.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CardComponent } from './card/card.component';
 import { MatTabsModule } from '@angular/material/tabs';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { AvalibilityDropDownCardComponent } from './avalibilityDropDownCard/card.component';
 import { EligibilityDropDownCardComponent } from './eligibilityDropDownCard/card.component';
@@ -75,7 +76,8 @@ import { PubmeddropdownComponent } from './pubmeddropdown/pubmeddropdown.compone
     MatTabsModule,
     HttpClientModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatSlideToggleModule
   ],
   providers: [
     {provide : LocationStrategy, useClass: HashLocationStrategy}

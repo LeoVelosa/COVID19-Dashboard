@@ -1,3 +1,4 @@
+<!--@JM_OneLess && @LV_OneLess-->
 <div class="grid-container">
   <h1 class="mat-h1">COVID19 Informational Hub</h1>
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
@@ -21,7 +22,7 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
       <app-card title="Youtube">
-        <iframe id="player" type="text/html" width="430" height="250"
+        <iframe id="player" type="text/html" maxWidth="100%" height="250"
           src="https://www.youtube.com/embed/1Mf3ZWmK1wM?enablejsapi=1&origin" frameborder="0">
         </iframe>
       </app-card>

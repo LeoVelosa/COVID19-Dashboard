@@ -1,3 +1,4 @@
+//@JM_OneLess All of this stuff in this file is my code.
 
 //This is the function you will be calling in card-component.ts, so it puts the data into the id's of
 //vaccine-page that have the same id in the <div id=''> in vaccine-page.component.html
@@ -46,7 +47,7 @@ async function getTweets(firebase, id, name, addToName, reset) {
     tweeters.innerHTML += '<style> ' +
       'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
       'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-      'p.text, div.text {text-size-adjust: auto; color:black;}' +
+      'p.text, div.text {text-size-adjust: auto;}' +
       '</style>'
 
     //For every Json file in the collection
@@ -100,7 +101,7 @@ async function getTweets(firebase, id, name, addToName, reset) {
   if(document.getElementById(id).innerHTML== '<style> ' +
     'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
     'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-    'p.text, div.text {text-size-adjust: auto; color:black;}' +
+    'p.text, div.text {text-size-adjust: auto;}' +
     '</style>'){
     document.getElementById(id).innerHTML ='<div style="border-radius: 10px; font-size:2.75vmin;   line-height: 140%; display: flex;  justify-content: center; align-items: center; text-align: center; border: 3px solid grey ;">There Are No Tweets Available For This County</div>';
   }
