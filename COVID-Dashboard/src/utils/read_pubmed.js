@@ -1,3 +1,7 @@
+/**
+ * @author melaniemccord
+ * deprecated, please see pulling_pubmed in javaStuff/functions.
+ * */
 require('./read_httpxml.js');
 class getSearchResultFromPubMed {
     constructor() {

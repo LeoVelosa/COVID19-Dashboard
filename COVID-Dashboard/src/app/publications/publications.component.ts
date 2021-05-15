@@ -1,3 +1,6 @@
+/**
+ * @author Melanie McCord
+ * */
 import { Component, OnInit} from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
@@ -5,7 +8,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/functions';
-/* Gets the function from js.js */
+/* Gets the data from PubMed*/
 declare function initializeFirebase(firebase: any): any;
 
 @Component({

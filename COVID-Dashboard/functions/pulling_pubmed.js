@@ -474,7 +474,7 @@ var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubme
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
 */
-const keywords = [
+const myPubMedKeywords = [
   'covid+vaccine',
   'covid+vaccine+symptoms',
   'covid+vaccine+immunological',
@@ -490,20 +490,20 @@ new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywor
 
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keywords[4], "pubmed_statistics");
 async function getAllPapersOnKeywords() {
-  for (var i = 0; i < keywords.length; i++) {
-    var keyword = keywords[i];
+  for (var i = 0; i < myPubMedKeywords.length; i++) {
+    var keyword = myPubMedKeywords[i];
     console.log(keyword);
     await new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
   }
 }
 async function getAllStatisticsOnKeywords() {
-  for (var i = 0; i < keywords.length; i++) {
-    let keyword = keywords[i];
+  for (var i = 0; i < myPubMedKeywords.length; i++) {
+    let keyword = myPubMedKeywords[i];
     await new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
   }
 }
 
-//Uploads all statistics on the keywords every 5 days at 3am
+//Uploads all statistics on the pubmedKeywords every 5 days at 3am
 exports.Statistics = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
   await getAllStatisticsOnKeywords().then(response => {
     console.log("Success!");
