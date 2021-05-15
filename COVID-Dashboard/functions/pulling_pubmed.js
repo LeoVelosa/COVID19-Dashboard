@@ -498,6 +498,7 @@ async function getAllPapersOnKeywords() {
 }
 async function getAllStatisticsOnKeywords() {
   for (var i = 0; i < keywords.length; i++) {
+    let keyword = keywords[i];
     await new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
   }
 }
