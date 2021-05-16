@@ -1,18 +1,17 @@
 /*@JM_OneLess && @LV_OneLess*/
+
 .twitterRow{
   font-size: 1em;
   display: grid;
   padding: 1%;
   height: 100%;
   width: 100%;
-  overflow:auto;
 
   grid-auto-columns: 98%;
   grid-auto-rows: 40%;
   grid-auto-flow: row;
 
   grid-gap: 3%;
-  overflow-x: hidden;
 }
 
 .twitterCol{
@@ -22,26 +21,24 @@
   padding: 1%;
   height: 100%;
   width: 100%;
-  overflow:auto;
 
   grid-auto-columns: 40%;
   grid-auto-flow: column;
   grid-auto-rows: 100%;
 
   grid-gap: 3%;
-  overflow-y: hidden;
 }
 
 .grid-container {
-  margin: 20px;
+  margin: 1.5%;
 }
 
 .dashboard-card {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  top: 2%;
+  left: 2%;
+  right: 2%;
+  bottom: 2%;
 }
 
 .tab-card {

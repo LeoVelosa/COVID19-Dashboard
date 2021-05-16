@@ -1,10 +1,19 @@
-/**
- * @JM_OneLess This is modified code from Card (Leo made that).
- * I made Modifications as this card needed a drop down, and
- * long story short, for formatting, making a new card was the
- *  best way to go. This card is for Vaccine Avalibility Information
- *  in Florida.
-*/
+.mat-card-content{
+  overflow:auto;
+  overflow-x: hidden;
+}
+
+.mat-card-title{
+  text-align: left;
+  word-wrap: break-word;
+  font-size: 1.5em;
+}
+select{
+  text-align: center;
+  width:100%;
+  font-size: .9em;
+}
+
 
 options {
   text-align: center;
