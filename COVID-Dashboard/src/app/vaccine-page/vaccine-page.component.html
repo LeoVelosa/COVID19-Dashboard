@@ -13,10 +13,16 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.longCards.cols" [rowspan]="( cardLayout | async )?.longCards.rows">
 
-      <app-card titleOfCard="COVID News Story Tweets" >
-        <div class="twitterRow" id="test3">
+
+      <!---
+//Original Title:  Florida county Eligibility
+// &#013;  is just how you put a new line in. -->
+      <app-elig-dd-card  titleOfCard="COVID Vaccine Eligibility Tweets For " title="This section shows tweets about COVID vaccine eligibility &#013;in a Florida county that is selected in the drop down menu.&#013;AlachuaCounty is the default option.">
+        <div class="twitterRow" id="test2" >
         </div>
-      </app-card>
+        </app-elig-dd-card>
+
+
 
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
@@ -36,14 +42,12 @@
 
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
-      <!---
-      //Original Title:  Florida county Eligibility
-      // &#013;  is just how you put a new line in. -->
-      <app-elig-dd-card  titleOfCard="COVID Vaccine Eligibility Tweets For " title="This section shows tweets about COVID vaccine eligibility &#013;in a Florida county that is selected in the drop down menu.&#013;AlachuaCounty is the default option.">
-        <div class="twitterCol" id="test2" >
-        </div>
 
-      </app-elig-dd-card>
+      <app-card titleOfCard="COVID News Story Tweets">
+        <div class="twitterCol" id="test3" style="  overflow:auto; overflow-y: hidden;">
+        </div>
+      </app-card>
+
     </mat-grid-tile>
     <mat-grid-tile>
       <app-card titleOfCard="Vaccinations by Type" updatedAt="Last updated: 5/5/2021">
