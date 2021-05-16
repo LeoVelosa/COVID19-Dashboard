@@ -15,11 +15,13 @@ select{
 }
 
 
+
 .more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
- }
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  z-index: 0;
+}
 
  .dashboard-card {
     position: absolute;

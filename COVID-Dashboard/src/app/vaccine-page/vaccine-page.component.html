@@ -13,25 +13,27 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.longCards.cols" [rowspan]="( cardLayout | async )?.longCards.rows">
 
-      //Original Title:  News stories
-      <app-card title="COVID News Story Tweets" >
+      <app-card titleOfCard="COVID News Story Tweets" >
         <div class="twitterRow" id="test3">
         </div>
       </app-card>
 
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
-      <app-card title="Youtube">
+      <app-card titleOfCard="Youtube">
         <iframe id="player" type="text/html" maxWidth="100%" height="250"
           src="https://www.youtube.com/embed/1Mf3ZWmK1wM?enablejsapi=1&origin" frameborder="0">
         </iframe>
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
-      <app-card title="Vaccinations in the US">
-        <div class="updatedInfo">Last updated: 5/5/2021</div>
+
+      <app-card titleOfCard="Vaccinations in the US" updatedAt="Last updated: 5/5/2021">
+
         <app-vaccinedata class="under"></app-vaccinedata>
+
       </app-card>
+
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
       <!---
@@ -44,8 +46,8 @@
       </app-elig-dd-card>
     </mat-grid-tile>
     <mat-grid-tile>
-      <app-card title="Vaccinations by Type">
-        <div class="updatedInfo">Last updated: 5/5/2021</div>
+      <app-card titleOfCard="Vaccinations by Type" updatedAt="Last updated: 5/5/2021">
+
         <app-vaccinetypedata class="under"></app-vaccinetypedata>
       </app-card>
     </mat-grid-tile>

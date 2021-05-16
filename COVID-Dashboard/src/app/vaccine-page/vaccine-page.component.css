@@ -1,7 +1,6 @@
 /*@JM_OneLess && @LV_OneLess*/
 
 .twitterRow{
-  font-size: 1em;
   display: grid;
   padding: 1%;
   height: 100%;
@@ -16,13 +15,12 @@
 
 .twitterCol{
   box-align: stretch;
-  font-size: 1em;
   display: grid;
   padding: 1%;
   height: 100%;
   width: 100%;
 
-  grid-auto-columns: 40%;
+  grid-auto-columns: max(100px, 40%);
   grid-auto-flow: column;
   grid-auto-rows: 100%;
 
@@ -62,15 +60,6 @@
   text-align: center;
 }
 
-.updatedInfo {
-  position: absolute;
-  width: 125%;
-  height: 100%;
-  font-size: 80%;
-  font-style: italic;
-  font-weight: lighter;
-  z-index: 0;
-}
 .under {
   position: relative;
   z-index: 1;

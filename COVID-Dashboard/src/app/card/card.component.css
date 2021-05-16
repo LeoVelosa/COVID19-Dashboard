@@ -14,13 +14,12 @@ select{
   font-size: .9em;
 }
 
-
 .more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    z-index: 2;
- }
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  z-index: 0;
+}
 
  .dashboard-card {
     position: absolute;
@@ -46,3 +45,11 @@ select{
     display: flex;
     flex-direction: column;
  }
+span{
+  width: 125%;
+  height: 100%;
+  font-size: 80%;
+  font-style: italic;
+  font-weight: lighter;
+  z-index: 0;
+}

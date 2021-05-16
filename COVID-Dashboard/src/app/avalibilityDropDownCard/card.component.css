@@ -18,11 +18,13 @@ select{
 options {
   text-align: center;
 }
+
 .more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
- }
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  z-index: 0;
+}
 
  .dashboard-card {
     position: absolute;
@@ -48,3 +50,6 @@ options {
     display: flex;
     flex-direction: column;
  }
+mat-menu{
+  margin: 10%;
+}

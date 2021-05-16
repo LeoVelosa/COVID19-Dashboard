@@ -1,8 +1,9 @@
 
 .more-button {
   position: absolute;
-  top: 5px;
-  right: 10px;
+  top: -8px;
+  right: -8px;
+  z-index: 0;
 }
 
 .dashboard-card {
