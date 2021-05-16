@@ -101,7 +101,7 @@ async function getTweets(firebase, id, name, addToName, reset) {
 
   //MAKE SURE THAT THIS AND THE STYLE AT AROUND LINE 40 ARE THE SAME!!!!!!
   if(document.getElementById(id).innerHTML== '<style> ' +
-    'div.tweet{width: 100%; border: 0.3em solid grey; text-align: left; padding-left: 3%; padding-top: 2%; padding-bottom: 2%; padding-right:3%; border-radius: 10px; height: 100%;}' +
+    'div.tweet{font-size:2vh; line-height: 2vh; width: 100%; border: 0.3em solid grey; text-align: left; padding-left: 3%; padding-top: 2%; padding-bottom: 2%; padding-right:3%; border-radius: 10px; height: 100%;}' +
     'img.profile {border: 0.1em solid black; border-radius: 50%;   float: left;}' +
     'p.text, div.text {}' +
     '</style>'){
