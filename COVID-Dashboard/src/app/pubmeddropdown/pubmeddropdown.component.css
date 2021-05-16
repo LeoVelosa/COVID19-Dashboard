@@ -26,4 +26,7 @@ mat-card {
   display: flex;
   flex-direction: column;
 }
-
+mat-card-content {
+  font-size:large;
+  text-align: left;
+}

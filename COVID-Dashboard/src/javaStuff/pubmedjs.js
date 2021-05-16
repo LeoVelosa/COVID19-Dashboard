@@ -51,6 +51,7 @@ async function createChartVisualization(firebase, Chart) {
     console.log("Retrieved", response);
     return response;
   });
+  Chart.defaults.font.size = 16;
   const pubmedChart = new Chart('pubmedChart', {
     type: 'bar',
     data: {

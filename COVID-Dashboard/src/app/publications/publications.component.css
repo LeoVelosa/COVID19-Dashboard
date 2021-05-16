@@ -21,7 +21,10 @@
   max-height: 100%;
   justify-content: left;
 }
-
+mat-card-content {
+  font-size:min(8em,8vh);
+  text-align: left;
+}
 mat-card {
   display: flex;
   flex-direction: column;
