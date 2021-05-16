@@ -45,9 +45,9 @@ async function getTweets(firebase, id, name, addToName, reset) {
     // Styles the html, cannot use card-component.css to do this, so it must be done here
     //MAKE SURE THAT THIS AND THE STYLE AT AROUND LINE 100 ARE THE SAME!!!!!!
     tweeters.innerHTML += '<style> ' +
-      'div.tweet{white-space: pre-line; font-size:2vh; line-height: 2vh; width: 100%; border: 0.3em solid grey; text-align: left; padding-left: 3%; padding-top: 2%; padding-bottom: 2%; padding-right:3%; border-radius: 10px; height: 100%;}' +
+      'div.tweet{white-space: pre-line; font-size:min(1em,2vh); line-height: min(1em,2vh); width: 100%; border: 0.3em solid grey; text-align: left; padding-left: 3%; padding-top: 2%; padding-bottom: 2%; padding-right:3%; border-radius: 10px; height: 100%;}' +
       'img.profile {border: 0.1em solid black; border-radius: 50%;   float: left;}' +
-      'p.break{line-height: 2vh;}' +
+      'p.break{line-height: min(1em,2vh);}' +
       '</style>'
 
     //For every Json file in the collection
