@@ -15,9 +15,10 @@ import { YoutubeService } from '../youtube.service';
 })
 export class CardComponent implements OnInit {
 
-  @Input() title!: string;
+  @Input() titleOfCard!: string;
+  @Input() updatedAt!: string;
   /*Gets the function from js.js  MUST BE LIKE THIS*/
   ngOnInit(){
-    
+
   }
 }
