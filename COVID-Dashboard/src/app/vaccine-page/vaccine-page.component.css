@@ -61,6 +61,7 @@
 }
 
 .under {
-  position: relative;
-  z-index: 1;
+  width: max(100%,315px);
+  height: max(100%,315px);
+  z-index: 0;
 }

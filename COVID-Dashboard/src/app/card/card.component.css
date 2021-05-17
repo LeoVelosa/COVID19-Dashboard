@@ -1,6 +1,6 @@
 .mat-card-content{
-  overflow:auto;
-  overflow-x: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 .mat-card-title{
