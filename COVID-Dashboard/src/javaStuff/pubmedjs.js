@@ -1,13 +1,18 @@
 // import firebase from "firebase";
 // import {Chart} from "chart.js";
-
-const keywords = [
+/**
+ * @author Melanie McCord
+ * */
+const pubmedKeywords = [
   'covid+vaccine+symptoms',
   'covid+vaccine+immunological',
   'covid+vaccine+molecular+epidemiology',
   'covid+vaccine+clinical',
   'covid+vaccine',
 ]
+function getpubmedKeywords() {
+  return pubmedKeywords;
+}
 // Where each pubmed statistic is stored
 const statistics_collection = 'pubmed_statistics';
 async function initializeFirebase(firebase) {
@@ -46,6 +51,7 @@ async function createChartVisualization(firebase, Chart) {
     console.log("Retrieved", response);
     return response;
   });
+  Chart.defaults.font.size = 16;
   const pubmedChart = new Chart('pubmedChart', {
     type: 'bar',
     data: {
@@ -101,13 +107,13 @@ async function getSearchStatisticsDataFromFirebase(firebase) {
     firebase.initializeApp(firebaseConfig);
   }
   var db = firebase.firestore();
-  // Creates a list of both keywords and statistics
+  // Creates a list of both pubmedKeywords and statistics
   var tuple = []
   var num_entries = []
   var new_key_words = []
-  for (var i = 0; i < keywords.length; i++) {
-    var key = keywords[i];
-    var temp = keywords[i];
+  for (var i = 0; i < pubmedKeywords.length; i++) {
+    var key = pubmedKeywords[i];
+    var temp = pubmedKeywords[i];
     console.log("Keyword", key, "Replaced in graph with", temp);
     if (key === 'covid+vaccine') {
       temp = 'Total'
@@ -197,16 +203,18 @@ async function test() {
 
 }
 
+/*
 async function getSearch(db, search_query) {
   print(search_query)
   console.log("Preparing to add the document to the search results")
-  const abstracts = document.getElementById("covid_pubmed_search");
+  const abstracts = document.getElementById("papers_by_keyword");
   console.log("Abstracts in top", abstracts);
   var data = await getDocument(db, "covid_pubmed_search", search_query).then(response => {
     return response;
   }).catch(err => {
     console.log(err);
   });
+  /*
   // data = JSON.stringify(data);
   console.log('Link: https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6));
   /*abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
@@ -230,6 +238,7 @@ abstracts.innerHTML += '<table>';
   }
   abstracts.innerHTML += '</table>';
    */
+  /*
   console.log(abstracts);
 
   abstracts.innerHTML += '<style> ' +
@@ -250,9 +259,88 @@ abstracts.innerHTML += '<table>';
       author + "</div>" + "<div id='link'>" + doi_with_label + '</div>';
 
   }
+
+}
+   */
+function getDatabase(firebase) {
+  if(firebase.apps.length==0){
+    //console.log(firebase.app.length);
+    var firebaseConfig = {
+      apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+      authDomain: "covid-dashboard-10efe.firebaseapp.com",
+      projectId: "covid-dashboard-10efe",
+      storageBucket: "covid-dashboard-10efe.appspot.com",
+      messagingSenderId: "933584669394",
+      appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+      measurementId: "G-XVWT1E6R8B"
+    };
+    firebase.initializeApp(firebaseConfig);
+  }
+  var db = firebase.firestore();
+  return db;
+}
+
+async function getResultDocument(db, collection_name, doc_id) {
+  var searchRef = db.collection(collection_name).doc(doc_id);
+  console.log("Getting the document from the search results");
+  var doc = await searchRef.get().then(response => {
+    console.log("Got this document here" + response.data());
+    console.log("Document data", response.data());
+    console.log("Successfully retrieved", search_results);
+    return search_results;
+  }).catch(err => {
+    console.log(err);
+  });
+  console.log(doc);
+  return doc;
+}
+
+async function getSearches(firebase, id, keyword, reset) {
+  // Default name: currently abstracts are stored in covid pubmed search
+  const collection_name = "covid_pubmed_search";
+  if (reset) {
+    document.getElementById(id).innerHTML = '';
+  }
+  if (keyword == null) {
+    keyword = "covid+vaccine";
+  }
+
+  var db = getDatabase(firebase);
+  var data = await getDocument(db, collection_name, keyword).then(response => {
+    console.log(response);
+    return response;
+  });
+
+  for (var i = 0; i < data.length; i++) {
+    var title = JSON.stringify(data[i].Item[5]._).replaceAll("\"", '').replaceAll("[",).replace("]", '');
+    var author_list = data[i].Item[3].Item;
+    var authors = "";
+    for (var j = 0; j < author_list.length; j++) {
+      authors += JSON.stringify(author_list[j]._).replaceAll("\"", "");
+      if (j === author_list.length - 2) {
+        authors += ' & '
+      } else if (j !== author_list.length - 1) {
+        authors += ',';
+      }
+      authors += ' ';
+    }
+    console.log(authors);
+
+    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replaceAll("\"", "");
+    var doi_with_label = JSON.stringify(data[0].Item[23]._).replaceAll("\"", '');
+    var pubdate = JSON.stringify(data[0].Item[0]._).replaceAll('\"', '');
+    var periodical = JSON.stringify(data[0].Item[2]._).replaceAll("\"", "");
+    var issue_number = JSON.stringify(data[0].Item[6]._);
+    console.log("Issue number and volume", JSON.stringify(data[0].Item[6]));
+    abstracts.innerHTML +=
+      authors +
+      " (" + pubdate + ") " + '<a href=' + link + '>' + ' ' + title + '</a>' + ' ' +
+      periodical + " (" + issue_number + ") " + '<a href=' + link + '>' + ' ' + doi_with_label + '</a>' + '<p></p>';
+
+  }
 }
 async function getAllSearches(db) {
-  var search_query = keywords[0];
+  var search_query = pubmedKeywords[0];
   print(search_query)
   console.log("Preparing to add the document to the search results")
   const abstracts = document.getElementById("covid_pubmed_search");
@@ -318,7 +406,7 @@ abstracts.innerHTML += '<table>';
 
   }
   /*
-  for (var k in keywords) {
+  for (var k in pubmedKeywords) {
     getSearch(db, k);
   }
   /*

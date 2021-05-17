@@ -1,5 +1,8 @@
-.grid-container {
-  margin: 20px;
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
 }
 
 .dashboard-card {
@@ -17,6 +20,53 @@
   z-index: 0;
 }
 
+
+.under {
+  width: max(100%,500px);
+  height: max(100%,500px);
+  z-index: 0;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+
 .dashboard-card-content {
-  text-align: center;
+  text-align: left;
+  flex-grow: 1;
+  display: flex;
+  max-height: 100%;
+  justify-content: left;
+}
+mat-card-content {
+  font-size:min(8em,8vh);
+  text-align: left;
+}
+mat-card {
+  display: flex;
+  flex-direction: column;
+}
+.flex {
+  flex: 1 1 auto;
+}
+
+.scrollable {
+  overflow: auto;
+  box-sizing: border-box;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }

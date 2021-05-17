@@ -1,3 +1,7 @@
+/**
+ * Deprecated. Please see webscraper.js for the latest updates.
+ * @author Melanie McCord
+ * */
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 // default class for making generalized xml http requests
 class MyXMLHTTPRequest {

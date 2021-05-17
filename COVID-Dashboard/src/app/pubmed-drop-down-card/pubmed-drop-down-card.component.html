@@ -1,18 +1,19 @@
+<!--
+Deprecated please use pubmeddropdown instead
+Displays the pubmed abstracts by keyword
+ Author: Melanie McCord
+ -->
 <mat-card class="dashboard-card">
   <mat-card-header>
 
     <mat-card-title>
       {{titleOfCard}}
-      <select [(ngModel)]="county" (change)="getTweetByCounty()">
-
-        <option  *ngFor="let county of countyTweets" [style]=county.color [disabled]=county.disabled [value]=county.name>
-          {{county.name}}
-        </option>
-
-      </select>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
+    <select>
+
+      <option ng-repeat ="k in pubmedKeywords"></option> </select>
     <ng-content>
     </ng-content>
   </mat-card-content>

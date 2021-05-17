@@ -1,13 +1,31 @@
 /** Pulling Pubmed
-* @author Melanie McCord
-* **/
+ * @author Melanie McCord
+ * **/
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+var firebaseConfig = {
+  apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+  authDomain: "covid-dashboard-10efe.firebaseapp.com",
+  databaseURL: "https://covid-dashboard-10efe-default-rtdb.firebaseio.com",
+  projectId: "covid-dashboard-10efe",
+  storageBucket: "covid-dashboard-10efe.appspot.com",
+  messagingSenderId: "933584669394",
+  appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+  measurementId: "G-XVWT1E6R8B"
+};
+
+// firebase.initializeApp(firebaseConfig);
+admin.initializeApp();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xml2js = require('xml2js');
 var fs = require('fs');
 var firebase = require('firebase');
 const {ajax} = require("rxjs/ajax");
 /**
- * pulling_pubmed.js
+ * TODO: integrate it with pubmed_to_firestore so that the data is uploaded directly to Firebase. Currently just saves to a file.
+ * */
+/**
+ * Pubmed2.js
  * Loads a webpage from PubMed Entrez API and runs it
  * Classes = MyXMLHTTPRequest: creates an xml http request based on a main url (the database's main page)
  *          because of asynchronous requests, each xmlhttprequest function creates a different xmlhttprequest object for separate uses
@@ -25,18 +43,6 @@ const {ajax} = require("rxjs/ajax");
  * 3. The json will be saved as a file.
  * Thank you!
  * */
-var firebaseConfig = {
-  apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
-  authDomain: "covid-dashboard-10efe.firebaseapp.com",
-  databaseURL: "https://covid-dashboard-10efe-default-rtdb.firebaseio.com",
-  projectId: "covid-dashboard-10efe",
-  storageBucket: "covid-dashboard-10efe.appspot.com",
-  messagingSenderId: "933584669394",
-  appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
-  measurementId: "G-XVWT1E6R8B"
-};
-
-firebase.initializeApp(firebaseConfig);
 db = firebase.firestore();
 class Id {
   constructor(id_list) {
@@ -481,22 +487,35 @@ var keyword = 'covid,symptoms';
 new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
 */
-console.log(new PubMedURLs().downloadResultFromIDList([
-  33964818,
-  33964815,
-  33964720,
-  33964602,
-  33964591], "pubmed"));
 
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
-for (var i = 0; i < pubmedKeywords.length; i++) {
-  var keyword = pubmedKeywords[i];
-  console.log(keyword);
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+async function getAllPapersOnpubmedKeywords() {
+  for (var i = 0; i < pubmedKeywords.length; i++) {
+    var keyword = pubmedKeywords[i];
+    console.log(keyword);
+    await new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+  }
+}
+async function getAllStatisticsOnpubmedKeywords() {
+  for (var i = 0; i < pubmedKeywords.length; i++) {
+    await new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
+  }
 }
 
-for (var i = 0; i < pubmedKeywords.length; i++) {
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
-}
+//Uploads all statistics on the pubmedKeywords every 5 days at 3am
+exports.Statistics = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
+  await getAllStatisticsOnpubmedKeywords().then(response => {
+    console.log("Success!");
+  }).catch(err => {
+    console.log(err);
+  })
+});
 
-
+// Uploads all papers by keyword every 5 days
+exports.Papers = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
+  await getAllPapersOnpubmedKeywords().then(response => {
+    console.log("Success!");
+  }).catch(err => {
+    console.log(err);
+  })
+});
