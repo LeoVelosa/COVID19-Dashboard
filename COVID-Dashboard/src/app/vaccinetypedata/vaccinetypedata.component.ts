@@ -24,9 +24,9 @@ export class VaccinetypedataComponent implements OnInit {
         datasets: [{
           label: 'People fully vaccinated by vaccine type in the US',
           data: [
-            54644578,
-            44211004,
-            8444321,
+            63506002,
+            49889927,
+            9552103,
           ],
           //backgroundColor: 'rgba(0,255,0,0.2)',
           

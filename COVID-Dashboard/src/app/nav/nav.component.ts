@@ -20,10 +20,14 @@ export class NavComponent {
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
+  //Checks if dark mode is true or false in local storage
+  //so that when the user comes back to the page there choice
+  //is already selected
   ngOnInit() {
     this.isDarkTheme = localStorage.getItem('theme') === "Dark" ? true:false;
   }
   
+  //Stores dark mode selection in local storage.
   storeThemeSelection() {
     localStorage.setItem('theme', this.isDarkTheme ? "Dark" : "Light");
   }

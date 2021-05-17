@@ -34,10 +34,14 @@
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
 
-      <app-card titleOfCard="Vaccinations in the US" updatedAt="Last updated: 5/5/2021">
-
+      <app-card titleOfCard="Vaccinations in the US" updatedAt="Last updated: 5/17/2021">
         <app-vaccinedata class="under"></app-vaccinedata>
-
+        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+          <mat-icon>help_outline</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          This graph shows the total amount of people vaccinated in the U.S within the last year.
+        </mat-menu>
       </app-card>
 
     </mat-grid-tile>
@@ -50,9 +54,15 @@
 
     </mat-grid-tile>
     <mat-grid-tile>
-      <app-card titleOfCard="Vaccinations by Type" updatedAt="Last updated: 5/5/2021">
+      <app-card titleOfCard="Vaccinations by Type" updatedAt="Last updated: 5/17/2021">
 
         <app-vaccinetypedata class="under"></app-vaccinetypedata>
+        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu2" aria-label="Toggle menu">
+          <mat-icon>help_outline</mat-icon>
+        </button>
+        <mat-menu #menu2="matMenu" xPosition="before">
+          This graph shows the total amount of people vaccinated by each of the different vaccines in the United States.
+        </mat-menu>
       </app-card>
     </mat-grid-tile>
   </mat-grid-list>

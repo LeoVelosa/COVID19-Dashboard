@@ -3,14 +3,6 @@
 
         <mat-card-title>
             {{titleOfCard}} <span>{{updatedAt}}</span>
-
-          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item>Link</button>
-                <button mat-menu-item>More info</button>
-            </mat-menu>
         </mat-card-title>
 
     <mat-card-content class="dashboard-card-content">
