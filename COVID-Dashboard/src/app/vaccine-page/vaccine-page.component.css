@@ -1,47 +1,42 @@
 /*@JM_OneLess && @LV_OneLess*/
+
 .twitterRow{
-  font-size: 1em;
   display: grid;
   padding: 1%;
   height: 100%;
   width: 100%;
-  overflow:auto;
 
   grid-auto-columns: 98%;
   grid-auto-rows: 40%;
   grid-auto-flow: row;
 
   grid-gap: 3%;
-  overflow-x: hidden;
 }
 
 .twitterCol{
   box-align: stretch;
-  font-size: 1em;
   display: grid;
   padding: 1%;
   height: 100%;
   width: 100%;
-  overflow:auto;
 
-  grid-auto-columns: 40%;
+  grid-auto-columns: max(100px, 40%);
   grid-auto-flow: column;
   grid-auto-rows: 100%;
 
   grid-gap: 3%;
-  overflow-y: hidden;
 }
 
 .grid-container {
-  margin: 20px;
+  margin: 1.5%;
 }
 
 .dashboard-card {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  top: 2%;
+  left: 2%;
+  right: 2%;
+  bottom: 2%;
 }
 
 .tab-card {
@@ -65,16 +60,8 @@
   text-align: center;
 }
 
-.updatedInfo {
-  position: absolute;
-  width: 125%;
-  height: 100%;
-  font-size: 80%;
-  font-style: italic;
-  font-weight: lighter;
-  z-index: 0;
-}
 .under {
-  position: relative;
-  z-index: 1;
+  width: max(100%,315px);
+  height: max(100%,315px);
+  z-index: 0;
 }

@@ -1,16 +1,27 @@
-/**
- * @JM_OneLess This is modified code from Card (Leo made that).
- * I made Modifications as this card needed a drop down, and
- * long story short, for formatting, making a new card was the
- *  best way to go. This card is for Vaccine Eligibility Information
- *  in Florida.
- */
+.mat-card-content{
+  overflow:auto;
+  overflow-x: hidden;
+}
+
+.mat-card-title{
+  text-align: left;
+  word-wrap: break-word;
+  font-size: 1.5em;
+}
+select{
+  text-align: center;
+  width:100%;
+  font-size: .9em;
+}
+
+
 
 .more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
- }
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  z-index: 0;
+}
 
  .dashboard-card {
     position: absolute;

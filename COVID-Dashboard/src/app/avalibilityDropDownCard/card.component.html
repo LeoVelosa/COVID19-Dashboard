@@ -1,27 +1,25 @@
-<!--
-* @JM_OneLess This is modified code from Card (Leo made that).
-* I made Modifications as this card needed a drop down, and
-* long story short, for formatting, making a new card was the
-*  best way to go. This card is for Vaccine Avalibility Information
-*  in Florida. I added a drop down menu here
--->
-
 <mat-card class="dashboard-card">
-    <mat-card-header>
 
-      <mat-card-title>
-        {{titleOfCard}}
-        <select  [(ngModel)]=county (change)="getTweetByCounty()">
-          <option  *ngFor="let county of countyTweets" [style]=county.color [value]=county.name [disabled]=county.disabled>
-            {{county.name}}
-          </option>
+  <mat-card-title>
+    <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+      <mat-icon>help_outline</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      &nbsp; This section shows tweets about COVID &nbsp; &#013; &nbsp;&nbsp;vaccine availability in a Florida county that &nbsp; &#013; &nbsp;&nbsp; is selected in the drop down menu. &#013; &nbsp;&nbsp;AlachuaCounty is the default option.&nbsp;
+    </mat-menu>
 
-        </select>
+    {{titleOfCard}}
+    <select  [(ngModel)]=county (change)="getTweetByCounty()">
+      <option  *ngFor="let county of countyTweets" [style]=county.color [value]=county.name [disabled]=county.disabled>
+        {{county.name}}
+      </option>
+
+    </select>
 
 
 
-        </mat-card-title>
-    </mat-card-header>
+  </mat-card-title>
+
     <mat-card-content class="dashboard-card-content">
         <ng-content></ng-content>
     </mat-card-content>

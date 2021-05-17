@@ -1,17 +1,10 @@
 <!--@LV_OneLess-->
 <mat-card class="dashboard-card">
-    <mat-card-header>
+
         <mat-card-title>
-            {{title}}
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item>Link</button>
-                <button mat-menu-item>More info</button>
-            </mat-menu>
+            {{titleOfCard}} <span>{{updatedAt}}</span>
         </mat-card-title>
-    </mat-card-header>
+
     <mat-card-content class="dashboard-card-content">
         <ng-content></ng-content>
     </mat-card-content>

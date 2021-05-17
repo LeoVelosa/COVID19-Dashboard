@@ -1,4 +1,3 @@
-//@JM_OneLess All of this stuff in this file is my code.
 
 //This is the function you will be calling in card-component.ts, so it puts the data into the id's of
 //vaccine-page that have the same id in the <div id=''> in vaccine-page.component.html
@@ -44,10 +43,11 @@ async function getTweets(firebase, id, name, addToName, reset) {
   await db.collection(name + addToName).get().then((twitterData) => {
 
     // Styles the html, cannot use card-component.css to do this, so it must be done here
+    //MAKE SURE THAT THIS AND THE STYLE AT AROUND LINE 100 ARE THE SAME!!!!!!
     tweeters.innerHTML += '<style> ' +
-      'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
-      'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-      'p.text, div.text {text-size-adjust: auto;}' +
+      'div.tweet{white-space: pre-line; font-size:min(1em,2vh); line-height: min(1em,2vh); width: 100%; border: 0.3em solid grey; text-align: left; padding-left: 3%; padding-top: 2%; padding-bottom: 2%; padding-right:3%; border-radius: 10px; height: 100%;}' +
+      'img.profile {border: 0.1em solid black; border-radius: 50%;   float: left;}' +
+      'p.break{line-height: min(1em,2vh);}' +
       '</style>'
 
     //For every Json file in the collection
@@ -87,23 +87,27 @@ async function getTweets(firebase, id, name, addToName, reset) {
         //Gets data from the JSON to make a hyperlink for the box (a) and makes a box (div)
         tweeters.innerHTML += '<div class="tweet">' +
           //Adds profile pic, twitter name and handle
-          '<img src=' + doc.data().user.profile_image_url_https + ' class="profile" width="14.4%"; height="24%";> <br> <p class="text"> &nbsp;&nbsp;' + doc.data().user.name + ' &nbsp;@' + doc.data().user.screen_name + ' </p>' +
+          '<img src=' + doc.data().user.profile_image_url_https + ' class="profile" width="17%" height="auto">  <p class="text">\n \n &nbsp;&nbsp;' + doc.data().user.name + ' &nbsp;@' + doc.data().user.screen_name + ' \n</p>' +
 
           //Adds text from tweet
-          '<br> <div class="text">' + doc.data().text + '</div> <br> <div class="text">Source:' +
+          ' <div class="text">\n ' + doc.data().text + '</div>  <div class="text">\n \n Source:' +
+
         '<a href="' + link + '" style="word-wrap: break-word;" target="_blank">'+ link
+
         + '</a></div></div>';
       }
 
 
     })}) ;
   }
+
+  //MAKE SURE THAT THIS AND THE STYLE AT AROUND LINE 40 ARE THE SAME!!!!!!
   if(document.getElementById(id).innerHTML== '<style> ' +
-    'div.tweet{ width: 100%; border: 3px solid grey; text-align: left; padding-left: 15px; padding-top: 10px; border-radius: 10px; height: 100%;}' +
-    'img.profile {border: 1px solid black; border-radius: 50%;   float: left;}' +
-    'p.text, div.text {text-size-adjust: auto;}' +
+    'div.tweet{white-space: pre-line; font-size:min(1em,2vh); line-height: min(1em,2vh); width: 100%; border: 0.3em solid grey; text-align: left; padding-left: 3%; padding-top: 2%; padding-bottom: 2%; padding-right:3%; border-radius: 10px; height: 100%;}' +
+    'img.profile {border: 0.1em solid black; border-radius: 50%;   float: left;}' +
+    'p.break{line-height: min(1em,2vh);}' +
     '</style>'){
-    document.getElementById(id).innerHTML ='<div style="border-radius: 10px; font-size:2.75vmin;   line-height: 140%; display: flex;  justify-content: center; align-items: center; text-align: center; border: 3px solid grey ;">There Are No Tweets Available For This County</div>';
+    document.getElementById(id).innerHTML ='<div style="border-radius: 10px; font-size:2.75vmin;   line-height: 140%; display: flex;  justify-content: center; align-items: center; text-align: center; border: 0.3em solid grey ;">There Are No Tweets Available For This County</div>';
   }
 
 }

@@ -1,6 +1,3 @@
-//@JM_OneLess All of this is my code.
-
-//This gets tweets from Twitter and puts them into Firbase Firestore
 //All the imports this needs
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
