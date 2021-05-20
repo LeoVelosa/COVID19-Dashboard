@@ -1,4 +1,6 @@
 /* @JM_OneLess  */
+/* Interacts with the Firebase API, Twit API, and package.json (both in functions and in src)*/
+
 //All the imports this needs
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
