@@ -1,4 +1,5 @@
 /* @JM_OneLess And @LV_OneLess (I used his card file and reformatted it to make a specific card so I want to give him credit)  */
+/* This file interacts with every other file in eligibilityDropDownCard. Aside from that, it uses functions from FirebaseTweetsToHTML.js in the file COVID-Dashboard/src/javaStuff  */
 import { Component, OnInit, Input } from '@angular/core';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
