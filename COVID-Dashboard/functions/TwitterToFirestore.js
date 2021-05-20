@@ -1,3 +1,4 @@
+/* @JM_OneLess  */
 //All the imports this needs
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
