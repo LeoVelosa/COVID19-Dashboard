@@ -1,31 +1,13 @@
 /** Pulling Pubmed
- * @author Melanie McCord
- * **/
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-var firebaseConfig = {
-  apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
-  authDomain: "covid-dashboard-10efe.firebaseapp.com",
-  databaseURL: "https://covid-dashboard-10efe-default-rtdb.firebaseio.com",
-  projectId: "covid-dashboard-10efe",
-  storageBucket: "covid-dashboard-10efe.appspot.com",
-  messagingSenderId: "933584669394",
-  appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
-  measurementId: "G-XVWT1E6R8B"
-};
-
-// firebase.initializeApp(firebaseConfig);
-admin.initializeApp();
+* @author Melanie McCord
+* **/
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xml2js = require('xml2js');
 var fs = require('fs');
 var firebase = require('firebase');
 const {ajax} = require("rxjs/ajax");
 /**
- * TODO: integrate it with pubmed_to_firestore so that the data is uploaded directly to Firebase. Currently just saves to a file.
- * */
-/**
- * Pubmed2.js
+ * pulling_pubmed.js
  * Loads a webpage from PubMed Entrez API and runs it
  * Classes = MyXMLHTTPRequest: creates an xml http request based on a main url (the database's main page)
  *          because of asynchronous requests, each xmlhttprequest function creates a different xmlhttprequest object for separate uses
@@ -43,6 +25,18 @@ const {ajax} = require("rxjs/ajax");
  * 3. The json will be saved as a file.
  * Thank you!
  * */
+var firebaseConfig = {
+  apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+  authDomain: "covid-dashboard-10efe.firebaseapp.com",
+  databaseURL: "https://covid-dashboard-10efe-default-rtdb.firebaseio.com",
+  projectId: "covid-dashboard-10efe",
+  storageBucket: "covid-dashboard-10efe.appspot.com",
+  messagingSenderId: "933584669394",
+  appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+  measurementId: "G-XVWT1E6R8B"
+};
+
+firebase.initializeApp(firebaseConfig);
 db = firebase.firestore();
 class Id {
   constructor(id_list) {
@@ -214,6 +208,12 @@ class MyXMLHTTPRequest {
      */
     this.ajax(this.main_url + (new PubMedURLs().getSearchStatistics(search_query)),
       new UploadToFirebase().uploadJSONToFirestore, search_query);
+    var search_stats_by_month = new PubMedURLs().getSearchStatisticsByMonth(search_query, 5)
+    for (var i = 0; i < 5; i++) {
+      this.ajax(search_stats_by_month[i],
+        new UploadToFirebase().uploadJSONToFirestore, search_query + 'month' + (i + 1).toString());
+    }
+
   }
 
   async uploadSearchResultsToFirestore(search_query, collection_name) {
@@ -299,9 +299,6 @@ class DocumentParsers {
       let re = "\\b\\d{8}\\b";
       ids[count] = parseInt(num.match(re));
       count += 1;
-      if (count >= 5) {
-        break;
-      }
     }
     console.log("Initial id list", ids);
     var myIDs = new IdList(ids, "covid_pubmed_search", keyword+ '_ids');
@@ -327,11 +324,47 @@ class PubMedURLs {
     this.lang = '+AND+English[language]'
 
   }
+  getSearchStatisticsByMonth(keyword, num_months) {
+    console.log("Url I'm requesting");
+    var search_stats_url =  'egquery.fcgi?term=' + keyword
+    var urls = []
+    var dates = this.getDates(num_months);
+    for (var index = 0; index < dates.length - 1; index++) {
+      let current_date = this.getFormattedDate(dates[index+1]);
+      let next_date = this.getFormattedDate(dates[index]);
+
+      urls.push(this.main_url + search_stats_url + '/min_date=' + current_date + '/max_date=' + next_date + this.apiKey);
+    }
+    return urls;
+  }
+  getFormattedDate(date) {
+    var year = date.getFullYear();
+
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+
+    return month + '/' + day + '/' + year;
+  }
+  // Gets the previous date from each month and returns it.
+  getDates(num_months) {
+    var dates = []
+    var now = new Date();
+    dates.push(now)
+    for (var i = 0; i < num_months + 1; i++) {
+      var prevMonthLastDate = new Date(now.getFullYear(), now.getMonth() - i, 0);
+      dates.push(prevMonthLastDate);
+    }
+    return dates;
+  }
   getIDsforSearchResults(keyword, database) {
-    return 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
+    var url = 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
+    console.log("URL:", this.main_url + url);
+    return url;
   }
   downloadResultFromIDList(id_list, database) {
-    console.log(id_list.toString());
     var url = 'esummary.fcgi?db=' + database + '&id=' + id_list + this.apiKey;
     console.log(this.main_url + url);
     return url;
@@ -481,26 +514,33 @@ const pubmedKeywords = [
   'covid+vaccine+molecular+epidemiology',
   'covid+vaccine+clinical'
 ]
-console.log(new PubMedURLs().getSearchStatistics('covid+symptoms'));
+console.log(new PubMedURLs().getSearchStatisticsByMonth('covid+symptoms', 5));
 /*
 var keyword = 'covid,symptoms';
 new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
 */
+console.log(new PubMedURLs().downloadResultFromIDList([
+  33964818,
+  33964815,
+  33964720,
+  33964602,
+  33964591], "pubmed"));
 
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
-async function getAllPapersOnpubmedKeywords() {
-  for (var i = 0; i < pubmedKeywords.length; i++) {
-    var keyword = pubmedKeywords[i];
-    console.log(keyword);
-    await new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
-  }
+var my_keywords = ["covid+vaccine", "covid+clinical", "covid+vaccine+symptoms"]
+for (var i = 0; i < pubmedKeywords.length; i++) {
+  var keyword = pubmedKeywords[i];
+  console.log(keyword);
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 }
-async function getAllStatisticsOnpubmedKeywords() {
-  for (var i = 0; i < pubmedKeywords.length; i++) {
-    await new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
-  }
+/*
+for (var i = 0; i < pubmedKeywords.length; i++) {
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[i], "pubmed_statistics");
 }
+*/
+
+
 
 //Uploads all statistics on the pubmedKeywords every 5 days at 3am
 exports.Statistics = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
