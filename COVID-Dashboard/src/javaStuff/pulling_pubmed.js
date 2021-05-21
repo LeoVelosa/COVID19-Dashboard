@@ -299,9 +299,6 @@ class DocumentParsers {
       let re = "\\b\\d{8}\\b";
       ids[count] = parseInt(num.match(re));
       count += 1;
-      if (count >= 5) {
-        break;
-      }
     }
     console.log("Initial id list", ids);
     var myIDs = new IdList(ids, "covid_pubmed_search", keyword+ '_ids');
@@ -531,7 +528,7 @@ console.log(new PubMedURLs().downloadResultFromIDList([
   33964591], "pubmed"));
 
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
-
+var my_keywords = ["covid+vaccine", "covid+clinical", "covid+vaccine+symptoms"]
 for (var i = 0; i < pubmedKeywords.length; i++) {
   var keyword = pubmedKeywords[i];
   console.log(keyword);

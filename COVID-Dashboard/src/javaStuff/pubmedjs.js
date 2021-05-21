@@ -384,19 +384,26 @@ abstracts.innerHTML += '<table>';
 
 
   for (var i = 0; i < data.length; i++) {
+    console.log(data[i]);
     console.log("We're getting the", i, "th paper");
     var title = JSON.stringify(data[i].Item[5]._).replaceAll("\"", '').replaceAll("[", ).replace("]", '');
     var author_list = data[i].Item[3].Item;
+    console.log(JSON.stringify(author_list));
     var authors = "";
-    for (var j = 0; j < author_list.length; j++) {
-      authors += JSON.stringify(author_list[j]._).replaceAll("\"", "");
-      if (j === author_list.length - 2) {
-        authors += ' & '
-      } else if (j !== author_list.length - 1) {
-        authors += ',';
+    if (author_list !== null) {
+      for (var j = 0; j < author_list.length; j++) {
+        authors += JSON.stringify(author_list[j]._).replaceAll("\"", "");
+        if (j === author_list.length - 2) {
+          authors += ' & '
+        } else if (j !== author_list.length - 1) {
+          authors += ',';
+        }
+        authors += ' ';
       }
-      authors += ' ';
+    } else {
+      authors = "Test";
     }
+
     console.log(authors);
 
     var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replaceAll("\"", "");
