@@ -40,20 +40,21 @@ This is a page. More specifically, it hosts this link: https://www.cdc.gov/coron
 ### Nav
 A menu bar which hosts links to all other pages, so you can go between pages. Commonly refered to as the Nav bar.
 ### Pfizer
+This is a page. More specifically, it hosts this link: https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/Pfizer-BioNTech.html. As with all pages, it is on the Nav bar.
 ### Publications
-This is a page which hosts the cards Pubmeddata and . As with all pages, it is on the Nav bar.
+This is a page which hosts the cards Pubmeddata and pubmeddropdown. As with all pages, it is on the Nav bar.
 ### Pubmed-drop-down-card
-
+This is a prototype of pubmeddropdown. Not actually used in the final product.
 ### Pubmeddata
-This hosts a graph which shows data relating to what words appear in PubMed articles.
+This hosts a graph which shows data relating to what words appear in PubMed articles. Is put in Card and is hosted on publications.
 ### Pubmeddropdown 
-
+This is a card which contains articles about COVID from PubMed. This is hosted on publications. Drop down cards were made seperately for formatting the drop down itself, as it wasn't working well by putting it into Card.
 ### Vaccine-page
 This is a page which hosts a various cards, including EligibilityDropDownCard, Card, Vaccinedata, Vaccinetypedata and AvalibilityDropDownCard. Has graphs, tweets, and a youtube video. This is the first page you see when you open up the website. As with all pages, it is on the Nav bar.
 ### Vaccinedata
-
+This is a graph which contains information about how many people in the USA are vaccinated. Is put in Card and is hosted on vaccine-page.
 ### Vaccinetypedata
-This is a graph which contains information about how many people have gotten which type of COVID vaccine.
+This is a graph which contains information about how many people have gotten which type of COVID vaccine. Is put in Card and is hosted on vaccine-page.
 
 
 ## JavaStuff
