@@ -65,9 +65,12 @@ function getDatabase(firebase) {
       }
       console.log(authors);
 
-      var link = 'https://doi.org/' + JSON.stringify(data[i].Item[23]._).substring(34).replace("\"", "");
-      console.log("Link: ", link);
-      var doi_with_label = JSON.stringify(data[i].Item[23]._);
+      var doi_with_label = JSON.stringify(data[i].Item[23]._).toString();
+      console.log(doi_with_label);
+      // Extracts the link starting at the index of the end of the doi and ending with the character before the quotes.
+      var link = 'https://doi.org/' + doi_with_label.substring(doi_with_label.indexOf('doi') + 5, doi_with_label.length - 1);
+
+      console.log(link, doi_with_label);
       var pubdate = JSON.stringify(data[i].Item[0]._).replaceAll('\"', '');
       var periodical = JSON.stringify(data[i].Item[2]._).replaceAll("\"", "");
       var issue_number = JSON.stringify(data[i].Item[6]._);
