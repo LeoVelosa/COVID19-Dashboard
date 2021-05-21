@@ -38,6 +38,7 @@ import { VaccinedataComponent } from './vaccinedata/vaccinedata.component';
 import { VaccinetypedataComponent } from './vaccinetypedata/vaccinetypedata.component';
 import { PubmeddataComponent } from './pubmeddata/pubmeddata.component';
 import { PubmeddropdownComponent } from './pubmeddropdown/pubmeddropdown.component';
+import { ChartDropDownComponent } from './chart-drop-down/chart-drop-down.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { PubmeddropdownComponent } from './pubmeddropdown/pubmeddropdown.compone
     VaccinedataComponent,
     VaccinetypedataComponent,
     PubmeddataComponent,
-    PubmeddropdownComponent
+    PubmeddropdownComponent,
+    ChartDropDownComponent
   ],
   imports: [
     BrowserModule,

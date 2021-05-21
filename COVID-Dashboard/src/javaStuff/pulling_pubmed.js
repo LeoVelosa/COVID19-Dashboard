@@ -208,7 +208,13 @@ class MyXMLHTTPRequest {
      */
     this.ajax(this.main_url + (new PubMedURLs().getSearchStatistics(search_query)),
       new UploadToFirebase().uploadJSONToFirestore, search_query);
-  }
+    var search_stats_by_month = new PubMedURLs().getSearchStatisticsByMonth(search_query, 5)
+    for (var i = 0; i < 5; i++) {
+      this.ajax(search_stats_by_month[i],
+        new UploadToFirebase().uploadJSONToFirestore, search_query + 'month' + (i + 1).toString());
+    }
+
+}
 
   async uploadSearchResultsToFirestore(search_query, collection_name) {
     if (collection_name == null) {
@@ -349,8 +355,8 @@ class PubMedURLs {
     var dates = []
     var now = new Date();
     dates.push(now)
-    for (var i = 0; i < num_months; i++) {
-      var prevMonthLastDate = new Date(now.getFullYear(), now.getMonth(), 1 - (i+1));
+    for (var i = 0; i < num_months + 1; i++) {
+      var prevMonthLastDate = new Date(now.getFullYear(), now.getMonth() - i, 0);
       dates.push(prevMonthLastDate);
     }
     return dates;
@@ -529,9 +535,9 @@ for (var i = 0; i < pubmedKeywords.length; i++) {
   console.log(keyword);
   new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 }
-
-for (var i = 0; i < pubmedKeywords.length; i++) {
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
-}
 */
+for (var i = 0; i < pubmedKeywords.length; i++) {
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[i], "pubmed_statistics");
+}
+
 
