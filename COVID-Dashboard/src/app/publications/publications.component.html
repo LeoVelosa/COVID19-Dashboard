@@ -1,13 +1,11 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Scientific Publications</h1>
+  <h1 class="mat-h1">Recent Publications from PubMed</h1>
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
     <mat-grid-tile [colspan]="( cardLayout | async )?.Abstracts.cols" [rowspan]="( cardLayout | async )?.Abstracts.rows">
       <app-card title="Recent Articles on Covid Vaccines">
         <!-- <div class="scrollable"></div> -->
         <app-pubmeddropdown> </app-pubmeddropdown>
         <div id="covid_pubmed_search"></div>
-
-
       </app-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="( cardLayout | async )?.Visualization.cols" [rowspan]="( cardLayout | async )?.Visualization.rows">

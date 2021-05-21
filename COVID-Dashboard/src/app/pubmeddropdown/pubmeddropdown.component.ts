@@ -28,6 +28,10 @@ export class PubmeddropdownComponent implements OnInit {
   getSearchByKeyword(): void{
     getSearches(firebase, 'abstracts', this.key, true);
   }
+  changeKey(mykey: any): void {
+    mykey = mykey.replaceAll('+', ' ');
+    return mykey;
+  }
 
 }
 function validateInput(input: string) {

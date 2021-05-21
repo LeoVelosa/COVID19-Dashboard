@@ -13,6 +13,12 @@ const pubmedKeywords = [
 function getpubmedKeywords() {
   return pubmedKeywords;
 }
+function getKeywordsForHTML() {
+  var pubmedKeywords2 = pubmedKeywords;
+  for (let i = 0; i < pubmedKeywords.length; i++)
+    pubmedKeywords2[i] = pubmedKeywords2[i].replaceAll('+', ' ');
+  return pubmedKeywords2;
+}
 // Where each pubmed statistic is stored
 const statistics_collection = 'pubmed_statistics';
 async function initializeFirebase(firebase) {
@@ -132,7 +138,7 @@ async function getSearchStatisticsDataFromFirebase(firebase) {
     });
     console.log(data.Result.eGQueryResult[0].ResultItem[0].Count[0]);
 
-    num_entries.push(data.Result.eGQueryResult[0].ResultItem[0].Count[0]);
+    num_entries.push(data.Result.eGQueryResult[0].ResultItem[1].Count[0]);
   }
   tuple.push(new_key_words, num_entries);
   return tuple;

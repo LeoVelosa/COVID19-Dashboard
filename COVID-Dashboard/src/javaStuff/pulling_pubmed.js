@@ -321,6 +321,40 @@ class PubMedURLs {
     this.lang = '+AND+English[language]'
 
   }
+  getSearchStatisticsByMonth(keyword, num_months) {
+    var search_stats_url =  'egquery.fcgi?term=' + keyword
+    var urls = []
+      var dates = this.getDates(num_months);
+      for (var index = 0; index < dates.length - 1; index++) {
+        let current_date = this.getFormattedDate(dates[index+1]);
+        let next_date = this.getFormattedDate(dates[index]);
+
+        urls.push(this.main_url + search_stats_url + '/min_date=' + current_date + '/max_date=' + next_date + this.apiKey);
+      }
+      return urls;
+  }
+  getFormattedDate(date) {
+    var year = date.getFullYear();
+
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+
+    return month + '/' + day + '/' + year;
+  }
+  // Gets the previous date from each month and returns it.
+  getDates(num_months) {
+    var dates = []
+    var now = new Date();
+    dates.push(now)
+    for (var i = 0; i < num_months; i++) {
+      var prevMonthLastDate = new Date(now.getFullYear(), now.getMonth(), 1 - (i+1));
+      dates.push(prevMonthLastDate);
+    }
+    return dates;
+}
   getIDsforSearchResults(keyword, database) {
     return 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
   }
@@ -475,7 +509,7 @@ const pubmedKeywords = [
   'covid+vaccine+molecular+epidemiology',
   'covid+vaccine+clinical'
 ]
-console.log(new PubMedURLs().getSearchStatistics('covid+symptoms'));
+console.log(new PubMedURLs().getSearchStatisticsByMonth('covid+symptoms', 5));
 /*
 var keyword = 'covid,symptoms';
 new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
@@ -489,6 +523,7 @@ console.log(new PubMedURLs().downloadResultFromIDList([
   33964591], "pubmed"));
 
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
+/*
 for (var i = 0; i < pubmedKeywords.length; i++) {
   var keyword = pubmedKeywords[i];
   console.log(keyword);
@@ -498,5 +533,5 @@ for (var i = 0; i < pubmedKeywords.length; i++) {
 for (var i = 0; i < pubmedKeywords.length; i++) {
   new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword, "pubmed_statistics");
 }
-
+*/
 
