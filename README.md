@@ -23,26 +23,39 @@ Most of our work is in the COVID-Dashboard file. In that file you will find many
 The src file contains all the things used to make the website. It uses a mixture of html, css, javascript, typescript, and angular. The main files you would want to look at here is app and javaStuff.
 
 ## App file
-App contains the html, css, and typescript of the website. App mostly contains either cards or pages of the website. Pages will host multiple cards or a single website, and cards just hold some form of information. Cards will typically draw some form of information from somewhere, the most common place being firebase firestore. If a card or webpage is drawing data from somewhere (dynamically) you can look in the FILENAME.component.ts file, where there will be a declare function at the top of the page. This declare function is getting a function from a file in javaStuff and calling it from within the typescript file. The FILENAME.component.css contains CSS, which is what is used to format things on the page or card. FILENAME.component.html contains the HTML of the page, which is code which is used to make the page itself. FILENAME.component.spec.ts files are for unit tests for individual components. There are 15 individual files: avalibilityDropDownCard, card, eligibilityDropDownCard, jand-j, listof-comorbidities, moderna, nav, pfizer, publications, pubmed-drop-down-card, pubmeddata, pubmeddropdown, vaccine-page, vaccinedata, and vaccinetypedata.
+App contains the html, css, and typescript of the website. App mostly contains either cards, graphs, or pages on the website. Pages will host multiple cards or a single website, and cards just hold some form of information. Cards will typically draw some form of information from somewhere, the most common place being firebase firestore. If a card or webpage is drawing data from somewhere (dynamically) you can look in the FILENAME.component.ts file, where there will be a declare function at the top of the page. This declare function is getting a function from a file in javaStuff and calling it from within the typescript file. The FILENAME.component.css contains CSS, which is what is used to format things on the page or card. FILENAME.component.html contains the HTML of the page, which is code which is used to make the page itself. FILENAME.component.spec.ts files are for unit tests for individual components. There are 15 individual files: avalibilityDropDownCard, card, eligibilityDropDownCard, jand-j, listof-comorbidities, moderna, nav, pfizer, publications, pubmed-drop-down-card, pubmeddata, pubmeddropdown, vaccine-page, vaccinedata, and vaccinetypedata.
 
 #### AvalibilityDropDownCard 
+This is a card that has a drop down menu for the vaccine avalibilty tweets in Florida counties. This is hosted on the vaccine-page. Drop down cards were made seperately for formatting the drop down itself, as it wasn't working well by putting it into Card.
 #### Card
+This is a generic card that we use to put in whatever data in. This is a card that is hosted on vaccine-page.
 #### EligibilityDropDownCard
+This is a card that has a drop down menu for the vaccine eligibility tweets in Florida counties. This is hosted on the vaccine-page. Drop down cards were made seperately for formatting the drop down itself, as it wasn't working well by putting it into Card.
 #### Jand-j
+This is a page. More specifically, it hosts this link: https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/janssen.html. As with all pages, it is on the Nav bar.
 #### Listof-comorbidities
+This is a page. More specifically, it hosts this link:https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html. As with all pages, it is on the Nav bar.
 #### Moderna
+This is a page. More specifically, it hosts this link: https://www.cdc.gov/coronavirus/2019-ncov/vaccines/different-vaccines/Moderna.html. As with all pages, it is on the Nav bar.
 #### Nav
+A menu bar which hosts links to all other pages, so you can go between pages. Commonly refered to as the Nav bar.
 #### Pfizer
 #### Publications
+This is a page which hosts the cards Pubmeddata and . As with all pages, it is on the Nav bar.
 #### Pubmed-drop-down-card
+
 #### Pubmeddata
+
 #### Pubmeddropdown 
+
 #### Vaccine-page
+This is a page which hosts a various cards, including EligibilityDropDownCard, Card, Vaccinedata, Vaccinetypedata and AvalibilityDropDownCard. Has graphs, tweets, and a youtube video. This is the first page you see when you open up the website. As with all pages, it is on the Nav bar.
 #### Vaccinedata
+
 #### Vaccinetypedata
+This is a graph which contains information about how many people have gotten which type of COVID vaccine.
 
-
-## javaStuff
+## JavaStuff
 JavaStuff is a file that contains code that will get data from a place, commonly firebase, and is used in conjunction with the files in app to make a dynamic website. 
 
 # What is the functions file?
