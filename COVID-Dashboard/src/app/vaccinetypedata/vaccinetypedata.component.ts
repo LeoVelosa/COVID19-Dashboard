@@ -12,9 +12,11 @@ export class VaccinetypedataComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    //var ctx = document.getElementById('vaccinedata');
+    //Grabs chart using "Chart" id.
     var myChart = new Chart("Chart", {
+      //Makes chart a bar graph
       type: 'bar',
+      //Sets labels of each bar to the vaccine name
       data: {
         labels: [
           "Pfizer-BioNTech",
@@ -22,32 +24,35 @@ export class VaccinetypedataComponent implements OnInit {
           "J&J/Janssen",
         ],
         datasets: [{
+          //Sets label for data at top
           label: 'People fully vaccinated by vaccine type in the US',
+          //Sets data for each vaccine
           data: [
             63506002,
             49889927,
             9552103,
           ],
-          //backgroundColor: 'rgba(0,255,0,0.2)',
           
+          //Sets color for each graph
           backgroundColor: [
+            //pinkish red
             'rgba(255, 99, 132, 0.2)',
+            //light blue
             'rgba(54, 162, 235, 0.2)',
-            
-            
+            //purple
             'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
           ],
+          //Sets color for border of bar
           borderColor: [
+            //pinkish red
             'rgba(255, 99, 132, 1)',
+            //light blue
             'rgba(54, 162, 235, 1)',
-            
-            
+            //purple
             'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
           ],
+          //Sets border width
           borderWidth: 1
-          
         }]
       },
       options: {

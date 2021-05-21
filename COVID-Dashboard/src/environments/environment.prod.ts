@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  //Creates firebase info
   firebase: {
     apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
     authDomain: "covid-dashboard-10efe.firebaseapp.com",

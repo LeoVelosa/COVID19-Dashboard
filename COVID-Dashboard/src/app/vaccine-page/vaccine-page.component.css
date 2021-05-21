@@ -39,6 +39,7 @@
   bottom: 2%;
 }
 
+/*Was used to create tab cards, but this is unused in the final product*/
 .tab-card {
   display: flex;
   align-items: center;
@@ -60,6 +61,7 @@
   text-align: center;
 }
 
+/*Makes objects be underneath everything*/
 .under {
   width: max(100%,315px);
   height: max(100%,315px);

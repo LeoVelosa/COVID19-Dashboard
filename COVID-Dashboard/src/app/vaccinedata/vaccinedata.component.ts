@@ -8,14 +8,17 @@ Chart.register(...registerables);
   templateUrl: './vaccinedata.component.html',
   styleUrls: ['./vaccinedata.component.css']
 })
+//Creates chart
 export class VaccinedataComponent implements OnInit {
 
   constructor() { }
 
   ngOnInit(): void {
-    //var ctx = document.getElementById('vaccinedata');
+    //Grabs chart using "myChart" id.
     var myChart = new Chart("myChart", {
+      //Sets chart to line chart
       type: 'line',
+      //Dates
       data: {
         labels: [
           "1/13/2021",
@@ -145,7 +148,9 @@ export class VaccinedataComponent implements OnInit {
 
         ],
         datasets: [{
+          //Sets data label at top
           label: 'People Vaccinated in the United States',
+          //Sets amount of people vaccinated data
           data: [
             7398897,
             8015434,
@@ -274,30 +279,16 @@ export class VaccinedataComponent implements OnInit {
             157132234,
 
           ],
+          //Makes chart data green
           backgroundColor: 'rgba(0,255,0,0.2)',
+          //Fills area underneath line
           fill: true,
+          //Shows line between dots (Not very neccessary in this case since dots are so close together)
           showLine: true,
+          //Sets size of each dot
           pointRadius: 2,
+          //Sets border width
           borderWidth: 2,
-          /*
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-          */
         }]
       },
       options: {

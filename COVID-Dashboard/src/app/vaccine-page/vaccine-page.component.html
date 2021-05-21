@@ -1,7 +1,15 @@
 <!--@JM_OneLess && @LV_OneLess-->
+
+<!--Makes the div area into a grid so the cards are laid out in columns and rows-->
 <div class="grid-container">
+  <!--Creates title of the vaccine page-->
   <h1 class="mat-h1">COVID19 Informational Hub</h1>
+  <!--"mat-grid-list" is used to create a list of columns and rows for the wrapped tiles to follow.
+      "cols" checks if the site is in handset mode or not and sets the appropriate amount of columns for each mode
+      "rowHeight" sets the pixel size for the rows-->
   <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="350px">
+    <!--this tile goes into vaccine-page.component.ts and grabs the longCards.cols and .rows value
+        based on whether or not it is in handset mode-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.longCards.cols" [rowspan]="( cardLayout | async )?.longCards.rows">
       <!--
       //Original Title: Vaccine Availability
@@ -11,6 +19,8 @@
       </app-aval-dd-card>
 
     </mat-grid-tile>
+    <!--this tile goes into vaccine-page.component.ts and grabs the longCards.cols and .rows value
+        based on whether or not it is in handset mode-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.longCards.cols" [rowspan]="( cardLayout | async )?.longCards.rows">
 
 
@@ -25,26 +35,37 @@
 
 
     </mat-grid-tile>
+    <!--this tile goes into vaccine-page.component.ts and grabs the regCards.cols and .rows value
+        based on whether or not it is in handset mode-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
+      <!--Sets title of card to "YouTube"-->
       <app-card titleOfCard="Youtube">
+        <!--Creates a YouTube embed-->
         <iframe id="player" type="text/html" maxWidth="100%" height="250"
           src="https://www.youtube.com/embed/1Mf3ZWmK1wM?enablejsapi=1&origin" frameborder="0">
         </iframe>
       </app-card>
     </mat-grid-tile>
+    <!--this tile goes into vaccine-page.component.ts and grabs the regCards.cols and .rows value
+        based on whether or not it is in handset mode-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
-
+      <!--Creates card with title and updatedAt text-->
       <app-card titleOfCard="Vaccinations in the US" updatedAt="Last updated: 5/17/2021">
+        <!--Creates vaccine data graph using under class-->
         <app-vaccinedata class="under"></app-vaccinedata>
+        <!--Creates help button-->
         <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
           <mat-icon>help_outline</mat-icon>
         </button>
+        <!--Creates info text for graph-->
         <mat-menu #menu="matMenu" xPosition="before">
           This graph shows the total amount of people vaccinated in the U.S within the last year.
         </mat-menu>
       </app-card>
 
     </mat-grid-tile>
+    <!--this tile goes into vaccine-page.component.ts and grabs the sidewayCards.cols and .rows value
+        based on whether or not it is in handset mode-->
     <mat-grid-tile [colspan]="( cardLayout | async )?.sidewayCards.cols" [rowspan]="( cardLayout | async )?.sidewayCards.rows">
 
       <app-card titleOfCard="COVID News Story Tweets">
@@ -53,13 +74,18 @@
       </app-card>
 
     </mat-grid-tile>
-    <mat-grid-tile>
+    <!--this tile goes into vaccine-page.component.ts and grabs the regCards.cols and .rows value
+        based on whether or not it is in handset mode-->
+    <mat-grid-tile [colspan]="( cardLayout | async )?.regCards.cols" [rowspan]="( cardLayout | async )?.regCards.rows">
+      <!--Creates card with title and updatedAt text-->
       <app-card titleOfCard="Vaccinations by Type" updatedAt="Last updated: 5/17/2021">
-
+        <!--Creates vaccine data type graph using under class-->
         <app-vaccinetypedata class="under"></app-vaccinetypedata>
+        <!--Creates help button-->
         <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu2" aria-label="Toggle menu">
           <mat-icon>help_outline</mat-icon>
         </button>
+        <!--Creates info text for graph-->
         <mat-menu #menu2="matMenu" xPosition="before">
           This graph shows the total amount of people vaccinated by each of the different vaccines in the United States.
         </mat-menu>

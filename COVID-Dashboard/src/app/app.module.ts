@@ -1,4 +1,6 @@
 //@ALL_OneLess
+
+// Imports all modules used within the website
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -80,6 +82,7 @@ import { PubmeddropdownComponent } from './pubmeddropdown/pubmeddropdown.compone
     MatSlideToggleModule
   ],
   providers: [
+    //Implements hash location strategy to make sure routing works smoothly
     {provide : LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

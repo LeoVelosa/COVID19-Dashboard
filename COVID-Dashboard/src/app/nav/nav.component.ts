@@ -11,7 +11,10 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class NavComponent {
 
+  //Dark mode boolean
   isDarkTheme: boolean = false;
+
+  //Creates handset functionality
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

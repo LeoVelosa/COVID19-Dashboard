@@ -1,3 +1,5 @@
+// @LV_OneLess && @JM_OneLess
+// This class imports any modules used inside the nav bar html file
 import { LayoutModule } from '@angular/cdk/layout';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';

@@ -8,6 +8,10 @@ import { PfizerComponent } from './pfizer/pfizer.component';
 import { PublicationsComponent } from './publications/publications.component';
 import { VaccinePageComponent } from './vaccine-page/vaccine-page.component';
 
+/* Creates a list of routes for each component
+ * This list is used in the nav bar so that when a certain
+ * nav option is chosen, it sets the router-outlet to the specified component
+ */
 const routes: Routes = [
   {path: '', component: VaccinePageComponent},
   {path: 'publications', component: PublicationsComponent},

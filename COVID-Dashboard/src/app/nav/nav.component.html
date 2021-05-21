@@ -1,27 +1,40 @@
 <!--@LV_OneLess-->
+
+<!--Creates Navigation system & grabs whether or not dark mode is turned on-->
 <mat-sidenav-container class="sidenav-container mat-app-background" [ngClass] = "{'dark-theme-mode':isDarkTheme}">
+  <!--Checks if in handset mode or not-->
   <mat-sidenav #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'">
+      <!--Sets title of Nav Bar-->
       <mat-toolbar><u>COVID19 Info Hub</u></mat-toolbar>
+    <!--Creates list of items below title-->
     <mat-nav-list>
       <mat-divider></mat-divider>
+      <!--Landing Page/Covid Vaccine info & News-->
       <a mat-list-item routerLink="" (click)="drawer.toggle()">COVID Vaccine News</a>
       <mat-divider></mat-divider>
+      <!--Publication page-->
       <a mat-list-item routerLink="/publications" (click)="drawer.toggle()">Scientific publications</a>
       <mat-divider></mat-divider>
+      <!--Subtitle to separate CDC pages-->
       <mat-toolbar><u>CDC Info</u></mat-toolbar>
       <mat-divider></mat-divider>
+      <!--Pfizer CDC page-->
       <a mat-list-item routerLink="/pfizer" (click)="drawer.toggle()">Pfizer</a>
       <mat-divider></mat-divider>
+      <!--Moderna CDC page-->
       <a mat-list-item routerLink="/moderna" (click)="drawer.toggle()">Moderna</a>
       <mat-divider></mat-divider>
+      <!--Johnson & Johnson CDC page-->
       <a mat-list-item routerLink="/jandj" (click)="drawer.toggle()">Johnson&Johnson</a>
       <mat-divider></mat-divider>
+      <!--List of comorbidities CDC page-->
       <a mat-list-item routerLink="/listofcomorbidities" (click)="drawer.toggle()">List of Comorbidities</a>
       <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
+    <!--Creates header at top of every page-->
     <mat-toolbar color="primary">
       <button
         type="button"
@@ -30,17 +43,23 @@
         (click)="drawer.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+      <!--Dashboard title-->
       <span>COVID19 Dashboard</span>
       <span style="flex:auto"></span>
+      <!--Creates dark mode toggle-->
       <mat-slide-toggle labelPosition="before" [(ngModel)]="isDarkTheme" (change)= "storeThemeSelection()">
+        <!--Moon icon-->
         <mat-icon>bedtime</mat-icon>
       </mat-slide-toggle>
     </mat-toolbar>
-    
+    <!--Based on which ever page the user selected, it uses the router system and grabs the component it is routed to and displays here-->
     <router-outlet></router-outlet>
+    <!--Creates footer-->
     <footer>
       <mat-toolbar color="primary">
+        <!--Creates all the team info-->
         <span style="font-size: 1.5vw;">by Team Oneless:<span style="margin-left: 5%;">Leo Velosa 
+          <!--All anchors below link to our individual pages and wrap an image for either github or linkedin-->
           <a target="_blank" href="https://github.com/LeoVelosa"><img src="../../assets/github.png" alt="github" style="height: auto; max-width: 3%;"></a>
           <a target="_blank" href="https://www.linkedin.com/in/leo-velosa-239064209/"><img src="../../assets/linkedin6.jpg" alt="linkedin" style="height: auto; max-width: 3%;"></a>
         </span>
@@ -53,10 +72,14 @@
           <a target="_blank" href="https://github.com/mpmccord"><img src="../../assets/github.png" alt="github" style="height: auto; max-width: 3%;"></a>
           <a target="_blank" href="https://www.linkedin.com/in/melanie-mccord/"><img src="../../assets/linkedin6.jpg" alt="linkedin" style="height: auto; max-width: 3%;"></a>
         </span>
+        <!--About this page text-->
         <small style="font-size: 1vw;">about this page</small>
+        <!--Question mark at bottom left-->
         <button mat-icon-button class="more-button sizeable" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+          <!--Question mark/help outline icon-->
           <mat-icon>help_outline</mat-icon>
         </button>
+        <!--Page info-->
         <mat-menu #menu="matMenu" xPosition="before">
           This is a Coronavirus News/Vaccine information dashboard for Florida. We have gathered all kinds of vaccine information and put it all on to one website to make the search for information easier.
         </mat-menu>

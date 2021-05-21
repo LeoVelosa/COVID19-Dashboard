@@ -15,8 +15,10 @@ declare function getNewsNames(): any;
 export class VaccinePageComponent implements OnInit{
   /** Based on the screen size, switch from standard to one column per row */
  public newsNames = getNewsNames();
+ //Creates variable that holds whether site is in handset mode or not
   cardLayout = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
+      //if in handset mode set columns and rows to these values
       if (matches) {
         return {
           columns: 2,
@@ -26,6 +28,7 @@ export class VaccinePageComponent implements OnInit{
           longCards: {cols: 1, rows: 1},
         };
       }
+      //if not in handset mode set columns and rows to these values
       return {
         columns: 3,
         sidewayCards: {cols: 2, rows: 1},
@@ -44,12 +47,3 @@ export class VaccinePageComponent implements OnInit{
   }
   constructor(private breakpointObserver: BreakpointObserver) {}
 }
-/*
-{ title: 'News Stories', cols: 2, rows: 1 },
-{ title: 'Vaccine Differences', cols: 1, rows: 2 },
-{ title: 'List of Comorbidities', cols: 1, rows: 1 },
-{ title: 'CDC Eligibility Guidelines', cols: 1, rows: 1 },
-{ title: 'Eligibility Guidelines', cols: 1, rows: 2},
-{ title: 'Vaccine Eligibility', cols: 1, rows: 2},
-{ title: 'Vaccine Eligibility comparison by Florida county', cols: 1, rows: 2},
-*/
