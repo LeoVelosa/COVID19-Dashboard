@@ -50,11 +50,11 @@ This hosts a graph which shows data relating to what words appear in PubMed arti
 ### Pubmeddropdown 
 This is a card which contains articles about COVID from PubMed. This is hosted on publications. Drop down cards were made separately for formatting the drop down itself, as it wasn't working well by putting it into Card.
 ### Vaccine-page
-This is a page which hosts various cards, including EligibilityDropDownCard, Card, Vaccinedata, Vaccinetypedata and AvalibilityDropDownCard. Has graphs, tweets, and a youtube video. This is the first page you see when you open up the website. As with all pages, it is on the Nav bar.
+This is a page which hosts various cards, including EligibilityDropDownCard, Card, Vaccinedata, Vaccinetypedata and AvalibilityDropDownCard. It contains graphs, tweets, and a youtube video. This is the first page you see when you open up the website. As with all pages, it is on the Nav bar.
 ### Vaccinedata
-This is a graph which contains information about how many people in the USA are vaccinated. Is put in Card and is hosted on vaccine-page.
+This is a graph which contains information about how many people in the USA are vaccinated. It is put inside an instance of the Card component and is hosted on vaccine-page.
 ### Vaccinetypedata
-This is a graph which contains information about how many people have gotten which type of COVID vaccine. Is put in Card and is hosted on vaccine-page.
+This is a graph which contains information about how many people have gotten which type of COVID vaccine. It is put inside an instance of the Card component and is hosted on vaccine-page.
 
 
 ## JavaStuff
