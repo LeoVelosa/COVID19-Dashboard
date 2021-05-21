@@ -328,6 +328,7 @@ class PubMedURLs {
 
   }
   getSearchStatisticsByMonth(keyword, num_months) {
+    console.log("Url I'm requesting");
     var search_stats_url =  'egquery.fcgi?term=' + keyword
     var urls = []
       var dates = this.getDates(num_months);
@@ -362,10 +363,11 @@ class PubMedURLs {
     return dates;
 }
   getIDsforSearchResults(keyword, database) {
-    return 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
+    var url = 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
+    console.log("URL:", this.main_url + url);
+    return url;
   }
   downloadResultFromIDList(id_list, database) {
-    console.log(id_list.toString());
     var url = 'esummary.fcgi?db=' + database + '&id=' + id_list + this.apiKey;
     console.log(this.main_url + url);
     return url;
@@ -529,15 +531,15 @@ console.log(new PubMedURLs().downloadResultFromIDList([
   33964591], "pubmed"));
 
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
-/*
+
 for (var i = 0; i < pubmedKeywords.length; i++) {
   var keyword = pubmedKeywords[i];
   console.log(keyword);
   new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 }
-*/
+/*
 for (var i = 0; i < pubmedKeywords.length; i++) {
   new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[i], "pubmed_statistics");
 }
-
+*/
 
