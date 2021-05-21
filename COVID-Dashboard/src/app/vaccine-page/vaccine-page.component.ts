@@ -1,4 +1,5 @@
 //@LV_OneLess && @JM_OneLess
+/* This file interacts with every other file in vaccine-page. Aside from that, it uses functions from FirebaseTweetsToHTML.js in the file COVID-Dashboard/src/javaStuff,   */
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
