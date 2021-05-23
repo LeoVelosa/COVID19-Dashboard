@@ -10,21 +10,15 @@
 <body>
 <div id="my_book"><table id="my_table"></table></div>
 <script>
-  abstracts = document.getElementById("my_book");
-  abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
-    'td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}' +
-    'tr:nth-child(odd)' +
-    '{background-color: #dddddd;}</style>';
-  abstracts.innerHTML += '<h2>HTML Table</h2>'+
-    '<table id="my_table">'+
-    '<tr>'+
-    '<td><a href="https://www.youtube.com" > title </a></td>' +
-    '<td>author</td>' +
-    '<td>Doi</td>' +
-    '</tr>' +
-    '</table>'
-</script>
+  var ctx = document.getElementById('myChart'); // node
 
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {/* Data here */},
+    options: {/* Options here */}
+  });
+</script>
+<div id="myChart"></div>
 
 </body>
 </html>

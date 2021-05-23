@@ -114,7 +114,10 @@ class MyXMLHTTPRequest {
     this.main_url = main_url;
     this.pubmedUrls = new PubMedURLs();
   };
-  ajax(url /* ,params */, callback, search_query) {
+  ajax(url /* ,params */, callback, search_query, collection_name) {
+    if (collection_name == null) {
+      collection_name = "pubmed_statistics";
+    }
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = async function () {
       // return if not ready state 4
@@ -134,7 +137,7 @@ class MyXMLHTTPRequest {
         console.log(response);
         return response;
       });
-      callback && callback(data, "pubmed_statistics", search_query);
+      callback && callback(data, collection_name, search_query);
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
@@ -176,6 +179,14 @@ class MyXMLHTTPRequest {
   }
   // Gets the statistics about a search result from pubmed and
   // uploads a json with this information to Firebase.
+  async getStatisticsAboutKeywordByMonth(search_query) {
+    const NUM_MONTHS = 17
+    var search_stats_by_month = new PubMedURLs().getSearchStatisticsByMonth(search_query, NUM_MONTHS)
+    for (var i = 0; i < NUM_MONTHS; i++) {
+      this.ajax(search_stats_by_month[i],
+        new UploadToFirebase().uploadJSONToFirestore, 'month' + (i).toString(), search_query);
+    }
+  }
   async getStatisticsAboutKeyword(search_query, collection_name) {
 
     /*const xhr = new XMLHttpRequest(),
@@ -206,12 +217,13 @@ class MyXMLHTTPRequest {
     }
     xhr.send();
      */
+    const NUM_MONTHS = 17
     this.ajax(this.main_url + (new PubMedURLs().getSearchStatistics(search_query)),
       new UploadToFirebase().uploadJSONToFirestore, search_query);
-    var search_stats_by_month = new PubMedURLs().getSearchStatisticsByMonth(search_query, 5)
-    for (var i = 0; i < 5; i++) {
+    var search_stats_by_month = new PubMedURLs().getSearchStatisticsByMonth(search_query, NUM_MONTHS)
+    for (var i = 0; i < NUM_MONTHS; i++) {
       this.ajax(search_stats_by_month[i],
-        new UploadToFirebase().uploadJSONToFirestore, search_query + 'month' + (i + 1).toString());
+        new UploadToFirebase().uploadJSONToFirestore, search_query + 'month' + (i).toString());
     }
 
 }
@@ -333,7 +345,8 @@ class PubMedURLs {
         let current_date = this.getFormattedDate(dates[index+1]);
         let next_date = this.getFormattedDate(dates[index]);
 
-        urls.push(this.main_url + search_stats_url + '/min_date=' + current_date + '/max_date=' + next_date + this.apiKey);
+        urls.push(this.main_url + search_stats_url + '/min_date=' +
+          current_date + '/max_date=' + next_date + this.apiKey);
       }
       return urls;
   }
@@ -514,25 +527,15 @@ const pubmedKeywords = [
   'covid+vaccine+molecular+epidemiology',
   'covid+vaccine+clinical'
 ]
-console.log(new PubMedURLs().getSearchStatisticsByMonth('covid+symptoms', 5));
-/*
-var keyword = 'covid,symptoms';
-new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
-new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(keyword);
-*/
-console.log(new PubMedURLs().downloadResultFromIDList([
-  33964818,
-  33964815,
-  33964720,
-  33964602,
-  33964591], "pubmed"));
 
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
 var my_keywords = ["covid+vaccine", "covid+clinical", "covid+vaccine+symptoms"]
 for (var i = 0; i < pubmedKeywords.length; i++) {
   var keyword = pubmedKeywords[i];
   console.log(keyword);
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeywordByMonth(keyword);
+  break;
+  // new MyXMLHTTPRequest(new PubMedURLs().main_url).uploadSearchResultsToFirestore(keyword, "covid_pubmed_search");
 }
 /*
 for (var i = 0; i < pubmedKeywords.length; i++) {

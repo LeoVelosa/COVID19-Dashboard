@@ -386,7 +386,7 @@ abstracts.innerHTML += '<table>';
   for (var i = 0; i < data.length; i++) {
     console.log(data[i]);
     console.log("We're getting the", i, "th paper");
-    var title = JSON.stringify(data[i].Item[5]._).replaceAll("\"", '').replaceAll("[", ).replace("]", '');
+    var title = JSON.stringify(data[i].Item[5]._).replaceAll("\"", '').replaceAll("[",).replace("]", '');
     var author_list = data[i].Item[3].Item;
     console.log(JSON.stringify(author_list));
     var authors = "";
@@ -415,47 +415,106 @@ abstracts.innerHTML += '<table>';
     abstracts.innerHTML +=
       authors +
       " (" + pubdate + ") " + '<a href=' + link + '>' + ' ' + title + '</a>' + ' ' +
-      periodical +  " (" + issue_number + ") " + '<a href=' + link + '>' + ' ' + doi_with_label + '</a>' + '<p></p>';
-
+      periodical + " (" + issue_number + ") " + '<a href=' + link + '>' + ' ' + doi_with_label + '</a>' + '<p></p>';
   }
-  /*
-  for (var k in pubmedKeywords) {
-    getSearch(db, k);
-  }
-  /*
-  console.log("Preparing to add the document to the search results")
-  const abstracts = document.getElementById("covid_pubmed_search");
-  console.log("Abstracts in top", abstracts);
-  var data = await getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi').then(response => {
-    return response;
-  }).catch(err => {
-    console.log(err);
-  });
-  // data = JSON.stringify(data);
-  console.log('Link: https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6));
-  /*abstracts.innerHTML += '<style> table {\n font-family: arial, sans-serif; border-collapse: collapse;width: 100%;}'+
-  'td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}' +
-    'tr:nth-child(odd)' +
-  '{background-color: #dddddd;}</style>';
-abstracts.innerHTML += '<table>';
-  for (var i = 0; i < data.length; i++) {
-    var title = JSON.stringify(data[i].Item[5]._).replace("\"", "").replace("[","").replace("]", "");
-    var author = JSON.stringify(data[i].Item[4]._).replace("\"", "");
-    var link = 'https://doi.org/' + JSON.stringify(data[0].Item[23]._).substring(6).replace("\"","");
-    var doi_with_label = JSON.stringify(data[0].Item[23]._);
-    /*
-    // console.log(<a href='+ link + '>' + doi_with_label +'</a>');
-    abstracts.innerHTML += '<div id=search_result><p class="text"><div class="text">' +
-    '<h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author +
-      doi_with_label + '</p></div></div>';
-    abstracts.innerHTML +=
-      // adds title, author, doi
-      '<tr> <h3>' + '<a href='+ link + '>' + title +'</a>' + '</h3>' + author + doi_with_label + '</tr>';
-  }
-  abstracts.innerHTML += '</table>';
-   */
-  console.log(abstracts);
-
+}
+  async function createChartVisualizationByMonth(firebase, Chart) {
+    if (firebase.apps.length == 0) {
+      //console.log(firebase.app.length);
+      var firebaseConfig = {
+        apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
+        authDomain: "covid-dashboard-10efe.firebaseapp.com",
+        projectId: "covid-dashboard-10efe",
+        storageBucket: "covid-dashboard-10efe.appspot.com",
+        messagingSenderId: "933584669394",
+        appId: "1:933584669394:web:b211b0c35649af42b1fb0b",
+        measurementId: "G-XVWT1E6R8B"
+      };
+      firebase.initializeApp(firebaseConfig);
+    }
+    const CHART_ELEMENT = 'keywordsByMonth';
+    var db = firebase.firestore();
+    var ctx = document.getElementById(CHART_ELEMENT);
+    var myChart = new Chart(CHART_ELEMENT, {
+      type: 'line',
+      data: {
+        labels: [
+          "Jan-20",
+          "Feb-20",
+          "Mar-20",
+          "Apr-20",
+          "May-20",
+          "Jun-20",
+          "Jul-20",
+          "Aug-20",
+          "Sep-20",
+          "Oct-20",
+          "Nov-20",
+          "Dec-20",
+          "Jan-21",
+          "Feb-21",
+          "Mar-21",
+          "Apr-21",
+          "May-21"
+        ],
+        datasets: [{
+          label: 'Papers Published On Covid Vaccine By Month',
+          data: [
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            70,
+            80,
+            90,
+            100,
+            110,
+            120,
+            130,
+            140,
+            150,
+            160,
+            170
+          ],
+          backgroundColor: 'rgba(0,255,0,0.2)',
+          fill: true,
+          showLine: true,
+          pointRadius: 2,
+          borderWidth: 2,
+          /*
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+          */
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+}
+async function getPapersByMonthFromFirebase(firebase) {
+  var db = getDatabase(firebase);
 
 }
 // console.log(getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi'));

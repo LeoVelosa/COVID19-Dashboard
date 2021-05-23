@@ -13,7 +13,7 @@ import 'firebase/functions';
 /* Gets the function from js.js */
 // tslint:disable-next-line:unified-signatures
 declare function createChartVisualization(firebase: any, Chart: any): any;
-
+declare function createChartVisualizationByMonth(firebase: any, Chart: any): any;
 @Component({
   selector: 'app-pubmeddata',
   templateUrl: './pubmeddata.component.html',
@@ -26,8 +26,9 @@ export class PubmeddataComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     // tslint:disable-next-line:prefer-const
-    var ctx = document.getElementById('pubmedChart');
+    var ctx = document.getElementById('keywordsByMonth');
     await createChartVisualization(firebase, Chart);
+    await createChartVisualizationByMonth(firebase, Chart);
     // tslint:disable-next-line:variable-name
 
 
