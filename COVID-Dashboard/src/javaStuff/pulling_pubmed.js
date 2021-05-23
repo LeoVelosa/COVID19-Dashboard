@@ -6,6 +6,7 @@ var xml2js = require('xml2js');
 var fs = require('fs');
 var firebase = require('firebase');
 const {ajax} = require("rxjs/ajax");
+var moment = require('moment.js')
 /**
  * pulling_pubmed.js
  * Loads a webpage from PubMed Entrez API and runs it
@@ -339,39 +340,15 @@ class PubMedURLs {
   getSearchStatisticsByMonth(keyword, num_months) {
     console.log("Url I'm requesting");
     var search_stats_url =  'egquery.fcgi?term=' + keyword
+    const myDateParser = new DateParsing();
     var urls = []
-      var dates = this.getDates(num_months);
-      for (var index = 0; index < dates.length - 1; index++) {
-        let current_date = this.getFormattedDate(dates[index+1]);
-        let next_date = this.getFormattedDate(dates[index]);
-
-        urls.push(this.main_url + search_stats_url + '/min_date=' +
-          current_date + '/max_date=' + next_date + this.apiKey);
+      var dates = myDateParser.createAllDatesFromStartDate(myDateParser.getStartOfPandemic());
+      for (let i = 1; i < dates.length; i++) {
+        urls.push(this.main_url + search_stats_url + '/start_date=' + dates[i-1] + "end_date=" + dates[i]);
       }
       return urls;
   }
-  getFormattedDate(date) {
-    var year = date.getFullYear();
 
-    var month = (1 + date.getMonth()).toString();
-    month = month.length > 1 ? month : '0' + month;
-
-    var day = date.getDate().toString();
-    day = day.length > 1 ? day : '0' + day;
-
-    return month + '/' + day + '/' + year;
-  }
-  // Gets the previous date from each month and returns it.
-  getDates(num_months) {
-    var dates = []
-    var now = new Date();
-    dates.push(now)
-    for (var i = 0; i < num_months + 1; i++) {
-      var prevMonthLastDate = new Date(now.getFullYear(), now.getMonth() - i, 0);
-      dates.push(prevMonthLastDate);
-    }
-    return dates;
-}
   getIDsforSearchResults(keyword, database) {
     var url = 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
     console.log("URL:", this.main_url + url);
@@ -520,6 +497,29 @@ var covid_text = myPubMedSearchResults.getIDsforSearchResults("Covid-19", "pubme
 var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
 */
+class DateParsing {
+  createAllDatesFromStartDate(start_date) {
+    // the start of the pandemic, i.e. January 1st, 2020
+    // today
+    var endDate = moment();
+
+    var result = [];
+
+    if (endDate.isBefore(startDate)) {
+      throw "End date must be greater than start date."
+    }
+
+    while (startDate.isBefore(endDate)) {
+      result.push(startDate.format("DD-MM-YYYY"));
+      startDate.add(1, 'month');
+    }
+    return result;
+  }
+  getStartOfPandemic() {
+    return moment('2020-01-01');
+  }
+
+}
 const pubmedKeywords = [
   'covid+vaccine',
   'covid+vaccine+symptoms',
