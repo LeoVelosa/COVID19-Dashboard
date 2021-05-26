@@ -6,7 +6,7 @@ var xml2js = require('xml2js');
 var fs = require('fs');
 var firebase = require('firebase');
 const {ajax} = require("rxjs/ajax");
-var moment = require('moment.js')
+var moment = require('moment');
 /**
  * pulling_pubmed.js
  * Loads a webpage from PubMed Entrez API and runs it
@@ -293,6 +293,50 @@ class MyXMLHTTPRequest {
     };
     xhr.send();
   }
+  async getSearchStatisticsByMonth(keyword) {
+    const urls_bydate = this.pubmedUrls.getSearchStatisticsByMonth(keyword);
+    const dates = urls_bydate[1];
+    const urls = urls_bydate[0];
+    console.log(urls, dates);
+
+    for (var i = 0; i < dates.length; i++) {
+      console.log("Uploading", dates[i], "in the collection", keyword, "to Firebase");
+      await this.uploadDatesToFirebase(urls[i], dates[i], keyword);
+    }
+
+  }
+  async uploadDatesToFirebase(my_url, date, my_keyword) {
+    console.log("Preparing to upload to Firebase");
+    const xhr = new XMLHttpRequest(),
+      method = "GET",
+      responseType = "document";
+    xhr.open(method, my_url, true);
+    xhr.onerror = function() {
+      console.log("Oh no! There has been an error with the request!");
+    }
+    xhr.onload = async function() {
+      console.log(date, my_keyword);
+      console.log(xhr.responseText);
+      const date_array = date.split(' ');
+      const month = date_array[0];
+      const year = date_array[1];
+      date = month + ' ' + year;
+      console.log(date);
+      console.log(date, "is being uploaded to", my_keyword);
+      let my_text = new DocumentParsers().getTextFromXMLHTTPResponse(xhr);
+      const my_json = await new XMLToJSONParser().parseXml(my_text);
+      await new UploadToFirebase().uploadJSONToFirestore(my_json, my_keyword, date).then(response => {
+        console.log("Successfully uploaded to Firebase!");
+      }).catch(err => {
+        console.log("Oh no! There has been an error with the upload!", err);
+      });
+      await new MyXMLHTTPRequest().sleep(2000);
+    }
+    xhr.send();
+  }
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }
 
 class DocumentParsers {
@@ -333,25 +377,37 @@ class DocumentParsers {
 class PubMedURLs {
   constructor() {
     this.main_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
-    this.apiKey = '/api_key=da3f695a22cf95ba939d5c477fe843a6e508';
+    this.apiKey = '&api_key=da3f695a22cf95ba939d5c477fe843a6e508';
     this.lang = '+AND+English[language]'
 
   }
-  getSearchStatisticsByMonth(keyword, num_months) {
+  // Gets the urls by date and returns an array with the dates and urls for searching
+  getSearchStatisticsByMonth(keyword) {
     console.log("Url I'm requesting");
-    var search_stats_url =  'egquery.fcgi?term=' + keyword
     const myDateParser = new DateParsing();
+    // the tuple of both urls and dates to return
+    var urls_by_date = [];
     var urls = []
-      var dates = myDateParser.createAllDatesFromStartDate(myDateParser.getStartOfPandemic());
-      for (let i = 1; i < dates.length; i++) {
-        urls.push(this.main_url + search_stats_url + '/start_date=' + dates[i-1] + "end_date=" + dates[i]);
+    // the start dates for each entry
+    var dates_to_return = []
+    var all_dates = myDateParser.createAllDatesFromStartDate(myDateParser.getStartOfPandemic());
+    var dates_urls = all_dates[0];
+    var dates_for_firebase = all_dates[1];
+      for (let i = 1; i < dates_for_firebase.length; i++) {
+       let my_date_url = (this.main_url + this.getIDsforSearchResults(keyword, 'pubmed') + '&datetype=pdat&mindate=' + dates_urls[i-1] + "&maxdate=" + dates_urls[i]) + this.apiKey;
+       // console.log(my_date_url);
+        // console.log(my_date_url, dates[i-1]);
+       urls.push(my_date_url)
+        dates_to_return.push(dates_for_firebase[i-1]);
       }
-      return urls;
+      urls_by_date.push(urls);
+      urls_by_date.push(dates_for_firebase);
+      return urls_by_date;
   }
 
   getIDsforSearchResults(keyword, database) {
-    var url = 'esearch.fcgi?db=' + database + '&term=' + keyword + this.lang + this.apiKey;
-    console.log("URL:", this.main_url + url);
+    var url = 'esearch.fcgi?db=' + database + '&term=' + keyword + this.apiKey;
+    // console.log("URL:", this.main_url + url);
     return url;
   }
   downloadResultFromIDList(id_list, database) {
@@ -366,7 +422,29 @@ class PubMedURLs {
     return url;
   }
 }
+// validating data from firebase
+class DataValidation {
+  constructor() {
 
+  }
+  // checks the collection for each piece of data not in the collection
+  // by default, uploads only the m
+  async checkMostRecentDateInDatabase(my_keyword, date_list) {
+    var keywordRef = db.collection(my_keyword);
+    var keywords_to_update = [];
+    for (let i = 0; i < date_list.length - 1; i++) {
+      var doc = await keywordRef.get(date_list[i]).then(response => {
+        console.log("This data is in the reference list");
+      }).catch(err => {
+        console.log("There was an error", err);
+        keywords_to_update.push(date_list[i]);
+      })
+    }
+    // Always update the most recent month
+    keywords_to_update.push(date_list[date_list.length - 1]);
+    return keywords_to_update;
+  }
+}
 // Functions for reading and writing data
 class ReadingAndWritingFiles {
   constructor() {
@@ -498,25 +576,43 @@ var my_list = new ReadingAndWritingFiles().readFromAFile("ids.txt");
 new MyXMLHTTPRequest().getSearchResults(my_list, "covid");
 */
 class DateParsing {
-  createAllDatesFromStartDate(start_date) {
+  constructor() {
+    this.years = ['2020', '2021'];
+    this.namedMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  }
+  getAllNamedMonths() {
+    return this.namedMonths;
+  }
+  getAllYears() {
+    return this.years;
+  }
+  createAllDatesFromStartDate(startDate) {
+    if (startDate == null)
+      startDate = this.getStartOfPandemic();
     // the start of the pandemic, i.e. January 1st, 2020
     // today
     var endDate = moment();
-
-    var result = [];
-
+    var dates_for_pubmed = []
+    var results = [];
+    var dates_strings = []
     if (endDate.isBefore(startDate)) {
       throw "End date must be greater than start date."
     }
 
     while (startDate.isBefore(endDate)) {
-      result.push(startDate.format("DD-MM-YYYY"));
+      dates_for_pubmed.push(startDate.format("YYYY/MM/DD"));
+      let date_string = (this.namedMonths[startDate.month()] + ' ' + startDate.year());
+      console.log(date_string);
+      dates_strings.push(date_string);
       startDate.add(1, 'month');
     }
-    return result;
+    dates_for_pubmed.push(endDate.format('YYYY/MM/DD'))
+    results.push(dates_for_pubmed);
+    results.push(dates_strings);
+    return results;
   }
   getStartOfPandemic() {
-    return moment('2020-01-01');
+    return moment("2020/01/01");
   }
 
 }
@@ -527,7 +623,21 @@ const pubmedKeywords = [
   'covid+vaccine+molecular+epidemiology',
   'covid+vaccine+clinical'
 ]
+// console.log(new DateParsing().createAllDatesFromStartDate());
+for (let i = 4; i < pubmedKeywords.length; i++) {
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[i]);
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).sleep(1000);
+  break;
+}
 
+
+
+/*
+console.log(new PubMedURLs().getSearchStatisticsByMonth('covid+vaccine'));
+console.log(new PubMedURLs().main_url + new PubMedURLs().getIDsforSearchResults('covid+vaccine', 'pubmed') + "&datetype=pdat&mindate=2020/01&maxdate=2020/02");
+console.log(new PubMedURLs().main_url + new PubMedURLs().getIDsforSearchResults('covid+vaccine', 'pubmed') + "&datetype=pdat&mindate=2020/03&maxdate=2020/04");
+
+/*
 // new MyXMLHTTPRequest(new PubMedURLs().main_url).getStatisticsAboutKeyword(pubmedKeywords[4], "pubmed_statistics");
 var my_keywords = ["covid+vaccine", "covid+clinical", "covid+vaccine+symptoms"]
 for (var i = 0; i < pubmedKeywords.length; i++) {

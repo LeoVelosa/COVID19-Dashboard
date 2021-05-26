@@ -67,7 +67,7 @@ async function createChartVisualization(firebase, Chart) {
         data: chart_data[1],
         backgroundColor: 'rgba(0,255,0,0.2)',
         borderWidth: 2,
-        /*
+
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -85,7 +85,7 @@ async function createChartVisualization(firebase, Chart) {
           'rgba(255, 159, 64, 1)'
         ],
         borderWidth: 1
-        */
+
       }]
     },
     options: {
@@ -97,6 +97,7 @@ async function createChartVisualization(firebase, Chart) {
     }
   });
   const chartElement = document.getElementById("pubmedChart");
+
 }
 async function getSearchStatisticsDataFromFirebase(firebase) {
   if(firebase.apps.length==0){
@@ -418,7 +419,36 @@ abstracts.innerHTML += '<table>';
       periodical + " (" + issue_number + ") " + '<a href=' + link + '>' + ' ' + doi_with_label + '</a>' + '<p></p>';
   }
 }
-  async function createChartVisualizationByMonth(firebase, Chart) {
+async function getStatsByMonthForEachKeyword(firebase, pubmedKeywords) {
+  console.log("Preparing to upload the number of stats per month for each keyword");
+  if (pubmedKeywords == null) {
+    pubmedKeywords = getpubmedKeywords();
+  }
+  let labels = []
+  let data = []
+  for (let i = 0; i < pubmedKeywords.length; i++) {
+    console.log("Currently getting the statistics on", pubmedKeywords[i]);
+    let months_by_data = await getStatisticsByMonth(pubmedKeywords[i], firebase).then(response => {
+      console.log('Got this months by data', response);
+      return response;
+    }).catch(err => {
+      console.log(err);
+    });
+    console.log("Updating the labels and data")
+    labels = months_by_data[0];
+    data.push(months_by_data[1]);
+  }
+
+  var tuple = [labels, data];
+  console.log(tuple[0]);
+  console.log(tuple[1]);
+  return tuple;
+
+}
+  async function createChartVisualizationByMonth(firebase, Chart, pubmed_keywords) {
+    if (pubmed_keywords === null) {
+      pubmed_keywords = getpubmedKeywords();
+    }
     if (firebase.apps.length == 0) {
       //console.log(firebase.app.length);
       var firebaseConfig = {
@@ -432,86 +462,142 @@ abstracts.innerHTML += '<table>';
       };
       firebase.initializeApp(firebaseConfig);
     }
+    /*
+    var months_by_data = await getStatisticsByMonth(pubmed_keywords[0], firebase).then(response => {
+      console.log('Months by data', response);
+      return response;
+    }).catch(err => {
+      console.log(err);
+    });
+     */
+    const data_and_labels = await getStatsByMonthForEachKeyword(firebase, pubmedKeywords);
+    console.log("Returned", data_and_labels);
+    const labels = data_and_labels[0];
+    const my_datasets = data_and_labels[1];
+    console.log("Datasets", my_datasets);
     const CHART_ELEMENT = 'keywordsByMonth';
     var db = firebase.firestore();
     var ctx = document.getElementById(CHART_ELEMENT);
     var myChart = new Chart(CHART_ELEMENT, {
       type: 'line',
       data: {
-        labels: [
-          "Jan-20",
-          "Feb-20",
-          "Mar-20",
-          "Apr-20",
-          "May-20",
-          "Jun-20",
-          "Jul-20",
-          "Aug-20",
-          "Sep-20",
-          "Oct-20",
-          "Nov-20",
-          "Dec-20",
-          "Jan-21",
-          "Feb-21",
-          "Mar-21",
-          "Apr-21",
-          "May-21"
-        ],
+        labels: labels,
         datasets: [{
-          label: 'Papers Published On Covid Vaccine By Month',
-          data: [
-            10,
-            20,
-            30,
-            40,
-            50,
-            60,
-            70,
-            80,
-            90,
-            100,
-            110,
-            120,
-            130,
-            140,
-            150,
-            160,
-            170
-          ],
-          backgroundColor: 'rgba(0,255,0,0.2)',
-          fill: true,
+          label: pubmedKeywords[0],
+          data: my_datasets[0],
+          backgroundColor: 'rgba(0,255,30,1)',
+          fill: false,
           showLine: true,
-          pointRadius: 2,
+          pointRadius: 5,
           borderWidth: 2,
-          /*
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-          */
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
+        },
+          {
+            label: pubmedKeywords[1],
+            data: my_datasets[1],
+            backgroundColor: 'rgba(123, 0, 255,1)',
+            fill: false,
+            showLine: true,
+            pointRadius: 5,
+            borderWidth: 2,
+          },
+          {
+            label: pubmedKeywords[2],
+            data: my_datasets[2],
+            backgroundColor: 'rgba(150,0,0,1)',
+            fill: false,
+            showLine: true,
+            pointRadius: 5,
+            borderWidth: 2,
+          },
+          {
+            label: pubmedKeywords[3],
+            data: my_datasets[3],
+            backgroundColor: 'rgba(255,150,30,1)',
+            fill: false,
+            showLine: true,
+            pointRadius: 5,
+            borderWidth: 2,
+          },
+          {
+            label: pubmedKeywords[4],
+            data: my_datasets[4],
+            backgroundColor: 'rgba(0,255,255,1)',
+            fill: false,
+            showLine: true,
+            pointRadius: 5,
+            borderWidth: 2,
+          }],
+        options: {
+          scales: {
+            y: {
+              beginAtZero: false
+            }
           }
         }
       }
     });
+
+}
+async function getStatisticsByMonth(my_keyword, firebase) {
+  console.log("Getting the statistics by month")
+  const db = getDatabase(firebase);
+  var keyword_ref = db.collection(my_keyword);
+  const snapshot = await keyword_ref.get().then(response => {
+    console.log("Success!");
+    console.log("Got the data from the keywords", response);
+    return response;
+  })
+  console.log("Snapshot", snapshot);
+  var months_and_data = [];
+  var months = [];
+  var data = [];
+  months = [0, 15, 7, 23, 5];
+  data = [5,4,89,0,24245];
+  console.log("Testing the sorting function");
+  console.log("Items", months, "Data", data);
+  console.log(sortBy2(months, data));
+  months = []
+  data = []
+  snapshot.forEach(doc => {
+    console.log(doc.id, '=>', doc.data().eSearchResult.Count[0]);
+    months.push(new Date(doc.id));
+    data.push(doc.data().eSearchResult.Count[0]);
+  });
+  months_and_data.push(months);
+  months_and_data.push(data);
+  months_and_data = sortBy2(months, data);
+
+  months = months_and_data[0];
+  for (let i = 0; i < months.length; i++) {
+    let current_month = months[i]
+    months[i] = current_month.getMonth() + 1 + '/' + current_month.getFullYear();
+  }
+  months_and_data[0] = months;
+  data = months_and_data[1];
+  console.log("Months by data", months, data);
+  console.log(months_and_data);
+  return months_and_data;
+}// https://www.guru99.com/quicksort-in-javascript.html
+
+function sortBy2(arr, arr_to_follow) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length - 1; j++) {
+      if (arr[i] > arr[j]) {
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+
+        temp = arr_to_follow[i];
+        arr_to_follow[i] = arr_to_follow[j];
+        arr_to_follow[j] = temp;
+
+      }
+    }
+  }
+  var result = []
+  result.push(arr, arr_to_follow)
+  return result;
+
 }
 async function getPapersByMonthFromFirebase(firebase) {
   var db = getDatabase(firebase);
