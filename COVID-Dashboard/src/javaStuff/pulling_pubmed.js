@@ -624,11 +624,10 @@ const pubmedKeywords = [
   'covid+vaccine+clinical'
 ]
 // console.log(new DateParsing().createAllDatesFromStartDate());
-for (let i = 4; i < pubmedKeywords.length; i++) {
-  new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[i]);
+// for (let i = 0; i < pubmedKeywords.length; i++) {
+  new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth("covid+vaccine+symptoms");
   new MyXMLHTTPRequest(new PubMedURLs().main_url).sleep(1000);
-  break;
-}
+// }
 
 
 

@@ -435,7 +435,8 @@ async function getStatsByMonthForEachKeyword(firebase, pubmedKeywords) {
       console.log(err);
     });
     console.log("Updating the labels and data")
-    labels = months_by_data[0];
+    if (i === 0)
+      labels = months_by_data[0];
     data.push(months_by_data[1]);
   }
 
@@ -503,7 +504,7 @@ async function getStatsByMonthForEachKeyword(firebase, pubmedKeywords) {
           {
             label: pubmedKeywords[2],
             data: my_datasets[2],
-            backgroundColor: 'rgba(150,0,0,1)',
+            backgroundColor: 'rgba(255,0,0,1)',
             fill: false,
             showLine: true,
             pointRadius: 5,
@@ -581,7 +582,7 @@ async function getStatisticsByMonth(my_keyword, firebase) {
 
 function sortBy2(arr, arr_to_follow) {
   for (let i = 0; i < arr.length; i++) {
-    for (let j = i + 1; j < arr.length - 1; j++) {
+    for (let j = i + 1; j < arr.length; j++) {
       if (arr[i] > arr[j]) {
         let temp = arr[i];
         arr[i] = arr[j];
