@@ -533,11 +533,36 @@ async function getStatsByMonthForEachKeyword(firebase, pubmedKeywords) {
             y: {
               beginAtZero: false
             }
+          },
+          plugins: {
+            legend: {
+              onClick(e) {
+                
+              }
+            }
           }
         }
       }
     });
+    ctx.onclick = function(e) {
+      var slice = myChart.getElementAtEvent(e);
+      if (!slice.length) {
+        return;
+      }
+      var label = slice[0]._model.label;
+      window.open('https://www.ncbi.nlm.nih.gov/pubmed?term=' + label);
 
+    }
+    console.log(myChart.datasets);
+    for (var i = 0; i < myChart.datasets.length; i++) {
+      var points = myChart.datasets[i].points;
+      for (var j = 0; i < points.length; j++) {
+        points[j].onClick = function(e) {
+          window.open('https://www.ncbi.nlm.nih.gov/pubmed?term=' + pubmed_keywords[i]);
+        }
+        // window.open('https://www.ncbi.nlm.nih.gov/pubmed?term=' + pubmed_keywords[i]);
+      }
+    }
 }
 async function getStatisticsByMonth(my_keyword, firebase) {
   console.log("Getting the statistics by month")
@@ -604,4 +629,5 @@ async function getPapersByMonthFromFirebase(firebase) {
   var db = getDatabase(firebase);
 
 }
+
 // console.log(getDocument(db, "covid_pubmed_search", 'lLyiMcd6bSvIkKvuldmi'));

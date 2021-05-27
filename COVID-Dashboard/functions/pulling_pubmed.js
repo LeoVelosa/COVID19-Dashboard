@@ -1,5 +1,5 @@
 /** Pulling Pubmed
- * @author Melanie McCord
+ * @author Melanie McCord @TeamOneLess
  * **/
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xml2js = require('xml2js');
@@ -7,6 +7,10 @@ var fs = require('fs');
 var firebase = require('firebase');
 const {ajax} = require("rxjs/ajax");
 var moment = require('moment');
+const functions = require("firebase-functions");
+var admin = require('firebase-admin');
+if (firebase.app.length === 0)
+  admin.initializeApp();
 /**
  * pulling_pubmed.js
  * Loads a webpage from PubMed Entrez API and runs it
@@ -26,6 +30,8 @@ var moment = require('moment');
  * 3. The json will be saved as a file.
  * Thank you!
  * */
+
+/*
 var firebaseConfig = {
   apiKey: "AIzaSyD5YuObpl_gksLoKErhPIc9CjdcCuxyWiU",
   authDomain: "covid-dashboard-10efe.firebaseapp.com",
@@ -39,6 +45,7 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 db = firebase.firestore();
+ */
 class Id {
   constructor(id_list) {
     this.id = id_list;
@@ -626,8 +633,7 @@ const pubmedKeywords = [
 
 
 
-//Uploads all statistics on the pubmedKeywords every 5 days at 3am
-exports.Statistics = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
+exports.Statistics = functions.pubsub.schedule('0 0 * * *').onRun( async(context) => {
   await getAllStatisticsOnpubmedKeywords().then(response => {
     console.log("Success!");
   }).catch(err => {
@@ -636,7 +642,7 @@ exports.Statistics = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('e
 });
 
 // Uploads all papers by keyword every 5 days
-exports.Papers = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every 5 days').onRun( async(context) => {
+exports.Papers = functions.pubsub.schedule('5 0 * * *').onRun( async(context) => {
   await getAllPapersOnpubmedKeywords().then(response => {
     console.log("Success!");
   }).catch(err => {
@@ -645,38 +651,20 @@ exports.Papers = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('every
 });
 // Getting the different keywords from PubMed
 // Due to PubMed API pull limits, only doing one at a time
-exports.CovidVaccineStats = functions.runWith().pubsub.schedule('0 3 * * *').onRun(async(context) => {
-  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[0]).then(response => {
-    console.log("Success!");
-  }).catch(err => {
-    console.log(err);
-  })
+
+
+exports.CovidVaccineStats1 = functions.pubsub.schedule('0 3 * * *').onRun(async(context) => {
+  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[0]);
 });
-exports.CovidVaccineSymptomsStats = functions.runWith().pubsub.schedule('2 3 * * *').onRun(async(context) => {
-  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[1]).then(response => {
-    console.log("Success!");
-  }).catch(err => {
-    console.log(err);
-  })
+exports.CovidVaccineSymptomsStats2 = functions.pubsub.schedule('2 3 * * *').onRun(async(context) => {
+  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[1]);
 });
-exports.CovidVaccineSymptomsStats = functions.runWith().pubsub.schedule('4 3 * * *').onRun(async(context) => {
-  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[2]).then(response => {
-    console.log("Success!");
-  }).catch(err => {
-    console.log(err);
-  })
+exports.CovidVaccineSymptomsStats3 = functions.pubsub.schedule('4 3 * * *').onRun(async(context) => {
+  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[2]);
 });
-exports.CovidVaccineSymptomsStats = functions.runWith().pubsub.schedule('6 3 * * *').onRun(async(context) => {
-  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[3]).then(response => {
-    console.log("Success!");
-  }).catch(err => {
-    console.log(err);
-  })
+exports.CovidVaccineSymptomsStats4 = functions.pubsub.schedule('6 3 * * *').onRun(async(context) => {
+  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[3]);
 });
-exports.CovidVaccineSymptomsStats = functions.runWith().pubsub.schedule('8 3 * * *').onRun(async(context) => {
-  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[4]).then(response => {
-    console.log("Success!");
-  }).catch(err => {
-    console.log(err);
-  })
+exports.CovidVaccineSymptomsStats5 = functions.pubsub.schedule('8 3 * * *').onRun(async(context) => {
+  await new MyXMLHTTPRequest(new PubMedURLs().main_url).getSearchStatisticsByMonth(pubmedKeywords[4]);
 });

@@ -250,3 +250,5 @@ exports.EligibilityTweets = functions.runWith({timeoutSeconds: 539}).pubsub.sche
 exports.NewsTweets = functions.runWith({timeoutSeconds: 539}).pubsub.schedule('0 0 * * *').onRun( async(context) => {
   await NewsTweetsTDB();
 });
+exports.PubMed = require('./pulling_pubmed');
+

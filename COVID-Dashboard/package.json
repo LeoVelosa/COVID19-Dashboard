@@ -30,6 +30,8 @@
     "cheerio": "^1.0.0-rc.6",
     "d3": "^6.7.0",
     "firebase": "^7.0 || ^8.0",
+    "firebase-admin": "^9.9.0",
+    "firebase-functions": "^3.14.1",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "ngx-spinner": "^11.0.1",
