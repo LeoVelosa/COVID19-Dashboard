@@ -586,7 +586,7 @@ async function getStatsByMonthForEachKeyword(firebase, pubmedKeywords) {
         }
       }
     });
-    
+
 }
 async function getStatisticsByMonth(my_keyword, firebase) {
   console.log("Getting the statistics by month")
