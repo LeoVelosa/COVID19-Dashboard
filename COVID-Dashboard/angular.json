@@ -39,6 +39,7 @@
             ],
             "scripts": [
               "src/javaStuff/js.js",
+              "src/javaStuff/sorting.js",
               "src/javaStuff/pubmedjs.js",
               "src/javaStuff/FirestoreTweetsToHTML.js",
               "src/javaStuff/PubMedDataToHTML.js"

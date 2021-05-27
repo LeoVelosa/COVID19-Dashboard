@@ -1,7 +1,7 @@
 // import firebase from "firebase";
 // import {Chart} from "chart.js";
 /**
- * @author Melanie McCord
+ * @author Melanie McCord @ TeamOneLess
  * */
 const pubmedKeywords = [
   'covid+vaccine+symptoms',
@@ -10,6 +10,55 @@ const pubmedKeywords = [
   'covid+vaccine+clinical',
   'covid+vaccine',
 ]
+// Sorting code from: https://www.guru99.com/quicksort-in-javascript.html
+// Slightly adapted to sort two arrays simultaneously
+// console.log(items, items_to_follow);
+function swap(items, leftIndex, rightIndex){
+  var temp = items[leftIndex];
+  items[leftIndex] = items[rightIndex];
+  items[rightIndex] = temp;
+}
+function partition(items, items_to_follow, left, right) {
+  var pivot   = items[Math.floor((right + left) / 2)], //middle element
+    i       = left, //left pointer
+    j       = right; //right pointer
+  while (i <= j) {
+    while (items[i] < pivot) {
+      i++;
+    }
+    while (items[j] > pivot) {
+      j--;
+    }
+    if (i <= j) {
+      swap(items, i, j); //sawpping two elements
+      swap(items_to_follow, i, j);
+      i++;
+      j--;
+    }
+  }
+  return i;
+}
+
+function quickSort(items, items_to_follow, left, right) {
+  var index;
+  if (items.length > 1) {
+    index = partition(items, items_to_follow, left, right); //index returned from partition
+    if (left < index - 1) { //more elements on the left side of the pivot
+      quickSort(items, items_to_follow, left, index - 1);
+    }
+    if (index < right) { //more elements on the right side of the pivot
+      quickSort(items, items_to_follow, index, right);
+    }
+  }
+  return [items, items_to_follow];
+}
+const sorting = function(items, items_to_follow) {
+  // first call to quick sort
+  var sortedArray = quickSort(items, items_to_follow, 0, items.length - 1);
+  console.log(sortedArray[0], sortedArray[1]);
+  return sortedArray;
+}
+
 function getpubmedKeywords() {
   return pubmedKeywords;
 }
@@ -537,7 +586,7 @@ async function getStatsByMonthForEachKeyword(firebase, pubmedKeywords) {
           plugins: {
             legend: {
               onClick(e) {
-                
+
               }
             }
           }
@@ -574,24 +623,22 @@ async function getStatisticsByMonth(my_keyword, firebase) {
     return response;
   })
   console.log("Snapshot", snapshot);
+  const months_of_year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   var months_and_data = [];
   var months = [];
   var data = [];
-  months = [0, 15, 7, 23, 5];
-  data = [5,4,89,0,24245];
-  console.log("Testing the sorting function");
-  console.log("Items", months, "Data", data);
-  console.log(sortBy2(months, data));
-  months = []
-  data = []
   snapshot.forEach(doc => {
     console.log(doc.id, '=>', doc.data().eSearchResult.Count[0]);
-    months.push(new Date(doc.id));
+    let doc_name = doc.id.split(' ');
+    let my_date = (months_of_year.indexOf(doc_name[0]) + 1).toString() + '/01/' + doc_name[1];
+    console.log("Date", my_date);
+    months.push(new Date(my_date));
+    console.log(new Date(my_date));
     data.push(doc.data().eSearchResult.Count[0]);
   });
   months_and_data.push(months);
   months_and_data.push(data);
-  months_and_data = sortBy2(months, data);
+  months_and_data = sorting(months, data);
 
   months = months_and_data[0];
   for (let i = 0; i < months.length; i++) {
@@ -603,28 +650,8 @@ async function getStatisticsByMonth(my_keyword, firebase) {
   console.log("Months by data", months, data);
   console.log(months_and_data);
   return months_and_data;
-}// https://www.guru99.com/quicksort-in-javascript.html
-
-function sortBy2(arr, arr_to_follow) {
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[i] > arr[j]) {
-        let temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-
-        temp = arr_to_follow[i];
-        arr_to_follow[i] = arr_to_follow[j];
-        arr_to_follow[j] = temp;
-
-      }
-    }
-  }
-  var result = []
-  result.push(arr, arr_to_follow)
-  return result;
-
 }
+
 async function getPapersByMonthFromFirebase(firebase) {
   var db = getDatabase(firebase);
 
